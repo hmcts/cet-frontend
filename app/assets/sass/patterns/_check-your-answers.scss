@@ -1,89 +1,83 @@
-/*
-Check your answers
-*/
-
-
-.check-your-answers {
-  
-  @include media(desktop) {
+// Recommended - Use these styles for the check your answers pattern
+.app-check-your-answers {
+  @include govuk-font(19);
+  margin-top: 0;
+  @include govuk-responsive-margin(9, "bottom");
+  @include govuk-media-query($from: desktop) {
     display: table;
-    
-    &--short,
-    &--long {
-      width: 100%;
-    }
-    
+  }
+}
+
+.app-check-your-answers--short {
+  @include govuk-media-query($from: desktop) {
+    // to make group of q&a line up horizontally (unless there is just one group)
+    width: 100%;
     // recommended for mostly short questions
-    &--short {
-      
-      .check-your-answers__question {
-        width: 30%;
-      }
-      
+    .app-check-your-answers__question {
+      width: 30%;
     }
-    
+  }
+}
+
+.app-check-your-answers--long {
+  @include govuk-media-query($from: desktop) {
+    // to make group of q&a line up horizontally (unless there is just one group)
+    width: 100%;
     // recommended for mostly long questions
-    &--long {
-        
-      .check-your-answers__question {
-        width: 50%;
-      }
-      
+    .app-check-your-answers__question {
+      width: 50%;
     }
-    
   }
-  
 }
 
-
-.check-your-answers__row {
-  border-bottom: 1px solid $border-colour;
+.app-check-your-answers__contents {
   position: relative;
-  
-  @include media(desktop) {
-    border-bottom-width: 0;
+  border-bottom: 1px solid $govuk-border-colour;
+
+  @include govuk-media-query($from: desktop) {
     display: table-row;
+    border-bottom-width: 0;
   }
-  
-  > * {    
-    display: block;
-
-    @include media(desktop) {
-      border-bottom: 1px solid $border-colour;
-      display: table-cell;
-      margin: 0;
-      padding: em(12, 19) em(20, 19) em(9, 19) 0; // copied from Elements' td padding
-    }
-    
-  }
-  
-  @include media(desktop) {
-    &:first-child > * {
-      padding-top: 0;
-    }
-  }
-
 }
 
+.app-check-your-answers__contents:first-child .app-check-your-answers__question,
+.app-check-your-answers__contents:first-child .app-check-your-answers__answer,
+.app-check-your-answers__contents:first-child .app-check-your-answers__change {
+  @include govuk-media-query($from: desktop) {
+    padding-top: 0;
+  }
+}
 
-.check-your-answers__question {
+.app-check-your-answers__question,
+.app-check-your-answers__answer,
+.app-check-your-answers__change {
+  display: block;
+  margin: 0;
+  @include govuk-media-query($from: desktop) {
+    display: table-cell;
+    border-bottom: 1px solid $govuk-border-colour;
+    padding: govuk-em(12, 19) govuk-em(20, 19) govuk-em(9, 19) 0;
+  }
+}
+
+.app-check-your-answers__question {
   font-weight: bold;
-  margin: em(12, 19) 4em em(4,19) 0;
+  margin: govuk-em(12, 19) 4em govuk-em(4,19) 0;
+  // using margin instead of padding because of easier absolutely positioning of .app-check-your-answers__change
 }
 
-
-.check-your-answers__answer {
-  padding-bottom: em(9, 19);
+.app-check-your-answers__answer {
+  padding-bottom: govuk-em(9, 19);
 }
 
-
-.check-your-answers__change {
-  position: absolute; right: 0; top: 0;
+.app-check-your-answers__change {
   text-align: right;
+  position: absolute;
+  top: 0;
+  right: 0;
 
-  @include media(desktop) {
-    padding-right: 0;
+  @include govuk-media-query($from: desktop) {
     position: static;
+    padding-right: 0;
   }
-  
 }

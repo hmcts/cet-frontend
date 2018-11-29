@@ -42,24 +42,14 @@
   }) }}
 {% endblock %}
 
-{% if useAutoStoreData %}
   {% block footer %}
     {{ govukFooter({
       meta: {
-        items: [
-          {
-            href: "https://govuk-prototype-kit.herokuapp.com/",
-            text: "GOV.UK Prototype Kit " + releaseVersion
-          },
-          {
-            href: "/prototype-admin/clears-data",
-            text: "Clear data"
-          }
-        ]
+        items: []
       }
-    }) }}
+     })
+    }}
   {% endblock %}
-{% endif %}
 
 {% block bodyEnd %}
   {% block scripts %}

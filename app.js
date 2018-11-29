@@ -6,7 +6,7 @@ const logger = require('app/components/logger');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const nunjucks = require('express-nunjucks');
+const nunjucks = require('nunjucks')
 const routes = require(`${__dirname}/app/routes`);
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
@@ -50,25 +50,47 @@ exports.init = function() {
 
     // Application settings
     app.set('view engine', 'html');
-    app.set('views', ['app/steps', 'app/views', 'node_modules/govuk_template_jinja/views/layouts']);
 
-    const filters = require('app/components/filters.js');
-    const globals = {
-        'currentYear': new Date().getFullYear(),
-        'gaTrackingId': config.gaTrackingId,
-        'enableTracking': config.enableTracking,
-        'links': config.links,
-        'helpline': config.helpline,
-        'nonce': uuid
-    };
 
-    const njk = nunjucks(app, {
-        autoescape: true,
-        watch: true,
-        noCache: true,
-        globals: globals
-    });
-    filters(njk.env);
+  // Set up App
+  const appViews = [
+    path.join(__dirname, '/node_modules/govuk-frontend/'),
+    path.join(__dirname, '/node_modules/govuk-frontend/components'),
+    path.join(__dirname, '/node_modules/govuk_template_jinja/views/layouts'),
+    path.join(__dirname, '/app/views/'),
+    path.join(__dirname, '/app/steps/')
+  ];
+
+  const globals = {
+    'currentYear': new Date().getFullYear(),
+    'gaTrackingId': config.gaTrackingId,
+    'enableTracking': config.enableTracking,
+    'links': config.links,
+    'helpline': config.helpline,
+    'nonce': uuid
+  };
+
+  const nunjucksAppEnv = nunjucks.configure(appViews, {
+    autoescape: true,
+    express: app,
+    noCache: true,
+    watch: true,
+    globals: globals
+  });
+
+  const filters = require('app/components/filters.js');
+
+  filters(nunjucksAppEnv);
+
+// Middleware to serve static assets
+  app.use('/public', express.static(path.join(__dirname, '/public')))
+  app.use('/assets', express.static(path.join(__dirname, 'node_modules', 'govuk-frontend', 'assets')))
+
+// Serve govuk-frontend in /public
+  app.use('/node_modules/govuk-frontend', express.static(path.join(__dirname, '/node_modules/govuk-frontend')))
+
+
+
 
     app.enable('trust proxy');
 
