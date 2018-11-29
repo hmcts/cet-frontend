@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block page_title %}
+{{ content.title }}
+{% endblock %}
+
+{% set displaySignOutLink = 'false' %}
+{% set serviceName = '' %}
+
+{% block content %}
+
+<main id="content" role="main">
+    {% include "includes/phase_banner_alpha.html" %}
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">{{content.header}}</h1>
+            <p>Use this service to apply for:</p>
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li>Writ of Control</li>
+                <li>Warrant of Control</li>
+            </ul>
+
+            <p>Applying only takes around 5 minutes.</p>
+
+            <a href="/applicant-name" role="button" class="govuk-button govuk-button--start govuk-!-margin-top-2 govuk-!-margin-bottom-8">Start now</a>
+
+            <h2 class="govuk-heading-m">Before you start</h2>
+
+            <p>You can also <a href="#">register by post</a>.</p>
+
+            <p>The online service is also available in <a href="#">Welsh (Cymraeg)</a>.</p>
+
+            <p>You can’t register for this service if you’re in the UK illegally.</p>
+        </div>
+        <div class="govuk-grid-column-one-third">
+
+            <aside class="app-related-items" role="complementary">
+                <h2 class="govuk-heading-m" id="subsection-title">
+                    Subsection
+                </h2>
+                <nav role="navigation" aria-labelledby="subsection-title">
+                    <ul class="govuk-list govuk-!-font-size-16">
+                        <li>
+                            <a href="#">
+                                Methods of enforcement
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                How to apply
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="govuk-!-font-weight-bold">
+                                More <span class="govuk-visually-hidden">in Subsection</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+
+        </div>
+
+    </div>
+    {% include "includes/help_details.html" %}
+</main>
+
+{% endblock %}

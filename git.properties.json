@@ -1,0 +1,18 @@
+{
+  "git": {
+    "commit": {
+      "message": {
+        "full": "Initial commit",
+        "short": "Initial commit"
+      },
+      "time": "Wed Nov 28 2018 14:58:14 GMT+0000 (GMT)",
+      "id": "056ef3439742005ca8b58c19174178325b79e155",
+      "abbrevId": "056ef34",
+      "user": {
+        "email": "38843249+johnhosolirius@users.noreply.github.com",
+        "name": "johnhosolirius"
+      }
+    },
+    "branch": "master"
+  }
+}
