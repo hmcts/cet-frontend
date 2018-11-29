@@ -5,7 +5,7 @@ services:
     build:
        context: ../
        dockerfile: docker/test/Dockerfile
-    container_name: probate-e2e
+    container_name: cet-e2e
     environment:
       - http_proxy=
       - https_proxy=
@@ -18,13 +18,13 @@ services:
       - SUBMIT_SERVICE_URL=http://submit-service:8181/submit
       - PERSISTENCE_SERVICE_URL=http://persistence-service:8282/formdata
     links:
-      - probate-frontend
+      - cet-frontend
       - idam-api
       - business-service
       - submit-service
       - persistence-service
     depends_on:
-      - probate-frontend
+      - cet-frontend
       - idam-api
       - business-service
       - submit-service
@@ -32,10 +32,10 @@ services:
     volumes:
       - ./test/end-to-end/output:/opt/app/output
 
-  probate-frontend:
+  cet-frontend:
     build:
       context: ../
-    container_name: probate-frontend
+    container_name: cet-frontend
     environment:
       - USE_IDAM=true
       - NODE_ENV=testing
@@ -46,7 +46,7 @@ services:
       - IDAM_URL=http://idam-api:8080
       - IDAM_LOGIN_URL=https://localhost:8000/login
 
-      - IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_PROBATE=123456
+      - IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_CET=123456
       - http_proxy=
       - https_proxy=
       - no_proxy=
@@ -67,10 +67,10 @@ services:
     networks:
       default:
         aliases:
-          - www-docker.probate.reform.hmcts.net
+          - www-docker.cet.reform.hmcts.net
 
   business-service:
-    image: docker.artifactory.reform.hmcts.net/probate/business-service
+    image: docker.artifactory.reform.hmcts.net/cet/business-service
     container_name: business-service
     environment:
       - SERVER_PORT=8081
@@ -81,37 +81,37 @@ services:
      - 8081:8081
 
   submit-service:
-    image: docker.artifactory.reform.hmcts.net/probate/submit-service
+    image: docker.artifactory.reform.hmcts.net/cet/submit-service
     container_name: submit-service
     environment:
       - SERVER_PORT=8181
-      - PROBATE_MAIL_HOST=probate-postfix
-      - PROBATE_MAIL_PORT=25
-      - PROBATE_MAIL_USERNAME=localhost
-      - PROBATE_MAIL_PASSWORD=Pr0bate!23
-      - PROBATE_MAIL_SENDER=probate-application@hmcts.net
-      - PROBATE_MAIL_RECIPIENT=test.probate.inbox@gmail.com
-      - PROBATE_PERSISTENCE_HOSTNAME=persistence-service:8282
+      - CET_MAIL_HOST=cet-postfix
+      - CET_MAIL_PORT=25
+      - CET_MAIL_USERNAME=localhost
+      - CET_MAIL_PASSWORD=Pr0bate!23
+      - CET_MAIL_SENDER=cet-application@hmcts.net
+      - CET_MAIL_RECIPIENT=test.cet.inbox@gmail.com
+      - CET_PERSISTENCE_HOSTNAME=persistence-service:8282
       - http_proxy=
       - https_proxy=
       - no_proxy=
     ports:
      - 8181:8181
     depends_on:
-      - probate-postfix
+      - cet-postfix
 
   persistence-service:
-    image: docker.artifactory.reform.hmcts.net/probate/persistence-service
+    image: docker.artifactory.reform.hmcts.net/cet/persistence-service
     command: --wait-for-database 30
     container_name: persistence-service
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://persistence-service-database:5432/probate
-      - PROBATE_POSTGRESQL_HOSTNAME=persistence-service-database
-      - PROBATE_POSTGRESQL_PORT=5432
-      - PROBATE_POSTGRESQL_DATABASE=probate
-      - PROBATE_POSTGRESQL_USER=probate
-      - PROBATE_POSTGRESQL_PASSWORD=probate
-      - PROBATE_PERSISTENCE_PORT=8282
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://persistence-service-database:5432/cet
+      - CET_POSTGRESQL_HOSTNAME=persistence-service-database
+      - CET_POSTGRESQL_PORT=5432
+      - CET_POSTGRESQL_DATABASE=cet
+      - CET_POSTGRESQL_USER=cet
+      - CET_POSTGRESQL_PASSWORD=cet
+      - CET_PERSISTENCE_PORT=8282
       - http_proxy=
       - https_proxy=
       - no_proxy=
@@ -132,12 +132,12 @@ services:
       - LOGGING_LEVEL_UK_GOV_HMCTS_IDAM=DEBUG
       - IDAM_AUTHENTICATION_WEB_HOST=https://authentication-web:8000
       - IDAM_REGISTRATION_WEB_HOST=https://www-local.registration.reform.hmcts.net:9000
-      - IDAM_PROBATE_URL=https://www-local.registration.reform.hmcts.net:9000/poc/probate
+      - IDAM_CET_URL=https://www-local.registration.reform.hmcts.net:9000/poc/cet
       - IDAM_CMC_URL=https://www-local.registration.reform.hmcts.net:9000/poc
       - IDAM_DIVORCE_URL=https://www-local.registration.reform.hmcts.net:9000/poc/divorce
       - IDAM_SSCS_URL=https://www-local.registration.reform.hmcts.net:9000/poc
       - IDAM_CCD_URL=https://www-local.registration.reform.hmcts.net:9000/poc/ccd
-      - IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_PROBATE=123456
+      - IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_CET=123456
       - http_proxy=
       - https_proxy=
       - no_proxy=
@@ -182,16 +182,16 @@ services:
 
 
   persistence-service-database:
-    image: docker.artifactory.reform.hmcts.net/probate/persistence-service-database
+    image: docker.artifactory.reform.hmcts.net/cet/persistence-service-database
     container_name: persistence-service-database
     ports:
       - 5432:5432
     volumes:
       - persistence-service-database-data:/var/lib/postgresql/data
 
-  probate-postfix:
+  cet-postfix:
     image: catatnight/postfix
-    container_name: probate-postfix
+    container_name: cet-postfix
     environment:
         - maildomain=localhost
         - smtp_user=localhost:Pr0bate!23

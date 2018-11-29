@@ -29,10 +29,10 @@ services:
     networks:
       default:
         aliases:
-          - https://www-local.probate.reform.hmcts.net
+          - https://www-local.cet.reform.hmcts.net
 
   business-service:
-    image: probate/business-service
+    image: cet/business-service
     container_name: business-service
     environment:
       - SERVER_PORT=8081
@@ -43,17 +43,17 @@ services:
      - 8081:8081
 
   submit-service:
-    image: probate/submit-service
+    image: cet/submit-service
     container_name: submit-service
     environment:
       - SERVER_PORT=8181
-      - PROBATE_MAIL_HOST=idam-postfix
-      - PROBATE_MAIL_PORT=25
-      - PROBATE_MAIL_USERNAME=localhost
-      - PROBATE_MAIL_PASSWORD=Pr0bate!23
-      - PROBATE_MAIL_SENDER=probate-application@hmcts.net
-      - PROBATE_MAIL_RECIPIENT=test.probate.inbox@gmail.com
-      - PROBATE_PERSISTENCE_HOSTNAME=persistence-service:8282
+      - CET_MAIL_HOST=idam-postfix
+      - CET_MAIL_PORT=25
+      - CET_MAIL_USERNAME=localhost
+      - CET_MAIL_PASSWORD=Pr0bate!23
+      - CET_MAIL_SENDER=cet-application@hmcts.net
+      - CET_MAIL_RECIPIENT=test.cet.inbox@gmail.com
+      - CET_PERSISTENCE_HOSTNAME=persistence-service:8282
       - http_proxy=
       - https_proxy=
       - no_proxy=
@@ -63,17 +63,17 @@ services:
       - idam-postfix
 
   persistence-service:
-    image: probate/persistence-service
+    image: cet/persistence-service
     command: --wait-for-database 30
     container_name: persistence-service
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://persistence-service-database:5432/probate
-      - PROBATE_POSTGRESQL_HOSTNAME=persistence-service-database
-      - PROBATE_POSTGRESQL_PORT=5432
-      - PROBATE_POSTGRESQL_DATABASE=probate
-      - PROBATE_POSTGRESQL_USER=probate
-      - PROBATE_POSTGRESQL_PASSWORD=probate
-      - PROBATE_PERSISTENCE_PORT=8282
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://persistence-service-database:5432/cet
+      - CET_POSTGRESQL_HOSTNAME=persistence-service-database
+      - CET_POSTGRESQL_PORT=5432
+      - CET_POSTGRESQL_DATABASE=cet
+      - CET_POSTGRESQL_USER=cet
+      - CET_POSTGRESQL_PASSWORD=cet
+      - CET_PERSISTENCE_PORT=8282
       - http_proxy=
       - https_proxy=
       - no_proxy=
@@ -85,7 +85,7 @@ services:
       - persistence-service-database
 
   persistence-service-database:
-    image: probate/persistence-service-database
+    image: cet/persistence-service-database
     container_name: persistence-service-database
     ports:
       - 5432:5432

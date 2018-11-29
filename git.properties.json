@@ -2,17 +2,17 @@
   "git": {
     "commit": {
       "message": {
-        "full": "Initial commit",
-        "short": "Initial commit"
+        "full": "Initial commit based on cet-frontend",
+        "short": "Initial commit based on cet-frontend"
       },
-      "time": "Wed Nov 28 2018 14:58:14 GMT+0000 (GMT)",
-      "id": "056ef3439742005ca8b58c19174178325b79e155",
-      "abbrevId": "056ef34",
+      "time": "Thu Nov 29 2018 15:31:24 GMT+0000 (GMT)",
+      "id": "7140a8a215e804c07e9589c4ce91875245434537",
+      "abbrevId": "7140a8a",
       "user": {
-        "email": "38843249+johnhosolirius@users.noreply.github.com",
-        "name": "johnhosolirius"
+        "email": "taleb.benouaer@hmcts.net",
+        "name": "taleb"
       }
     },
-    "branch": "master"
+    "branch": "skeleton-frontend-app"
   }
 }

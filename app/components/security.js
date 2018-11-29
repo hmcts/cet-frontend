@@ -62,11 +62,11 @@ class Security {
         const returnUrl = FormatUrl.createHostname(req);
         this._storeRedirectCookie(req, res, returnUrl, state);
 
-        const callbackUrl = FormatUrl.format(returnUrl, config.services.idam.probate_oauth_callback_path);
+        const callbackUrl = FormatUrl.format(returnUrl, config.services.idam.cet_oauth_callback_path);
         const redirectUrl = URL.parse(this.loginUrl, true);
         redirectUrl.query.response_type = 'code';
         redirectUrl.query.state = state;
-        redirectUrl.query.client_id = 'probate';
+        redirectUrl.query.client_id = 'cet';
         redirectUrl.query.redirect_uri = callbackUrl;
 
         res.redirect(redirectUrl.format());
@@ -128,7 +128,7 @@ class Security {
 
     _getTokenFromCode(req) {
         const hostname = FormatUrl.createHostname(req);
-        const redirectUri = FormatUrl.format(hostname, config.services.idam.probate_oauth_callback_path);
+        const redirectUri = FormatUrl.format(hostname, config.services.idam.cet_oauth_callback_path);
         return services.getOauth2Token(req.query.code, redirectUri);
     }
 

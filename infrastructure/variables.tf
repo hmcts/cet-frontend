@@ -3,7 +3,7 @@
 variable "product" {}
 
 variable "raw_product" {
-  default = "probate" // jenkins-library overrides product for PRs and adds e.g. pr-118-probate
+  default = "cet" // jenkins-library overrides product for PRs and adds e.g. pr-118-cet
 }
 
 variable "microservice" {
@@ -69,11 +69,11 @@ variable "external_host_name" {
 
 // Package details
 variable "packages_name" {
-  default = "probate-frontend"
+  default = "cet-frontend"
 }
 
 variable "packages_project" {
-  default = "probate"
+  default = "cet"
 }
 
 variable "packages_environment" {
@@ -88,15 +88,15 @@ variable "version" {
   default = "-1"
 }
 
-variable "probate_frontend_service_name" {
-  default = "probate-frontend"
+variable "cet_frontend_service_name" {
+  default = "cet-frontend"
 }
 
-variable "probate_frontend_public_port" {
+variable "cet_frontend_public_port" {
   default = "443"
 }
 
-variable "probate_frontend_port" {
+variable "cet_frontend_port" {
   default = "3001"
 }
 
@@ -121,36 +121,24 @@ variable "health_endpoint" {
 }
 
 variable "frontend_service_name" {
-  default = "probate-frontend"
+  default = "cet-frontend"
 }
 
-variable "probate_business_service_url" {
-  type = "string"
-}      
-
-variable "probate_submit_service_url" {
-  type = "string"
-}      
-      
-variable "probate_persistence_service_url" {
-  type = "string"
-}
-
-variable "probate_frontend_use_redis" {
+variable "cet_frontend_use_redis" {
   default = "false"
 }
 
 
 
-variable "probate_frontend_https" {
+variable "cet_frontend_https" {
   default = "false"
 }
 
-variable "probate_frontend_use_auth" {
+variable "cet_frontend_use_auth" {
   default = "false"
 }
 
-variable "probate_frontend_use_idam" {
+variable "cet_frontend_use_idam" {
   default = "false"
 }
 
@@ -158,25 +146,25 @@ variable "idam_user_host" {
   type = "string"
 }
 
-variable "probate_private_beta_auth_url" {
+variable "cet_private_beta_auth_url" {
   default = "/login"
 }
 
-variable "probate_frontend_protocol" {
+variable "cet_frontend_protocol" {
   default = "https"
 }
 
 
-variable "probate_google_track_id" {
+variable "cet_google_track_id" {
   description = "Google Analytics tracking ID"
 }
 
-variable "probate_deployment_env" {
+variable "cet_deployment_env" {
   type = "string"
 }
 
 variable "reform_team" {
-  default = "probate"
+  default = "cet"
 }
 
 variable "idam_service_api" {

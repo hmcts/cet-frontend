@@ -144,7 +144,7 @@ describe('PaymentBreakdown', () => {
                     'status': 'success',
                     'finished': true
                 },
-                'description': 'Probate Payment: 50',
+                'description': 'Civil Enforcement Payment: 50',
                 'reference': 'CODE4$$$Hill4314$$$CODE5$$$CODE2/100',
                 'date_created': '2018-08-29T15:25:11.920+0000',
                 '_links': {}
@@ -208,7 +208,7 @@ describe('PaymentBreakdown', () => {
                     'status': 'success',
                     'finished': true
                 },
-                'description': 'Probate Payment: 50',
+                'description': 'Civil Enforcement Payment: 50',
                 'reference': 'CODE4$$$Hill4314$$$CODE5$$$CODE2/100',
                 'date_created': '2018-08-29T15:25:11.920+0000',
                 '_links': {}

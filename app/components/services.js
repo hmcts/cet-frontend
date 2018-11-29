@@ -91,8 +91,8 @@ const authorise = () => {
 
 const getOauth2Token = (code, redirectUri) => {
     logInfo('calling oauth2 token');
-    const clientName = config.services.idam.probate_oauth2_client;
-    const secret = config.services.idam.probate_oauth2_secret;
+    const clientName = config.services.idam.cet_oauth2_client;
+    const secret = config.services.idam.cet_oauth2_secret;
     const idam_api_url = config.services.idam.apiUrl;
 
     const headers = {
@@ -115,7 +115,7 @@ const getOauth2Token = (code, redirectUri) => {
 
 const signOut = (access_token) => {
     logInfo('signing out of IDAM');
-    const clientName = config.services.idam.probate_oauth2_client;
+    const clientName = config.services.idam.cet_oauth2_client;
     const headers = {
         'Authorization': `Basic ${new Buffer(`${clientName}:${secret}`).toString('base64')}`,
     };

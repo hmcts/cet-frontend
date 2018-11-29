@@ -14,7 +14,7 @@ const createPaymentData = (data) => {
     const currency = config.payment.currency;
     const paymentData = {
         amount: data.amount,
-        description: 'Probate Fees',
+        description: 'Civil Enforcement Fees',
         ccd_case_number: data.ccdCaseId,
         service: SERVICE_ID,
         currency: currency,
@@ -27,7 +27,7 @@ const createPaymentData = (data) => {
             amount: data.applicationFee,
             ccdCaseId: data.ccdCaseId,
             code: APPLICATION_FEE_CODE,
-            memoLine: 'Probate Fees',
+            memoLine: 'Civil Enforcement Fees',
             reference: data.userId,
             version: version,
             volume: 1

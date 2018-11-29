@@ -8,9 +8,9 @@ const config = {
     featureToggles: {
         url: process.env.FEATURE_TOGGLES_API_URL || 'http://localhost:8282',
         path: process.env.FEATURE_TOGGLES_PATH || '/api/ff4j/check',
-        fe_shutter_toggle: 'probate-fe-shutter',
-        screening_questions: 'probate-screening-questions',
-        document_upload: 'probate-document-upload'
+        fe_shutter_toggle: 'cet-fe-shutter',
+        screening_questions: 'cet-screening-questions',
+        document_upload: 'cet-document-upload'
     },
     app: {
         username: process.env.USERNAME,
@@ -35,13 +35,13 @@ const config = {
         idam: {
             loginUrl: process.env.IDAM_LOGIN_URL || 'https://localhost:8000/login',
             apiUrl: process.env.IDAM_API_URL || 'http://localhost:8484',
-            roles: ['probate-private-beta', 'citizen'],
+            roles: ['cet-private-beta', 'citizen'],
             s2s_url: process.env.IDAM_S2S_URL || 'http://localhost:4502',
-            service_name: 'probate_frontend',
+            service_name: 'cet_frontend',
             service_key: process.env.IDAM_SERVICE_KEY || 'AAAAAAAAAAAAAAAA',
-            probate_oauth2_client: 'probate',
-            probate_oauth2_secret: process.env.IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_PROBATE || '123456',
-            probate_oauth_callback_path: '/oauth2/callback'
+            cet_oauth2_client: 'cet',
+            cet_oauth2_secret: process.env.IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_CET || '123456',
+            cet_oauth_callback_path: '/oauth2/callback'
         },
         payment: {
             createPaymentUrl: process.env.PAYMENT_CREATE_URL || 'http://localhost:8383/card-payments',
@@ -88,13 +88,13 @@ const config = {
         surveyEndOfApplication: process.env.SURVEY_END_OF_APPLICATION || 'https://www.smartsurvey.co.uk/',
         ihtNotCompleted: 'https://www.gov.uk/valuing-estate-of-someone-who-died/tell-hmrc-estate-value',
         renunciationForm: '/public/pdf/renunciation.pdf',
-        applicationFormPA1A: '/public/pdf/probate-application-form-pa1a.pdf',
-        applicationFormPA1P: '/public/pdf/probate-application-form-pa1p.pdf',
-        guidance: '/public/pdf/probate-guidance-pa2sot.pdf',
-        registryInformation: '/public/pdf/probate-registries-pa4sot.pdf',
+        applicationFormPA1A: '/public/pdf/cet-application-form-pa1a.pdf',
+        applicationFormPA1P: '/public/pdf/cet-application-form-pa1p.pdf',
+        guidance: '/public/pdf/cet-guidance-pa2sot.pdf',
+        registryInformation: '/public/pdf/cet-registries-pa4sot.pdf',
         deathCertificate: 'https://www.gov.uk/order-copy-birth-death-marriage-certificate',
         deathReportedToCoroner: 'https://www.gov.uk/after-a-death/when-a-death-is-reported-to-a-coroner',
-        findOutNext: 'https://www.gov.uk/wills-probate-inheritance/once-the-grants-been-issued'
+        findOutNext: 'https://www.gov.uk/wills-cet-inheritance/once-the-grants-been-issued'
     },
     helpline: {
         number: '0300 303 0648',
@@ -122,7 +122,7 @@ const config = {
                 version: '3'
             }
         },
-        serviceId: process.env.SERVICE_ID || 'PROBATE',
+        serviceId: process.env.SERVICE_ID || 'CET',
         siteId: process.env.SITE_ID || 'P223',
         version: process.env.version || '1',
         currency: process.env.currency || 'GBP'

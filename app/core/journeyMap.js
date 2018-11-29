@@ -1,7 +1,7 @@
 'use strict';
 
 const {get} = require('lodash');
-const journey = require('app/journeys/probate');
+const journey = require('app/journeys/cet');
 const steps = require('app/core/initSteps').steps;
 
 const nextOptionStep = (currentStep, ctx) => {

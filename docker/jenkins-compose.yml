@@ -1,12 +1,12 @@
 version: '2.1'
 
 services:
-  probate-frontend:
+  cet-frontend:
     # build:
     #   context: ../.
-    # image: probate/probabte-frontend
-    image: docker.artifactory.reform.hmcts.net/probate/probate-frontend:${FRONTEND_TAG:-latest}
-    container_name: probate-frontend
+    # image: cet/probabte-frontend
+    image: docker.artifactory.reform.hmcts.net/cet/cet-frontend:${FRONTEND_TAG:-latest}
+    container_name: cet-frontend
     environment:
       - USE_HTTPS=false
       - USE_AUTH=false
@@ -30,10 +30,10 @@ services:
     networks:
       default:
         aliases:
-          - https://www-local.probate.reform.hmcts.net
+          - https://www-local.cet.reform.hmcts.net
 
   business-service:
-    image: docker.artifactory.reform.hmcts.net/probate/business-service
+    image: docker.artifactory.reform.hmcts.net/cet/business-service
     container_name: business-service
     environment:
       - SERVER_PORT=8881
@@ -44,37 +44,37 @@ services:
      - 8881:8881
 
   submit-service:
-    image: docker.artifactory.reform.hmcts.net/probate/submit-service
+    image: docker.artifactory.reform.hmcts.net/cet/submit-service
     container_name: submit-service
     environment:
       - SERVER_PORT=8181
-      - PROBATE_MAIL_HOST=probate-postfix
-      - PROBATE_MAIL_PORT=25
-      - PROBATE_MAIL_USERNAME=localhost
-      - PROBATE_MAIL_PASSWORD=Pr0bate!23
-      - PROBATE_MAIL_SENDER=probate-application@hmcts.net
-      - PROBATE_MAIL_RECIPIENT=test.probate.inbox@gmail.com
-      - PROBATE_PERSISTENCE_HOSTNAME=persistence-service:8282
+      - CET_MAIL_HOST=cet-postfix
+      - CET_MAIL_PORT=25
+      - CET_MAIL_USERNAME=localhost
+      - CET_MAIL_PASSWORD=Pr0bate!23
+      - CET_MAIL_SENDER=cet-application@hmcts.net
+      - CET_MAIL_RECIPIENT=test.cet.inbox@gmail.com
+      - CET_PERSISTENCE_HOSTNAME=persistence-service:8282
       - http_proxy=
       - https_proxy=
       - no_proxy=
     ports:
      - 8181:8181
     depends_on:
-      - probate-postfix
+      - cet-postfix
 
   persistence-service:
-    image: docker.artifactory.reform.hmcts.net/probate/persistence-service
+    image: docker.artifactory.reform.hmcts.net/cet/persistence-service
     command: --wait-for-database 30
     container_name: persistence-service
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://persistence-service-database:5432/probate
-      - PROBATE_POSTGRESQL_HOSTNAME=persistence-service-database
-      - PROBATE_POSTGRESQL_PORT=5432
-      - PROBATE_POSTGRESQL_DATABASE=probate
-      - PROBATE_POSTGRESQL_USER=probate
-      - PROBATE_POSTGRESQL_PASSWORD=probate
-      - PROBATE_PERSISTENCE_PORT=8282
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://persistence-service-database:5432/cet
+      - CET_POSTGRESQL_HOSTNAME=persistence-service-database
+      - CET_POSTGRESQL_PORT=5432
+      - CET_POSTGRESQL_DATABASE=cet
+      - CET_POSTGRESQL_USER=cet
+      - CET_POSTGRESQL_PASSWORD=cet
+      - CET_PERSISTENCE_PORT=8282
       - http_proxy=
       - https_proxy=
       - no_proxy=
@@ -86,16 +86,16 @@ services:
       - persistence-service-database
 
   persistence-service-database:
-    image: docker.artifactory.reform.hmcts.net/probate/persistence-service-database
+    image: docker.artifactory.reform.hmcts.net/cet/persistence-service-database
     container_name: persistence-service-database
     ports:
       - 5432:5432
     volumes:
       - persistence-service-database-data:/var/lib/postgresql/data
 
-  probate-postfix:
+  cet-postfix:
     image: catatnight/postfix
-    container_name: probate-postfix
+    container_name: cet-postfix
     environment:
         - maildomain=localhost
         - smtp_user=localhost:Pr0bate!23

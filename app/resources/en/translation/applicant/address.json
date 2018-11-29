@@ -1,7 +1,7 @@
 {
   "title": "Applicant address",
   "question": "What is your address?",
-  "explanation1": "We&rsquo;ll send the grant of probate to this address.",
+  "explanation1": "We&rsquo;ll send the grant of cet to this address.",
   "postcode": "Postcode",
   "findAddress": "Find UK address",
   "addressLabel": "Address",

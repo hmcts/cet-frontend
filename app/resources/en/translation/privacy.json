@@ -17,13 +17,13 @@
   "whyWeCollectDataParagraph2": "Our staff use your personal data to process your application. They work in the UK and your data is stored in the UK.",
 
   "dataWeCollectHeading": "The personal data we collect",
-  "dataWeCollectParagraph1": "When you use the apply for probate service we ask for:",
+  "dataWeCollectParagraph1": "When you use the apply for cet service we ask for:",
   "dataWeCollect-item1": "your name, and any other names you are known as",
   "dataWeCollect-item2": "your email address",
   "dataWeCollect-item3": "your phone number",
   "dataWeCollect-item4": "your address",
   "dataWeCollect-item5": "the names of any executors of the will",
-  "dataWeCollect-item6": "contact details for all of the executors who are applying for probate",
+  "dataWeCollect-item6": "contact details for all of the executors who are applying for cet",
 
   "usingYourDataHeading": "Using your data",
   "usingYourDataParagraph1": "As part of your application you&rsquo;ll be asked to use your email address to set up an account. You will be able to use this email address and password to sign into other HMCTS services.",
@@ -37,9 +37,9 @@
   "storingYourDataHeading1": "Storing your data",
   "storingYourDataParagraph1": "When you use this service you&rsquo;ll be asked to use your email address to set up an account. You can use this email address and password to sign into other HMCTS services.",
   "storingYourDataHeading2": "Before you submit your information",
-  "storingYourDataParagraph2": "Information you enter in the apply for probate service is saved until you decide to submit it. This allows you to save what you are doing and continue later. Saved information that you do not submit will be deleted after 90 days.",
+  "storingYourDataParagraph2": "Information you enter in the apply for cet service is saved until you decide to submit it. This allows you to save what you are doing and continue later. Saved information that you do not submit will be deleted after 90 days.",
   "storingYourDataHeading3": "After you submit your information",
-  "storingYourDataParagraph3": "Information you enter in the apply for probate service will be stored for 50 years and then deleted. Wills and grants of probate can be accessed as public records. Grants of probate do not include email addresses and telephone numbers, but they do include addresses.",
+  "storingYourDataParagraph3": "Information you enter in the apply for cet service will be stored for 50 years and then deleted. Wills and grants of cet can be accessed as public records. Grants of cet do not include email addresses and telephone numbers, but they do include addresses.",
 
   "sharingYourDataHeading1": "Sharing your data",
   "sharingYourDataParagraph1": "While processing your application, another government department, agency or organisation might be involved and we may share your data with them.",

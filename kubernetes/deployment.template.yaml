@@ -1,5 +1,5 @@
 #
-# PROBATE-FRONTEND
+# CET-FRONTEND
 #
 ---
 apiVersion: apps/v1
@@ -25,9 +25,9 @@ spec:
         name: ${SERVICE_NAME}
         env:
         - name: REFORM_TEAM
-          value: 'probate'
+          value: 'cet'
         - name: REFORM_SERVICE_NAME
-          value: 'probate-frontend'
+          value: 'cet-frontend'
         - name: NODE_ENV
           value: 'production'
         - name: UV_THREADPOOL_SIZE
@@ -44,7 +44,7 @@ spec:
         - name: REDIS_USE_TLS
           value: 'false'
         - name: REDIS_HOST
-          value: 'probate-frontend-redis'
+          value: 'cet-frontend-redis'
         - name: REDIS_PORT
           value: '6379'
           # IDAM
@@ -52,8 +52,8 @@ spec:
           value: 'true'
         - name: IDAM_SERVICE_KEY
           value: ${IDAM_S2S_SECRET}
-        - name: IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_PROBATE
-          value: ${IDAM_SECRET_PROBATE}
+        - name: IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_CET
+          value: ${IDAM_SECRET_CET}
           # POSTCODE
         - name: POSTCODE_SERVICE_URL
           value: ${PRO_POSTCODE_SERVICE_URL}
@@ -297,7 +297,7 @@ spec:
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: probate-frontend-redis
+  name: cet-frontend-redis
   namespace: ${NAMESPACE}
   labels:
     app: redis
@@ -327,7 +327,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: probate-frontend-redis
+  name: cet-frontend-redis
   namespace: ${NAMESPACE}
   labels:
     app: redis

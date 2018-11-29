@@ -51,7 +51,7 @@ const setupConfig = {
 function getDesiredCapabilities() {
     const desiredCapability = supportedBrowsers[browser];
     desiredCapability.tunnelIdentifier = tunnelName;
-    desiredCapability.tags = ['probate'];
+    desiredCapability.tags = ['cet'];
     return desiredCapability;
 }
 

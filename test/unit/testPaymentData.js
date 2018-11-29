@@ -8,7 +8,7 @@ describe('payment-data.js', () => {
         it('should return no fees when there is no application fee, no uk copies and no overseas copies', (done) => {
             const data = {
                 amount: 0,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccdCaseId: '123',
                 applicationFee: 0,
                 copies: {
@@ -23,9 +23,9 @@ describe('payment-data.js', () => {
             const result = paymentData.createPaymentData(data);
             expect(result).to.deep.equal({
                 amount: 0,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccd_case_number: '123',
-                service: 'PROBATE',
+                service: 'CET',
                 currency: 'GBP',
                 site_id: 'P223',
                 fees: []
@@ -36,7 +36,7 @@ describe('payment-data.js', () => {
         it('should return the application fee when applicationFee > 0', (done) => {
             const data = {
                 amount: 215,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccdCaseId: '123',
                 applicationFee: 215,
                 copies: {
@@ -54,16 +54,16 @@ describe('payment-data.js', () => {
             const result = paymentData.createPaymentData(data);
             expect(result).to.deep.equal({
                 amount: 215,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccd_case_number: '123',
-                service: 'PROBATE',
+                service: 'CET',
                 currency: 'GBP',
                 site_id: 'P223',
                 fees: [{
                     calculated_amount: 215,
                     ccd_case_number: '123',
                     code: 'FEE0226',
-                    memo_line: 'Probate Fees',
+                    memo_line: 'Civil Enforcement Fees',
                     reference: '11111',
                     version: '1',
                     volume: 1
@@ -75,7 +75,7 @@ describe('payment-data.js', () => {
         it('should return the uk copies when uk.copies.number > 0', (done) => {
             const data = {
                 amount: 0.50,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccdCaseId: '123',
                 applicationFee: 0,
                 copies: {
@@ -93,9 +93,9 @@ describe('payment-data.js', () => {
             const result = paymentData.createPaymentData(data);
             expect(result).to.deep.equal({
                 amount: 0.50,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccd_case_number: '123',
-                service: 'PROBATE',
+                service: 'CET',
                 currency: 'GBP',
                 site_id: 'P223',
                 fees: [{
@@ -114,7 +114,7 @@ describe('payment-data.js', () => {
         it('should return the overseas copies when overseas.copies.number > 0', (done) => {
             const data = {
                 amount: 1,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccdCaseId: '123',
                 applicationFee: 0,
                 copies: {
@@ -132,9 +132,9 @@ describe('payment-data.js', () => {
             const result = paymentData.createPaymentData(data);
             expect(result).to.deep.equal({
                 amount: 1,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccd_case_number: '123',
-                service: 'PROBATE',
+                service: 'CET',
                 currency: 'GBP',
                 site_id: 'P223',
                 fees: [{
@@ -153,7 +153,7 @@ describe('payment-data.js', () => {
         it('should return all fees when there is an application fee, uk copies and overseas copies', (done) => {
             const data = {
                 amount: 216.50,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccdCaseId: '123',
                 applicationFee: 215,
                 copies: {
@@ -171,16 +171,16 @@ describe('payment-data.js', () => {
             const result = paymentData.createPaymentData(data);
             expect(result).to.deep.equal({
                 amount: 216.50,
-                description: 'Probate Fees',
+                description: 'Civil Enforcement Fees',
                 ccd_case_number: '123',
-                service: 'PROBATE',
+                service: 'CET',
                 currency: 'GBP',
                 site_id: 'P223',
                 fees: [{
                     calculated_amount: 215,
                     ccd_case_number: '123',
                     code: 'FEE0226',
-                    memo_line: 'Probate Fees',
+                    memo_line: 'Civil Enforcement Fees',
                     reference: '11111',
                     version: '1',
                     volume: 1

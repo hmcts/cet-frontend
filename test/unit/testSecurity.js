@@ -11,10 +11,10 @@ const services = require('app/components/services');
 chai.use(sinonChai);
 
 describe('Security middleware', function () {
-    const ROLE = 'probate-private-beta';
+    const ROLE = 'cet-private-beta';
 
     const LOGIN_URL = 'http://localhost:8000/login';
-    const LOGIN_URL_WITH_CONTINUE = LOGIN_URL + '?response_type=code&state=57473&client_id=probate&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth2%2Fcallback';
+    const LOGIN_URL_WITH_CONTINUE = LOGIN_URL + '?response_type=code&state=57473&client_id=cet&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth2%2Fcallback';
     const TOKEN = 'dummyToken';
     const API_URL = 'http://localhost:7000/';
     const appConfig = require('../../app/config');

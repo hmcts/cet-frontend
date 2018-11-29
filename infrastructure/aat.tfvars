@@ -6,34 +6,33 @@ vault_section = "preprod"
 packages_environment = "preprod"
 packages_version = "3.0.0"
 
-external_host_name = "probate.aat.platform.hmcts.net"
+external_host_name = "cet.aat.platform.hmcts.net"
 
-probate_google_track_id = "UA-93598808-1"
+cet_google_track_id = "NEED-TO-GET-ONE"
 
-probate_frontend_https = "false"
-probate_frontend_use_auth = "false"
+cet_frontend_https = "false"
+cet_frontend_use_auth = "false"
 
 payment_create_url = "http://payment-api-aat.service.core-compute-aat.internal/card-payments"
 
 idam_service_api = "http://rpe-service-auth-provider-aat.service.core-compute-aat.internal"
 
-probate_private_beta_auth_url = "https://idam.preprod.ccidam.reform.hmcts.net/login"
+cet_private_beta_auth_url = "https://idam.preprod.ccidam.reform.hmcts.net/login"
 
 idam_user_host = "https://preprod-idamapi.reform.hmcts.net:3511"
 
-probate_deployment_env = "test"
+cet_deployment_env = "test"
 
 
-probate_frontend_port = "3101"
+cet_frontend_port = "3101"
 
-probate_frontend_use_idam = "true"
-
-probate_frontend_use_redis = "true"
+cet_frontend_use_idam = "true"
+cet_frontend_use_redis = "true"
 
 reform_envirionment_for_test = "aat"
 
 feature_toggles_api_url = "http://rpe-feature-toggle-api-aat.service.core-compute-aat.internal"
 
 capacity = "2"
-asp_name = "probate-aat"
-asp_rg = "probate-aat"
+asp_name = "cet-aat"
+asp_rg = "cet-aat"
