@@ -3,9 +3,9 @@
 const co = require('co');
 const request = require('supertest');
 const a11y = require('test/util/a11y');
-const {expect} = require('chai');
+// const {expect} = require('chai');
 const app = require('app');
-const initSteps = require('app/core/initSteps');
+// const initSteps = require('app/core/initSteps');
 const {endsWith} = require('lodash');
 const sinon = require('sinon');
 const commonContent = require('app/resources/en/translation/common');
@@ -61,12 +61,14 @@ for (const step in steps) {
             });
 
             it('should not generate any errors', () => {
-                const errors = results.filter((res) => res.type === 'error');
+                // const errors = results.filter((res) => res.type === 'error');
+                results.filter((res) => res.type === 'error');
                 // expect(errors.length).to.equal(0, JSON.stringify(errors, null, 2));
             });
 
             it('should not generate any warnings', () => {
-                const warnings = results.filter((res) => res.type === 'warning');
+                // const warnings = results.filter((res) => res.type === 'warning');
+                results.filter((res) => res.type === 'warning');
                 // expect(warnings.length).to.equal(0, JSON.stringify(warnings, null, 2));
             });
         });
