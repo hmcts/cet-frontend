@@ -1,16 +1,12 @@
 'use strict';
 
-const pageUnderTest = require('app/steps/ui/startapply/index');
-const testConfig = require('test/config.js');
+const pageUnderTest = require('app/steps/ui/start/index');
 
 module.exports = function () {
     const I = this;
 
-    if (testConfig.useIdam !== 'false') {
-        I.amOnPage(pageUnderTest.getUrl());
-        I.seeCurrentUrlEquals(pageUnderTest.getUrl());
-    }
+    I.amOnPage(pageUnderTest.getUrl());
+    I.seeCurrentUrlEquals(pageUnderTest.getUrl());
 
-    I.click('.button.button-start');
-
+    // I.click('.govuk-button');
 };

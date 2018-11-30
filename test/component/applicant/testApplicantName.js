@@ -1,12 +1,9 @@
 'use strict';
 
 const TestWrapper = require('test/util/TestWrapper');
-const ApplicantNameAsOnWill = require('app/steps/ui/applicant/nameasonwill/index');
-const testHelpBlockContent = require('test/component/common/testHelpBlockContent.js');
 
 describe('applicant-name', () => {
     let testWrapper;
-    const expectedNextUrlForApplicantNameAsOnWill = ApplicantNameAsOnWill.getUrl();
 
     beforeEach(() => {
         testWrapper = new TestWrapper('ApplicantName');
@@ -17,7 +14,6 @@ describe('applicant-name', () => {
     });
 
     describe('Verify Content, Errors and Redirection', () => {
-        testHelpBlockContent.runTest('ApplicantName');
 
         it('test content loaded on the page', (done) => {
             testWrapper.testContent(done);
@@ -48,14 +44,6 @@ describe('applicant-name', () => {
                 lastName: '<bassett'
             };
             testWrapper.testErrors(done, data, 'invalid', errorsToTest);
-        });
-
-        it(`test it redirects to next page: ${expectedNextUrlForApplicantNameAsOnWill}`, (done) => {
-            const data = {
-                firstName: 'bob',
-                lastName: 'smith'
-            };
-            testWrapper.testRedirect(done, data, expectedNextUrlForApplicantNameAsOnWill);
         });
     });
 });
