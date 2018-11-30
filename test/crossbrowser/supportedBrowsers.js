@@ -97,7 +97,6 @@ const supportedBrowsers = {
             'platform': 'OS X 10.11',
             'version': 'latest-1'
         },
-    
         'firefox_win_latest': {
             'browserName': 'firefox',
             'name': 'WIN_FIREFOX_LATEST',
