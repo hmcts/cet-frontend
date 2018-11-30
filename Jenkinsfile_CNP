@@ -11,34 +11,21 @@ List<LinkedHashMap<String, Object>> secrets = [
     secret('testIdamBaseUrl', 'IDAM_API_URL'),
     secret('testIdamLoginUrl', 'IDAM_LOGIN_URL'),
     secret('testUseIdam', 'USE_IDAM'),
-    secret('testInviteIdListUrl', 'INVITE_ID_LIST_URL'),
-    secret('testPinUrl', 'PIN_URL'),
-    secret('testInvitationUrl', 'INVITATION_URL'),
-    secret('testIdamAddUserUrl', 'IDAM_ADD_USER_URL'),
     secret('testIdamRole', 'IDAM_CITIZEN_ROLE'),
     secret('testIdamUserGroup', 'IDAM_USER_GROUP'),
     secret('testCitizenDomain', 'CITIZEN_EMAIL_DOMAIN'),
-    secret('testEnvEmailAddress', 'TEST_EMAIL_ADDRESS'),
-    secret('testEnvMobileNumber', 'TEST_MOBILE_NUMBER'),
     secret('testTerms', 'TERMS_AND_CONDITIONS'),
-    secret('testSurvey', 'SURVEY'),
-    secret('testsurveyEndOfApplication', 'SURVEY_END_OF_APPLICATION'),
     secret('testUseGovPay', 'USE_GOV_PAY'),
     secret('testPostcodeServiceUrl', 'POSTCODE_SERVICE_URL'),
     secret('testPostCodeAddressToken', 'ADDRESS_TOKEN'),
     secret('testRunE2ETest', 'RUN_E2E_TEST'),
-    secret('testValidationServiceUrl', 'TEST_VALIDATION_SERVICE_URL'),
-    secret('idam-secret-cet', 'IDAM_SECRET_CET'),
+    secret('idam-secret', 'IDAM_SECRET'),
     secret('idam-s2s-secret', 'IDAM_S2S_SECRET'),
-    secret('postcode-service-url', 'PRO_POSTCODE_SERVICE_URL'),
-    secret('postcode-service-token', 'PRO_POSTCODE_SERVICE_TOKEN'),
-    secret('cet-survey', 'PRO_SURVEY'),
-    secret('cet-survey-end', 'PRO_SURVEY_END_OF_APPLICATION'),
-    secret('cet-application-fee-code', 'PRO_APPLICATION_FEE_CODE'),
-    secret('cet-uk-application-fee-code', 'PRO_UK_COPIES_FEE_CODE'),
-    secret('cet-overseas-application-fee-code', 'PRO_OVERSEAS_COPIES_FEE_CODE'),
-    secret('cet-service-id', 'PRO_SERVICE_ID'),
-    secret('cet-site-id', 'PRO_SITE_ID')
+    secret('postcode-service-url', 'POSTCODE_SERVICE_URL'),
+    secret('postcode-service-token', 'POSTCODE_SERVICE_TOKEN'),
+    secret('application-fee-code', 'APPLICATION_FEE_CODE'),
+    secret('service-id', 'SERVICE_ID'),
+    secret('site-id', 'SITE_ID')
 ]
 
 static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
@@ -79,10 +66,9 @@ withPipeline("nodejs", product, component) {
 
   setVaultName('cet')
   loadVaultSecrets(secrets)
-  enableSlackNotifications('#cet-jenkins')
+  enableSlackNotifications('#cet-pipeline')
   after('functionalTest:aat') {
       publishHTML target: [
-
               reportDir            : "output/",
               reportFiles          : "mochawesome.html",
               reportName           : "SAAT Functional Tests",

@@ -1,9 +1,21 @@
-// Infrastructural variables
+variable "product" {
+  type = "string"
+}
 
-variable "product" {}
+variable "shared_product_name" {
+  default = "cet"
+}
 
 variable "raw_product" {
-  default = "cet" // jenkins-library overrides product for PRs and adds e.g. pr-118-cet
+  default = "cet" // jenkins-library overrides product for PRs and adds e.g. pr-118-cmc
+}
+
+variable "component" {
+  type = "string"
+}
+
+variable "team_name" {
+  default = "cet"
 }
 
 variable "microservice" {
@@ -24,9 +36,7 @@ variable "deployment_env" {
   type = "string"
 }
 
-
 variable "node_config_dir" {
-  
   // for Windows
   default = "D:\\home\\site\\wwwroot\\config"
 }
@@ -88,15 +98,11 @@ variable "version" {
   default = "-1"
 }
 
-variable "cet_frontend_service_name" {
-  default = "cet-frontend"
-}
-
-variable "cet_frontend_public_port" {
+variable "public_port" {
   default = "443"
 }
 
-variable "cet_frontend_port" {
+variable "port" {
   default = "3001"
 }
 
@@ -105,8 +111,8 @@ variable "ga_tracking_url" {
   default = "http://www.google-analytics.com/collect"
 }
 
-variable "use_auth" {
-  default = "false"
+variable "google_track_id" {
+  description = "Google Analytics tracking ID"
 }
 
 variable "redis_use_tls" {
@@ -120,25 +126,23 @@ variable "health_endpoint" {
   default = "/health"
 }
 
-variable "frontend_service_name" {
+variable "service_name" {
   default = "cet-frontend"
 }
 
-variable "cet_frontend_use_redis" {
+variable "use_redis" {
   default = "false"
 }
 
-
-
-variable "cet_frontend_https" {
+variable "use_https" {
   default = "false"
 }
 
-variable "cet_frontend_use_auth" {
+variable "use_auth" {
   default = "false"
 }
 
-variable "cet_frontend_use_idam" {
+variable "use_idam" {
   default = "false"
 }
 
@@ -146,21 +150,12 @@ variable "idam_user_host" {
   type = "string"
 }
 
-variable "cet_private_beta_auth_url" {
+variable "private_beta_auth_url" {
   default = "/login"
 }
 
-variable "cet_frontend_protocol" {
+variable "frontend_protocol" {
   default = "https"
-}
-
-
-variable "cet_google_track_id" {
-  description = "Google Analytics tracking ID"
-}
-
-variable "cet_deployment_env" {
-  type = "string"
 }
 
 variable "reform_team" {
@@ -186,10 +181,3 @@ variable "common_tags" {
 variable "feature_toggles_api_url" {
   type = "string"
 }
-
-variable "asp_rg" {
-  
-}
- variable "asp_name" {
-  
-} 
