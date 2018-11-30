@@ -4,7 +4,7 @@ const Step = require('app/core/steps/Step');
 
 class Start extends Step {
 
-    static getUrl() {
+    static getUrl () {
         return '/start';
     }
 }

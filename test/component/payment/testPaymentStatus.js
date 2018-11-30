@@ -31,8 +31,9 @@ describe('payment-status', () => {
         nock(PERSISTENCE_URL).post('/')
             .reply(201, {});
         nock(IDAM_S2S_URL).post('/lease')
-            .reply(200, 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSRUZFUkVOQ0UifQ.Z_YYn0go02ApdSMfbehsLXXbxJxLugPG' +
-                '8v_3ktCpQurK8tHkOy1qGyTo02bTdilX4fq4M5glFh80edDuhDJXPA');
+            .reply(200,
+                'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSRUZFUkVOQ0UifQ.Z_YYn0go02ApdSMfbehsLXXbxJxLugPG' +
+                   '8v_3ktCpQurK8tHkOy1qGyTo02bTdilX4fq4M5glFh80edDuhDJXPA');
     });
 
     afterEach(() => {
@@ -56,12 +57,13 @@ describe('payment-status', () => {
             testWrapper.testContent(done, excludeKeys);
         });
 
-        it(`test it redirects to next page with no input: ${expectedNextUrlForTaskList}`, (done) => {
-            testWrapper.agent.post('/prepare-session/form')
-                .send(sessionData)
-                .end(() => {
-                    testWrapper.testRedirect(done, {}, expectedNextUrlForTaskList);
-                });
-        });
+        it(`test it redirects to next page with no input: ${expectedNextUrlForTaskList}`,
+            (done) => {
+                testWrapper.agent.post('/prepare-session/form')
+                    .send(sessionData)
+                    .end(() => {
+                        testWrapper.testRedirect(done, {}, expectedNextUrlForTaskList);
+                    });
+            });
     });
 });

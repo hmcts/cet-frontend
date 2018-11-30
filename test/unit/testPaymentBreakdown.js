@@ -9,7 +9,8 @@ const sinon = require('sinon');
 const submitResponse = require('test/data/send-to-submit-service');
 
 describe('PaymentBreakdown', () => {
-    const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
+    const steps = initSteps(
+        [`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
     let authoriseStub;
     let sendToSubmitServiceStub;
     let createPaymentStub;
@@ -60,7 +61,7 @@ describe('PaymentBreakdown', () => {
             let errors = [];
             const formdata = {};
 
-            co(function* () {
+            co(function * () {
                 [ctx, errors] = yield PaymentBreakdown.handlePost(ctx, errors, formdata);
                 assert.deepEqual(formdata.paymentPending, 'false');
                 done();
@@ -77,7 +78,7 @@ describe('PaymentBreakdown', () => {
             let errors = [];
             const formdata = {paymentPending: 'unknown'};
 
-            co(function* () {
+            co(function * () {
                 [ctx, errors] = yield PaymentBreakdown.handlePost(ctx, errors, formdata);
                 assert.equal(PaymentBreakdown.nextStepUrl(), '/payment-status');
                 done();
@@ -101,9 +102,10 @@ describe('PaymentBreakdown', () => {
                 save: () => true
             };
 
-            co(function* () {
+            co(function * () {
                 const [ctx, errors] = yield PaymentBreakdown.handlePost(ctxTestData,
-                    errorsTestData, formdata, session, hostname);
+                    errorsTestData, formdata,
+                    session, hostname);
                 assert.deepEqual(formdata, {
                     'ccdCase': {
                         'id': 1535395401245028,
@@ -160,9 +162,10 @@ describe('PaymentBreakdown', () => {
                 save: () => true
             };
 
-            co(function* () {
+            co(function * () {
                 const [ctx, errors] = yield PaymentBreakdown.handlePost(ctxTestData,
-                    errorsTestData, formdata, session, hostname);
+                    errorsTestData, formdata,
+                    session, hostname);
                 assert.deepEqual(formdata, {
                     'ccdCase': {
                         'id': 1535395401245028,
@@ -198,69 +201,71 @@ describe('PaymentBreakdown', () => {
                 });
         });
 
-        it('Returns errror message if ctx.total > 0 and authorise service returns error', (done) => {
-            sendToSubmitServiceStub.returns(submitResponse);
-            authoriseStub.returns(Promise.resolve({name: 'Success'}));
-            createPaymentStub.returns(Promise.resolve([{
-                'id': '24',
-                'amount': 5000,
-                'state': {
-                    'status': 'success',
-                    'finished': true
-                },
-                'description': 'Civil Enforcement Payment: 50',
-                'reference': 'CODE4$$$Hill4314$$$CODE5$$$CODE2/100',
-                'date_created': '2018-08-29T15:25:11.920+0000',
-                '_links': {}
-            }, 1234]));
-            const PaymentBreakdown = steps.PaymentBreakdown;
-            const hostname = 'localhost';
-            const ctxTestData = {total: 215};
-            const errorsTestData = [];
-            const formdata = {
-                creatingPayment: 'false'
-            };
-            const session = {
-                save: () => true
-            };
+        it('Returns errror message if ctx.total > 0 and authorise service returns error',
+            (done) => {
+                sendToSubmitServiceStub.returns(submitResponse);
+                authoriseStub.returns(Promise.resolve({name: 'Success'}));
+                createPaymentStub.returns(Promise.resolve([{
+                    'id': '24',
+                    'amount': 5000,
+                    'state': {
+                        'status': 'success',
+                        'finished': true
+                    },
+                    'description': 'Civil Enforcement Payment: 50',
+                    'reference': 'CODE4$$$Hill4314$$$CODE5$$$CODE2/100',
+                    'date_created': '2018-08-29T15:25:11.920+0000',
+                    '_links': {}
+                }, 1234]));
+                const PaymentBreakdown = steps.PaymentBreakdown;
+                const hostname = 'localhost';
+                const ctxTestData = {total: 215};
+                const errorsTestData = [];
+                const formdata = {
+                    creatingPayment: 'false'
+                };
+                const session = {
+                    save: () => true
+                };
 
-            co(function* () {
-                const [ctx, errors] = yield PaymentBreakdown.handlePost(ctxTestData,
-                    errorsTestData, formdata, session, hostname);
-                assert.deepEqual(formdata, {
-                    'ccdCase': {
-                        'id': 1535395401245028,
-                        'state': 'PaAppCreated'
-                    },
-                    'creatingPayment': 'false',
-                    'payment': {
-                        'total': 215
-                    },
-                    'paymentPending': 'true',
-                    'registry': {
+                co(function * () {
+                    const [ctx, errors] = yield PaymentBreakdown.handlePost(ctxTestData,
+                        errorsTestData, formdata,
+                        session, hostname);
+                    assert.deepEqual(formdata, {
+                        'ccdCase': {
+                            'id': 1535395401245028,
+                            'state': 'PaAppCreated'
+                        },
+                        'creatingPayment': 'false',
+                        'payment': {
+                            'total': 215
+                        },
+                        'paymentPending': 'true',
                         'registry': {
-                            'address': 'Line 1 Ox\nLine 2 Ox\nLine 3 Ox\nPostCode Ox\n',
-                            'email': 'oxford@email.com',
-                            'name': 'Oxford',
-                            'sequenceNumber': 10034
+                            'registry': {
+                                'address': 'Line 1 Ox\nLine 2 Ox\nLine 3 Ox\nPostCode Ox\n',
+                                'email': 'oxford@email.com',
+                                'name': 'Oxford',
+                                'sequenceNumber': 10034
+                            },
+                            'submissionReference': 97
                         },
                         'submissionReference': 97
-                    },
-                    'submissionReference': 97
-                });
-                assert.equal(errors, errorsTestData);
-                assert.deepEqual(ctx, {
-                    'total': 215,
-                    'paymentId': 'CODE4$$$Hill4314$$$CODE5$$$CODE2/100',
-                    'paymentReference': 1234,
-                    'paymentCreatedDate': '2018-08-29T15:25:11.920+0000'
-                });
-                done();
-            })
-                .catch((err) => {
-                    done(err);
-                });
-        });
+                    });
+                    assert.equal(errors, errorsTestData);
+                    assert.deepEqual(ctx, {
+                        'total': 215,
+                        'paymentId': 'CODE4$$$Hill4314$$$CODE5$$$CODE2/100',
+                        'paymentReference': 1234,
+                        'paymentCreatedDate': '2018-08-29T15:25:11.920+0000'
+                    });
+                    done();
+                })
+                    .catch((err) => {
+                        done(err);
+                    });
+            });
 
         it('if sendToSubmitService returns DUPLICATE_SUBMISSION', (done) => {
             authoriseStub.returns(Promise.resolve({name: 'Success'}));
@@ -275,7 +280,7 @@ describe('PaymentBreakdown', () => {
             const session = {
                 save: () => true
             };
-            co(function* () {
+            co(function * () {
                 const [ctx, errors] = yield PaymentBreakdown.handlePost(
                     ctxTestData, errorsTestData, formdata, session, hostname);
                 assert.deepEqual(ctx, {total: 215});
@@ -293,109 +298,113 @@ describe('PaymentBreakdown', () => {
                 });
         });
 
-        it('sets paymentPending to true if ctx.total > 0 and payment exists with status of Success', (done) => {
-            authoriseStub.returns(Promise.resolve({name: 'Success'}));
-            findPaymentStub.returns(Promise.resolve(successfulPaymentResponse));
-            sendToSubmitServiceStub.returns(submitResponse);
-            const PaymentBreakdown = steps.PaymentBreakdown;
-            const hostname = 'localhost';
-            const ctxTestData = {total: 215};
-            const errorsTestData = [];
-            const formdata = {
-                creatingPayment: 'true',
-                payment: {
-                    paymentId: 'RC-12345'
-                }
-            };
-            const session = {
-                save: () => true
-            };
+        it('sets paymentPending to true if ctx.total > 0 and payment exists with status of Success',
+            (done) => {
+                authoriseStub.returns(Promise.resolve({name: 'Success'}));
+                findPaymentStub.returns(Promise.resolve(successfulPaymentResponse));
+                sendToSubmitServiceStub.returns(submitResponse);
+                const PaymentBreakdown = steps.PaymentBreakdown;
+                const hostname = 'localhost';
+                const ctxTestData = {total: 215};
+                const errorsTestData = [];
+                const formdata = {
+                    creatingPayment: 'true',
+                    payment: {
+                        paymentId: 'RC-12345'
+                    }
+                };
+                const session = {
+                    save: () => true
+                };
 
-            co(function* () {
-                const [ctx, errors] = yield PaymentBreakdown.handlePost(ctxTestData,
-                    errorsTestData, formdata, session, hostname);
-                assert.deepEqual(formdata, {
-                    'ccdCase': {
-                        'id': 1535395401245028,
-                        'state': 'PaAppCreated'
-                    },
-                    'creatingPayment': 'true',
-                    'payment': {
-                        'total': 215,
-                        'paymentId': 'RC-12345'
-                    },
-                    'paymentPending': 'true',
-                    'registry': {
+                co(function * () {
+                    const [ctx, errors] = yield PaymentBreakdown.handlePost(ctxTestData,
+                        errorsTestData, formdata,
+                        session, hostname);
+                    assert.deepEqual(formdata, {
+                        'ccdCase': {
+                            'id': 1535395401245028,
+                            'state': 'PaAppCreated'
+                        },
+                        'creatingPayment': 'true',
+                        'payment': {
+                            'total': 215,
+                            'paymentId': 'RC-12345'
+                        },
+                        'paymentPending': 'true',
                         'registry': {
-                            'address': 'Line 1 Ox\nLine 2 Ox\nLine 3 Ox\nPostCode Ox\n',
-                            'email': 'oxford@email.com',
-                            'name': 'Oxford',
-                            'sequenceNumber': 10034
+                            'registry': {
+                                'address': 'Line 1 Ox\nLine 2 Ox\nLine 3 Ox\nPostCode Ox\n',
+                                'email': 'oxford@email.com',
+                                'name': 'Oxford',
+                                'sequenceNumber': 10034
+                            },
+                            'submissionReference': 97
                         },
                         'submissionReference': 97
-                    },
-                    'submissionReference': 97
-                });
-                assert.deepEqual(ctx, ctxTestData);
-                assert.equal(errors, errorsTestData);
-                done();
-            })
-                .catch((err) => {
-                    done(err);
-                });
-        });
+                    });
+                    assert.deepEqual(ctx, ctxTestData);
+                    assert.equal(errors, errorsTestData);
+                    done();
+                })
+                    .catch((err) => {
+                        done(err);
+                    });
+            });
 
-        it('sets paymentPending to true if ctx.total > 0 and payment exists with status of Initiated', (done) => {
-            authoriseStub.returns(Promise.resolve({name: 'Success'}));
-            findPaymentStub.returns(Promise.resolve(initiatedPaymentResponse));
-            sendToSubmitServiceStub.returns(submitResponse);
-            const PaymentBreakdown = steps.PaymentBreakdown;
-            const hostname = 'localhost';
-            const ctxTestData = {total: 215};
-            const errorsTestData = [];
-            const formdata = {
-                creatingPayment: 'true',
-                payment: {
-                    paymentId: 'RC-12345'
-                }
-            };
-            const session = {
-                save: () => true
-            };
+        it('sets paymentPending to true if ctx.total > 0 and payment exists with status of Initiated',
+            (done) => {
+                authoriseStub.returns(Promise.resolve({name: 'Success'}));
+                findPaymentStub.returns(Promise.resolve(initiatedPaymentResponse));
+                sendToSubmitServiceStub.returns(submitResponse);
+                const PaymentBreakdown = steps.PaymentBreakdown;
+                const hostname = 'localhost';
+                const ctxTestData = {total: 215};
+                const errorsTestData = [];
+                const formdata = {
+                    creatingPayment: 'true',
+                    payment: {
+                        paymentId: 'RC-12345'
+                    }
+                };
+                const session = {
+                    save: () => true
+                };
 
-            co(function* () {
-                const [ctx, errors] = yield PaymentBreakdown.handlePost(ctxTestData,
-                    errorsTestData, formdata, session, hostname);
-                assert.deepEqual(formdata, {
-                    'ccdCase': {
-                        'id': 1535395401245028,
-                        'state': 'PaAppCreated'
-                    },
-                    'creatingPayment': 'true',
-                    'payment': {
-                        'total': 215,
-                        'paymentId': 'RC-12345'
-                    },
-                    'paymentPending': 'true',
-                    'registry': {
+                co(function * () {
+                    const [ctx, errors] = yield PaymentBreakdown.handlePost(ctxTestData,
+                        errorsTestData, formdata,
+                        session, hostname);
+                    assert.deepEqual(formdata, {
+                        'ccdCase': {
+                            'id': 1535395401245028,
+                            'state': 'PaAppCreated'
+                        },
+                        'creatingPayment': 'true',
+                        'payment': {
+                            'total': 215,
+                            'paymentId': 'RC-12345'
+                        },
+                        'paymentPending': 'true',
                         'registry': {
-                            'address': 'Line 1 Ox\nLine 2 Ox\nLine 3 Ox\nPostCode Ox\n',
-                            'email': 'oxford@email.com',
-                            'name': 'Oxford',
-                            'sequenceNumber': 10034
+                            'registry': {
+                                'address': 'Line 1 Ox\nLine 2 Ox\nLine 3 Ox\nPostCode Ox\n',
+                                'email': 'oxford@email.com',
+                                'name': 'Oxford',
+                                'sequenceNumber': 10034
+                            },
+                            'submissionReference': 97
                         },
                         'submissionReference': 97
-                    },
-                    'submissionReference': 97
-                });
-                assert.deepEqual(ctx, ctxTestData);
-                assert.equal(errors, errorsTestData);
-                done();
-            })
-                .catch((err) => {
-                    done(err);
-                });
-        });
+                    });
+                    assert.deepEqual(ctx, ctxTestData);
+                    assert.equal(errors, errorsTestData);
+                    done();
+                })
+                    .catch((err) => {
+                        done(err);
+                    });
+            });
     });
 
     describe('action', () => {

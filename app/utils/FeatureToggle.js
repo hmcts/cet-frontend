@@ -5,7 +5,7 @@ const featureToggles = require('app/config').featureToggles;
 const logger = require('app/components/logger');
 
 class FeatureToggle {
-    callCheckToggle(req, res, next, featureToggleKey, callback, redirectPage) {
+    callCheckToggle (req, res, next, featureToggleKey, callback, redirectPage) {
         return this.checkToggle({
             req,
             res,
@@ -16,12 +16,13 @@ class FeatureToggle {
         });
     }
 
-    checkToggle(params) {
+    checkToggle (params) {
         const featureToggleKey = params.featureToggleKey;
         const sessionId = params.req.session.id;
         return services.featureToggle(featureToggles[featureToggleKey])
             .then(isEnabled => {
-                logger(sessionId).info(`Checking feature toggle: ${featureToggleKey}, isEnabled: ${isEnabled}`);
+                logger(sessionId)
+                    .info(`Checking feature toggle: ${featureToggleKey}, isEnabled: ${isEnabled}`);
                 params.callback({
                     req: params.req,
                     res: params.res,
@@ -36,7 +37,7 @@ class FeatureToggle {
             });
     }
 
-    togglePage(params) {
+    togglePage (params) {
         if (params.isEnabled) {
             params.next();
         } else {
@@ -44,7 +45,7 @@ class FeatureToggle {
         }
     }
 
-    toggleExistingPage(params) {
+    toggleExistingPage (params) {
         if (params.isEnabled) {
             params.res.redirect(params.redirectPage);
         } else {
@@ -52,7 +53,7 @@ class FeatureToggle {
         }
     }
 
-    toggleFeature(params) {
+    toggleFeature (params) {
         if (!params.req.session.featureToggles) {
             params.req.session.featureToggles = {};
         }
@@ -60,7 +61,7 @@ class FeatureToggle {
         params.next();
     }
 
-    static isEnabled(featureToggles, key) {
+    static isEnabled (featureToggles, key) {
         if (featureToggles && featureToggles[key]) {
             return true;
         }

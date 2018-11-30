@@ -7,7 +7,7 @@ const testConfig = require('test/config');
 /* eslint no-console: 0 no-unused-vars: 0 */
 class TestConfigurator {
 
-    constructor() {
+    constructor () {
         this.testBaseUrl = testConfig.TestIdamBaseUrl;
         this.useIdam = testConfig.TestUseIdam;
         this.setTestCitizenName();
@@ -25,7 +25,7 @@ class TestConfigurator {
         this.retryScenarios = testConfig.TestRetryScenarios;
     }
 
-    getBefore() {
+    getBefore () {
 
         if (process.env.testCitizenEmail === this.getTestCitizenEmail()) {
             this.setTestCitizenName();
@@ -68,7 +68,7 @@ class TestConfigurator {
 
     }
 
-    getAfter() {
+    getAfter () {
         // if (this.useIdam === 'true') {
         //     request({
         //             url: this.getTestDeleteUserURL() + process.env.testCitizenEmail,
@@ -80,67 +80,70 @@ class TestConfigurator {
         // }
     }
 
-    setTestCitizenName() {
+    setTestCitizenName () {
         this.testCitizenName = randomstring.generate({
             length: 36,
             charset: 'alphabetic'
         });
     }
 
-    getTestCitizenName() {
+    getTestCitizenName () {
         return this.testCitizenName;
     }
 
-    getTestCitizenPassword() {
+    getTestCitizenPassword () {
         return this.testCitizenPassword;
     }
 
-    setTestCitizenPassword() {
+    setTestCitizenPassword () {
         const letters = randomstring.generate({length: 5, charset: 'alphabetic'});
         const captiliseFirstLetter = letters.charAt(0).toUpperCase();
 
-        this.testCitizenPassword = captiliseFirstLetter + letters.slice(1) + randomstring.generate({length: 4, charset: 'numeric'});
+        this.testCitizenPassword =
+            captiliseFirstLetter + letters.slice(1) + randomstring.generate(
+                {length: 4, charset: 'numeric'});
     }
 
-    getTestRole() {
+    getTestRole () {
         return this.role;
     }
 
-    getTestIdamUserGroup() {
+    getTestIdamUserGroup () {
         return this.testIdamUserGroup;
     }
 
-    getTestCitizenEmail() {
+    getTestCitizenEmail () {
         return this.testCitizenName + this.testCitizenDomain;
     }
 
-    getTestAddUserURL() {
+    getTestAddUserURL () {
         return this.testBaseUrl + this.testAddUserUrl;
     }
 
-    getTestDeleteUserURL() {
+    getTestDeleteUserURL () {
         return this.testBaseUrl + this.testDeleteUserUrl;
     }
 
-    idamInUseText(scenarioText) {
-        return (this.useIdam === 'true') ? scenarioText + ' - With Idam' : scenarioText + ' - Without Idam';
+    idamInUseText (scenarioText) {
+        return (this.useIdam === 'true') ? scenarioText + ' - With Idam' : scenarioText +
+                                                                           ' - Without Idam';
     }
 
-    setEnvVars() {
+    setEnvVars () {
         process.env.testCitizenEmail = this.getTestCitizenEmail();
         process.env.testCitizenPassword = this.getTestCitizenPassword();
     }
 
-    resetEnvVars() {
+    resetEnvVars () {
         process.env.testCitizenEmail = null;
         process.env.testCitizenPassword = null;
     }
 
-    getUseGovPay() {
+    getUseGovPay () {
         return this.useGovPay;
     }
 
-    getRetryScenarios() {
+    getRetryScenarios () {
         return this.retryScenarios;
     }
 }

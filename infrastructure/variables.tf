@@ -7,7 +7,8 @@ variable "shared_product_name" {
 }
 
 variable "raw_product" {
-  default = "cet" // jenkins-library overrides product for PRs and adds e.g. pr-118-cmc
+  default = "cet"
+  // jenkins-library overrides product for PRs and adds e.g. pr-118-cmc
 }
 
 variable "component" {
@@ -30,7 +31,7 @@ variable "env" {
   type = "string"
 }
 
-variable "ilbIp" { }
+variable "ilbIp" {}
 
 variable "deployment_env" {
   type = "string"
@@ -49,8 +50,8 @@ variable "vault_section" {
 
 // CNP settings
 variable "jenkins_AAD_objectId" {
-  type                        = "string"
-  description                 = "(Required) The Azure AD object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies."
+  type = "string"
+  description = "(Required) The Azure AD object ID of a user, service principal or security group in the Azure Active Directory tenant for the vault. The object ID must be unique for the list of access policies."
 }
 
 variable "tenant_id" {
@@ -116,11 +117,12 @@ variable "google_track_id" {
 }
 
 variable "redis_use_tls" {
-  default = "true"  //always true in cnp
+  default = "true"
+  //always true in cnp
 }
 
 variable "reform_envirionment_for_test" {
-  default = "prod" 
+  default = "prod"
 }
 variable "health_endpoint" {
   default = "/health"

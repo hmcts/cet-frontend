@@ -18,7 +18,8 @@ router.get('/', (req, res) => {
                 uptime: process.uptime(),
                 host: osHostname,
                 version: gitRevision,
-                downstream: healthcheck.mergeInfoAndHealthData(healthDownstream, infoDownstream)
+                downstream: healthcheck.mergeInfoAndHealthData(healthDownstream,
+                    infoDownstream)
             });
         });
     });

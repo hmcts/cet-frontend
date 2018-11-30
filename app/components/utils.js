@@ -32,9 +32,9 @@ exports.basicAuth = (username, password) => {
     };
 };
 
-exports.forceHttps = function(req, res, next) {
+exports.forceHttps = function (req, res, next) {
     if (req.headers['x-forwarded-proto'] !== 'https') {
-    // 302 temporary - this is a feature that can be disabled
+        // 302 temporary - this is a feature that can be disabled
         return res.redirect(302, `https://${req.get('Host')}${req.url}`);
     }
     next();

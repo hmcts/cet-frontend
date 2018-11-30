@@ -20,7 +20,8 @@ const updateTaskStatus = function (ctx, req, steps) {
         while (step.name !== task.lastStep) {
             const localctx = step.getContextData(req);
             const featureToggles = req.session.featureToggles;
-            const [stepCompleted, progressFlag] = step.isComplete(localctx, formdata, featureToggles);
+            const [stepCompleted, progressFlag] = step.isComplete(localctx, formdata,
+                featureToggles);
             const nextStep = step.next(localctx);
             if (stepCompleted && nextStep !== steps.StopPage) {
                 status = progressFlag !== 'noProgress' ? 'started' : status;

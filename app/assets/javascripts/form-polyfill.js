@@ -1,31 +1,33 @@
+/* eslint no-undef: 0 prefer-const: 0  */
 
-    var _input = document.createElement('input');
+const _input = document.createElement('input');
 
-    if (!('formTarget' in _input && 'formAction' in _input)) {
-        $('[type="submit"]').on('click', function (e) {
-            // Prevent default form submit
-            e.preventDefault();
+if (!('formTarget' in _input && 'formAction' in _input)) {
+    $('[type="submit"]').on('click', function (e) {
+        // Prevent default form submit
+        e.preventDefault();
 
-            // Find parent form and store values
-            var $this = $(this),
-                $form = $this.closest('form'),
-                formTarget = $form.attr('target'),
-                formAction = $form.attr('action');
+        // Find parent form and store values
+        let $this = $(this),
+            $form = $this.closest('form'),
+            formTarget = $form.attr('target'),
+            formAction = $form.attr('action');
 
+        // Check if a target is defined and set the form target accordingly
+        if ($this.attr('formtarget') !== null) {
+            $form.attr('target', $this.attr('formtarget'));
+        }
 
-            // Check if a target is defined and set the form target accordingly
-            if ($this.attr('formtarget') !== null)
-                $form.attr('target', $this.attr('formtarget'));
+        // Check if an action is defined and set the form action accordingly
+        if ($this.attr('formaction') !== null) {
+            $form.attr('action', $this.attr('formaction'));
+        }
 
-            // Check if an action is defined and set the form action accordingly
-            if ($this.attr('formaction') !== null)
-                $form.attr('action', $this.attr('formaction'));
+        // Submit form
+        $form.submit();
 
-            // Submit form
-            $form.submit();
-
-            // Set form back to initial values
-            $form.attr('target', formTarget);
-            $form.attr('action', formAction);
-        });
-    };
+        // Set form back to initial values
+        $form.attr('target', formTarget);
+        $form.attr('action', formAction);
+    });
+}

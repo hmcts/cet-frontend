@@ -5,10 +5,10 @@ const co = require('co');
 
 class RedirectRunner extends UIStepRunner {
 
-    handleGet(step, req, res) {
+    handleGet (step, req, res) {
         const originalHandleGet = super.handleGet;
 
-        return co(function* () {
+        return co(function * () {
             const ctx = step.getContextData(req);
 
             if (!req.session.form.applicantEmail) {

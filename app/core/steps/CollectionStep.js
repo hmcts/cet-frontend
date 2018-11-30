@@ -5,14 +5,14 @@ const {startsWith, findIndex} = require('lodash');
 
 class CollectionStep extends ValidationStep {
 
-    nextStepUrl(ctx) {
+    nextStepUrl (ctx) {
         if (ctx.index === -1) {
             return this.next(ctx).constructor.getUrl();
         }
         return this.next(ctx).constructor.getUrl(ctx.index);
     }
 
-    getContextData(req) {
+    getContextData (req) {
         const ctx = super.getContextData(req);
         if (req.params && !isNaN(req.params[0])) {
             ctx.index = parseInt(req.params[0]);
@@ -24,13 +24,13 @@ class CollectionStep extends ValidationStep {
         return ctx;
     }
 
-    action(ctx, formdata) {
+    action (ctx, formdata) {
         super.action(ctx, formdata);
         delete ctx.index;
         return [ctx, formdata];
     }
 
-    recalcIndex(ctx, index) {
+    recalcIndex (ctx, index) {
         return findIndex(ctx.list, o => o.isApplying === true, index + 1);
     }
 }

@@ -7,12 +7,12 @@ const FormatUrl = require('app/utils/FormatUrl');
 
 class UIStepRunner {
 
-    constructor() {
+    constructor () {
         this.GET = curry(this.handleGet);
         this.POST = curry(this.handlePost);
     }
 
-    handleGet(step, req, res) {
+    handleGet (step, req, res) {
 
         return co(function * () {
             let errors = null;
@@ -22,7 +22,8 @@ class UIStepRunner {
             const featureToggles = session.featureToggles;
             [ctx, errors] = yield step.handleGet(ctx, formdata, featureToggles);
             forEach(errors, (error) =>
-                req.log.info({type: 'Validation Message', url: step.constructor.getUrl()}, JSON.stringify(error))
+                req.log.info({type: 'Validation Message', url: step.constructor.getUrl()},
+                    JSON.stringify(error))
             );
             const content = step.generateContent(ctx, formdata);
             const fields = step.generateFields(ctx, errors, formdata);
@@ -39,7 +40,7 @@ class UIStepRunner {
         });
     }
 
-    handlePost(step, req, res) {
+    handlePost (step, req, res) {
 
         return co(function * () {
             const session = req.session;
@@ -49,7 +50,9 @@ class UIStepRunner {
             [isValid, errors] = step.validate(ctx, formdata);
             const featureToggles = session.featureToggles;
             if (isValid) {
-                [ctx, errors] = yield step.handlePost(ctx, errors, formdata, req.session, FormatUrl.createHostname(req), featureToggles);
+                [ctx, errors] =
+                    yield step.handlePost(ctx, errors, formdata, req.session,
+                        FormatUrl.createHostname(req), featureToggles);
             }
 
             if (isEmpty(errors)) {
@@ -59,7 +62,8 @@ class UIStepRunner {
                 set(formdata, step.section, ctx);
 
                 if (!formdata.applicantEmail) {
-                    req.log.error(`We don't have applicantEmail on ${step.constructor.getUrl()} step`);
+                    req.log.error(
+                        `We don't have applicantEmail on ${step.constructor.getUrl()} step`);
                 }
 
                 if (session.back[session.back.length - 1] !== step.constructor.getUrl()) {
@@ -69,7 +73,8 @@ class UIStepRunner {
                 res.redirect(nextStepUrl);
             } else {
                 forEach(errors, (error) =>
-                    req.log.info({type: 'Validation Message', url: step.constructor.getUrl()}, JSON.stringify(error))
+                    req.log.info({type: 'Validation Message', url: step.constructor.getUrl()},
+                        JSON.stringify(error))
                 );
                 const content = step.generateContent(ctx, formdata);
                 let fields = step.generateFields(ctx, errors, formdata);

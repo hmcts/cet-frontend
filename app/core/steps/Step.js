@@ -7,26 +7,26 @@ const mapErrorsToFields = require('app/components/error').mapErrorsToFields;
 
 class Step {
 
-    static getUrl() {
+    static getUrl () {
         throw new ReferenceError('Step must override #url');
     }
 
-    get name() {
+    get name () {
         return this.constructor.name;
     }
 
-    runner() {
+    runner () {
         return new UIStepRunner();
     }
 
-    get template() {
+    get template () {
         if (!this.templatePath) {
             throw new TypeError(`Step ${this.name} has no template file in its resource folder`);
         }
         return `${this.templatePath}/template`;
     }
 
-    constructor(steps, section = null, resourcePath, i18next) {
+    constructor (steps, section = null, resourcePath, i18next) {
         this.steps = steps;
         this.section = section;
         this.resourcePath = resourcePath;
@@ -35,15 +35,15 @@ class Step {
         this.i18next = i18next;
     }
 
-    next(ctx) {
+    next (ctx) {
         return journeyMap(this, ctx);
     }
 
-    nextStepUrl(ctx) {
+    nextStepUrl (ctx) {
         return this.next(ctx).constructor.getUrl();
     }
 
-    getContextData(req) {
+    getContextData (req) {
         const session = req.session;
         let ctx = {};
         Object.assign(ctx, session.form[this.section] || {});
@@ -52,47 +52,52 @@ class Step {
         return ctx;
     }
 
-    handleGet(ctx) {
+    handleGet (ctx) {
         return [ctx];
     }
 
-    handlePost(ctx, errors) {
+    handlePost (ctx, errors) {
         return [ctx, errors];
     }
 
-    validate() {
+    validate () {
         return [true, []];
     }
 
-    isComplete() {
+    isComplete () {
         return [this.validate()[0], 'noProgress'];
     }
 
-    generateContent(ctx, formdata, lang = 'en') {
+    generateContent (ctx, formdata, lang = 'en') {
         if (!this.content) {
-            throw new ReferenceError(`Step ${this.name} has no content.json in its resource folder`);
+            throw new ReferenceError(
+                `Step ${this.name} has no content.json in its resource folder`);
         }
         const contentCtx = Object.assign({}, formdata, ctx, this.commonProps);
         this.i18next.changeLanguage(lang);
 
-        return mapValues(this.content, (value, key) => this.i18next.t(`${this.resourcePath.replace(/\//g, '.')}.${key}`, contentCtx));
+        return mapValues(this.content, (value, key) => this.i18next.t(
+            `${this.resourcePath.replace(/\//g, '.')}.${key}`, contentCtx));
     }
 
-    commonContent(lang = 'en') {
+    commonContent (lang = 'en') {
         this.i18next.changeLanguage(lang);
         const common = require('app/resources/en/translation/common');
         return mapValues(common, (value, key) => this.i18next.t(`common.${key}`));
     }
 
-    generateFields(ctx, errors) {
-        let fields = mapValues(ctx, (value) => ({value: isObject(value) ? value : escape(value), error: false}));
+    generateFields (ctx, errors) {
+        let fields = mapValues(ctx, (value) => ({
+            value: isObject(value) ? value : escape(value),
+            error: false
+        }));
         if (!isEmpty(errors)) {
             fields = mapErrorsToFields(fields, errors);
         }
         return fields;
     }
 
-    action(ctx, formdata) {
+    action (ctx, formdata) {
         delete ctx.sessionID;
         delete ctx._csrf;
         return [ctx, formdata];

@@ -24,7 +24,7 @@ describe('addressLookup service tests', function () {
         fetchJsonStub.returns(when(expectedResponse));
 
         services.findAddress('postcode')
-            .then(function(actualResponse) {
+            .then(function (actualResponse) {
                 sinon.assert.alwaysCalledWith(findAddressSpy, 'postcode');
                 assert.strictEqual(expectedResponse, actualResponse);
                 done();
@@ -37,7 +37,7 @@ describe('addressLookup service tests', function () {
         fetchJsonStub.returns(when(expectedError));
 
         services.findAddress('postcode')
-            .then(function(actualError) {
+            .then(function (actualError) {
                 sinon.assert.alwaysCalledWith(findAddressSpy, 'postcode');
                 assert.strictEqual(expectedError, actualError);
                 done();

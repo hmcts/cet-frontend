@@ -7,15 +7,15 @@ const ActionStepRunner = require('app/core/runners/ActionStepRunner');
 const FieldError = require('app/components/error');
 
 class AddressLookup extends ValidationStep {
-    static getUrl() {
+    static getUrl () {
         return '/find-address';
     }
 
-    runner() {
+    runner () {
         return new ActionStepRunner();
     }
 
-    next() {
+    next () {
         return this.steps[this.referrer];
     }
 
@@ -31,7 +31,8 @@ class AddressLookup extends ValidationStep {
                 referrerData.addressFound = 'true';
             } else {
                 referrerData.addressFound = 'false';
-                referrerData.errors = [FieldError('postcode', 'noAddresses', this.resourcePath, ctx)];
+                referrerData.errors =
+                    [FieldError('postcode', 'noAddresses', this.resourcePath, ctx)];
             }
         } else {
             referrerData.errors = errors;
@@ -40,7 +41,7 @@ class AddressLookup extends ValidationStep {
         return [ctx];
     }
 
-    getReferrerData(ctx, formdata) {
+    getReferrerData (ctx, formdata) {
         const refSection = this.steps[ctx.referrer].section;
         if (!formdata[refSection]) {
             formdata[refSection] = {};
@@ -48,7 +49,7 @@ class AddressLookup extends ValidationStep {
         return formdata[refSection];
     }
 
-    pruneReferrerData(referrerData) {
+    pruneReferrerData (referrerData) {
         delete referrerData.addresses;
         delete referrerData.addressFound;
         delete referrerData.postcodeAddress;

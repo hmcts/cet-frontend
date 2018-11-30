@@ -6,7 +6,7 @@ const steps = requireDirectory(module);
 module.exports = function () {
 
     return actor({
-    //PreIdam
+        //PreIdam
         startApplication: steps.startEligibility.startEligibility,
         startApply: steps.startApply.startApply,
 

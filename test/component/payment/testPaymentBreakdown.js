@@ -14,8 +14,9 @@ describe('payment-breakdown', () => {
         submitStub = require('test/service-stubs/submit');
         testWrapper = new TestWrapper('PaymentBreakdown');
         nock(IDAM_S2S_URL).post('/lease')
-            .reply(200, 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSRUZFUkVOQ0UifQ.Z_YYn0go02ApdSMfbehsLXXbxJxLugPG' +
-                '8v_3ktCpQurK8tHkOy1qGyTo02bTdilX4fq4M5glFh80edDuhDJXPA');
+            .reply(200,
+                'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSRUZFUkVOQ0UifQ.Z_YYn0go02ApdSMfbehsLXXbxJxLugPG' +
+                   '8v_3ktCpQurK8tHkOy1qGyTo02bTdilX4fq4M5glFh80edDuhDJXPA');
     });
 
     afterEach(() => {
@@ -28,7 +29,8 @@ describe('payment-breakdown', () => {
         testHelpBlockContent.runTest('PaymentBreakdown');
 
         it('test content loaded on the page with no extra copies', (done) => {
-            const contentToExclude = ['extraCopiesFeeUk', 'extraCopiesFeeJersey', 'extraCopiesFeeOverseas'];
+            const contentToExclude = ['extraCopiesFeeUk', 'extraCopiesFeeJersey',
+                'extraCopiesFeeOverseas'];
             testWrapper.testContent(done, contentToExclude);
         });
 

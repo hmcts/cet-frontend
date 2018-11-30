@@ -24,37 +24,37 @@
 {% from "warning-text/macro.njk"  import govukWarningText %}
 
 {% block head %}
-  {% include "includes/head.html" %}
+{% include "includes/head.html" %}
 {% endblock %}
 
 {% block pageTitle %}
-  GOV.UK Prototype Kit
+GOV.UK Prototype Kit
 {% endblock %}
 
 {% block header %}
-  {% include "includes/cookie-banner.html" %}
-  {# Set serviceName in config.js. #}
-  {{ govukHeader({
-    homepageUrl: "/",
-    serviceName: serviceName,
-    serviceUrl: "/",
-    containerClasses: "govuk-width-container"
-  }) }}
+{% include "includes/cookie-banner.html" %}
+{# Set serviceName in config.js. #}
+{{ govukHeader({
+homepageUrl: "/",
+serviceName: serviceName,
+serviceUrl: "/",
+containerClasses: "govuk-width-container"
+}) }}
 {% endblock %}
 
-  {% block footer %}
-    {{ govukFooter({
-      meta: {
-        items: []
-      }
-     })
-    }}
-  {% endblock %}
+{% block footer %}
+{{ govukFooter({
+meta: {
+items: []
+}
+})
+}}
+{% endblock %}
 
 {% block bodyEnd %}
-  {% block scripts %}
-    {% include "includes/scripts.html" %}
-    {% block pageScripts %}{% endblock %}
-  {% endblock %}
-  <!-- GOV.UK Prototype Kit {{releaseVersion}} -->
+{% block scripts %}
+{% include "includes/scripts.html" %}
+{% block pageScripts %}{% endblock %}
+{% endblock %}
+<!-- GOV.UK Prototype Kit {{releaseVersion}} -->
 {% endblock %}

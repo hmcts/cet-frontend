@@ -8,7 +8,7 @@ class ThankYou extends Step {
         return '/thankyou';
     }
 
-    getContextData(req) {
+    getContextData (req) {
         const ctx = super.getContextData(req);
         ctx.ccdReferenceNumber = '';
         if (req.session.form.ccdCase && req.session.form.ccdCase.id) {
@@ -22,7 +22,7 @@ class ThankYou extends Step {
         return ctx;
     }
 
-    action(ctx, formdata) {
+    action (ctx, formdata) {
         super.action(ctx, formdata);
         delete ctx.ccdReferenceNumber;
         return [ctx, formdata];

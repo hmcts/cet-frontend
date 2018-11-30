@@ -8,7 +8,8 @@ const steps = {};
 
 const initStep = filePath => {
     const stepObject = require(filePath);
-    const filePathFragments = filePath.search('ui') >= 0 ? filePath.split(`${path.sep}ui${path.sep}`) : filePath.split(`${path.sep}action${path.sep}`);
+    const filePathFragments = filePath.search('ui') >= 0 ? filePath.split(
+        `${path.sep}ui${path.sep}`) : filePath.split(`${path.sep}action${path.sep}`);
     let resourcePath = filePathFragments[1];
     resourcePath = resourcePath.replace(`${path.sep}index.js`, '');
     const section = resourcePath.split(path.sep);

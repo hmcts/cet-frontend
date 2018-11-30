@@ -23,7 +23,8 @@ router.post('/lease', function (req, res) {
 
     if (!getShowErrorFromSeq()) {
         res.status(200);
-        res.send('eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSRUZFUkVOQ0UifQ.Z_YYn0go02ApdSMfbehsLXXbxJxLugPG8v_3ktCpQurK8tHkOy1qGyTo02bTdilX4fq4M5glFh80edDuhDJXPA');
+        res.send(
+            'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSRUZFUkVOQ0UifQ.Z_YYn0go02ApdSMfbehsLXXbxJxLugPG8v_3ktCpQurK8tHkOy1qGyTo02bTdilX4fq4M5glFh80edDuhDJXPA');
 
     } else {
         res.status(401);
@@ -51,7 +52,7 @@ const server = app.listen(S2S_STUB_PORT);
 
 module.exports = server;
 
-function getShowErrorFromSeq() {
+function getShowErrorFromSeq () {
     let showError = false;
     if (errorSequence.charAt(iterator) === '1') {
         showError = true;

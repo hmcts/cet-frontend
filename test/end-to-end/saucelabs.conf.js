@@ -48,7 +48,7 @@ const setupConfig = {
     'name': 'frontEnd Tests'
 };
 
-function getDesiredCapabilities() {
+function getDesiredCapabilities () {
     const desiredCapability = supportedBrowsers[browser];
     desiredCapability.tunnelIdentifier = tunnelName;
     desiredCapability.tags = ['cet'];

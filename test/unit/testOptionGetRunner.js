@@ -20,7 +20,8 @@ describe('OptionGetRunner', function () {
 
         const runner = new OptionGetRunner();
         runner.handlePost(step, req, res);
-        expect(req.log.error).to.have.been.calledWith('Post operation not defined for OptionGetRunner');
+        expect(req.log.error).to.have.been
+            .calledWith('Post operation not defined for OptionGetRunner');
         expect(res.status).to.have.been.calledWith(404);
         expect(res.render).to.have.been.calledWith('errors/404');
 

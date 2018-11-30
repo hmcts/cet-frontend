@@ -60,7 +60,7 @@ li.task-item {
       @include media(tablet) {
         margin-left: 35px;
         margin-bottom: 15px;
-        float:left;
+        float: left;
       }
       @include media(desktop) {
         float: right;
@@ -73,7 +73,7 @@ li.task-item {
       text-transform: none;
 
       @include media(tablet) {
-        float:left;
+        float: left;
         margin-left: 35px;
       }
 
@@ -86,6 +86,7 @@ li.task-item {
     margin-bottom: 0;
   }
 }
+
 // Tasklist page end
 
 // Helper CSS start
@@ -150,12 +151,12 @@ div.declaration-header {
   text-decoration: none;
 }
 
-  @include media(tablet) {
-    #global-header .header-proposition #sign-out-header {
-      @include bold-19;
-      margin-top: 2px;
-    }
+@include media(tablet) {
+  #global-header .header-proposition #sign-out-header {
+    @include bold-19;
+    margin-top: 2px;
   }
+}
 
 #global-header .header-proposition a#sign-out-header:hover {
   text-decoration: underline;
@@ -166,13 +167,13 @@ div.declaration-header {
 }
 
 .check-your-answers__question {
-    font-weight: inherit;
+  font-weight: inherit;
 }
 
 .check-your-answers__answer {
-    .check-your-answers__row {
-        border-bottom: none;
-    }
+  .check-your-answers__row {
+    border-bottom: none;
+  }
 }
 
 .govuk-box-highlight {

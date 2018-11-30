@@ -5,19 +5,19 @@ const {curry} = require('lodash');
 
 class ActionStepRunner {
 
-    constructor() {
+    constructor () {
         this.GET = curry(this.handleGet);
         this.POST = curry(this.handlePost);
     }
 
-    handleGet(step, req, res) {
+    handleGet (step, req, res) {
         req.log.error(`GET operation not defined for ${step.name} step`);
         res.status(404);
         res.render('errors/404');
     }
 
-    handlePost(step, req, res) {
-        return co(function* () {
+    handlePost (step, req, res) {
+        return co(function * () {
             const session = req.session;
             const formdata = session.form;
 

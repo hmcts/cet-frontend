@@ -33,7 +33,8 @@ const generateErrors = (errs, ctx, formdata, errorPath, lang = 'en') => {
             return FieldError(param, 'invalid', errorPath);
 
         } catch (e) {
-            throw new ReferenceError(`Error messages have not been defined for Step in content.json for errors.${param}`);
+            throw new ReferenceError(
+                `Error messages have not been defined for Step in content.json for errors.${param}`);
         }
     });
     return uniqWith(errors, isEqual);

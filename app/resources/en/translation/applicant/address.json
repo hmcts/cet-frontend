@@ -7,7 +7,6 @@
   "addressLabel": "Address",
   "selectAddress": "Select address",
   "enterManually": "Enter your address instead",
-
   "errors": {
     "crossField": {
       "oneOf": {

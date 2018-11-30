@@ -16,7 +16,8 @@ describe('Address Lookup API Tests', () => {
                     if (err) {
                         logger.error(`error raised: ${err}`);
                     } else {
-                        expect(res.body.detail).to.equal('You do not have permission to perform this action.');
+                        expect(res.body.detail).to
+                            .equal('You do not have permission to perform this action.');
                     }
                     done();
                 });
@@ -36,8 +37,10 @@ describe('Address Lookup API Tests', () => {
                         logger.error(`error raised: ${err}`);
                     } else {
                         expect(res.body.length).to.equal(1);
-                        expect(res.body[0].organisation_name).to.equal(testConfig.postcodeLookup.singleOrganisationName);
-                        expect(res.body[0].formatted_address).to.equal(testConfig.postcodeLookup.singleFormattedAddress);
+                        expect(res.body[0].organisation_name).to
+                            .equal(testConfig.postcodeLookup.singleOrganisationName);
+                        expect(res.body[0].formatted_address).to
+                            .equal(testConfig.postcodeLookup.singleFormattedAddress);
                     }
                     done();
                 });

@@ -14,7 +14,8 @@ describe('Security middleware', function () {
     const ROLE = 'cet-private-beta';
 
     const LOGIN_URL = 'http://localhost:8000/login';
-    const LOGIN_URL_WITH_CONTINUE = LOGIN_URL + '?response_type=code&state=57473&client_id=cet&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth2%2Fcallback';
+    const LOGIN_URL_WITH_CONTINUE = LOGIN_URL +
+                                    '?response_type=code&state=57473&client_id=cet&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Foauth2%2Fcallback';
     const TOKEN = 'dummyToken';
     const API_URL = 'http://localhost:7000/';
     const appConfig = require('../../app/config');
@@ -88,26 +89,27 @@ describe('Security middleware', function () {
             expect(res.redirect).to.have.been.calledWith(LOGIN_URL_WITH_CONTINUE);
         });
 
-        it('should redirect to login page when getUserDetails returns Unauthorized', function (done) {
-            req.cookies[SECURITY_COOKIE] = TOKEN;
-            req.session = {};
-            req.protocol = 'http';
-            const promise = when({name: 'Error', message: 'Unauthorized'});
+        it('should redirect to login page when getUserDetails returns Unauthorized',
+            function (done) {
+                req.cookies[SECURITY_COOKIE] = TOKEN;
+                req.session = {};
+                req.protocol = 'http';
+                const promise = when({name: 'Error', message: 'Unauthorized'});
 
-            getUserDetailsStub.returns(promise);
+                getUserDetailsStub.returns(promise);
 
-            protect(req, res, next);
+                protect(req, res, next);
 
-            promise
-                .then(() => {
-                    sinon.assert.calledOnce(res.redirect);
-                    expect(res.redirect).to.have.been.calledWith(LOGIN_URL_WITH_CONTINUE);
-                    done();
-                })
-                .catch((err) => {
-                    done(err);
-                });
-        });
+                promise
+                    .then(() => {
+                        sinon.assert.calledOnce(res.redirect);
+                        expect(res.redirect).to.have.been.calledWith(LOGIN_URL_WITH_CONTINUE);
+                        done();
+                    })
+                    .catch((err) => {
+                        done(err);
+                    });
+            });
 
         it('should retrieve user details when auth token provided', function () {
             req.cookies[SECURITY_COOKIE] = TOKEN;
@@ -170,7 +172,8 @@ describe('Security middleware', function () {
             callBackEndpoint(req, res, next);
 
             checkAsync(() => {
-                expect(res.cookie).to.have.been.calledWith(SECURITY_COOKIE, TOKEN, {httpOnly: true});
+                expect(res.cookie).to.have.been
+                    .calledWith(SECURITY_COOKIE, TOKEN, {httpOnly: true});
                 done();
             });
         });
@@ -182,13 +185,14 @@ describe('Security middleware', function () {
             callBackEndpoint(req, res, next);
 
             checkAsync(() => {
-                expect(res.cookie).to.have.been.calledWith(SECURITY_COOKIE, TOKEN, {secure: true, httpOnly: true});
+                expect(res.cookie).to.have.been
+                    .calledWith(SECURITY_COOKIE, TOKEN, {secure: true, httpOnly: true});
             });
         });
     });
 
-    function checkAsync(callback) {
-        setTimeout(function() {
+    function checkAsync (callback) {
+        setTimeout(function () {
             callback();
         }, 50);
     }

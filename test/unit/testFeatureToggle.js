@@ -121,19 +121,20 @@ describe('FeatureToggle', () => {
                 done();
             });
 
-            it('when the session does not contain a featureToggles object and call next()', (done) => {
-                const params = {
-                    req: {session: {}},
-                    featureToggleKey: 'document_upload',
-                    isEnabled: true,
-                    next: sinon.spy()
-                };
-                featureToggle.toggleFeature(params);
-                expect(params.req.session.featureToggles).to.deep.equal({document_upload: true});
-                expect(params.next.calledOnce).to.equal(true);
-                expect(params.next.calledWith()).to.equal(true);
-                done();
-            });
+            it('when the session does not contain a featureToggles object and call next()',
+                (done) => {
+                    const params = {
+                        req: {session: {}},
+                        featureToggleKey: 'document_upload',
+                        isEnabled: true,
+                        next: sinon.spy()
+                    };
+                    featureToggle.toggleFeature(params);
+                    expect(params.req.session.featureToggles).to.deep.equal({document_upload: true});
+                    expect(params.next.calledOnce).to.equal(true);
+                    expect(params.next.calledWith()).to.equal(true);
+                    done();
+                });
         });
     });
 

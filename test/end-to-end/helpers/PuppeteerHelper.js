@@ -5,7 +5,7 @@ const helperName = 'Puppeteer';
 
 class PuppeteerHelper extends Helper {
 
-    clickBrowserBackButton() {
+    clickBrowserBackButton () {
         const page = this.helpers[helperName].page;
 
         return page.goBack();

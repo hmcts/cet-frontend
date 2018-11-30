@@ -10,7 +10,9 @@
     {{ fieldError(field) }}
 
     <label class="form-label" for="{{id}}">{{text | safe}}</label>
-    <input type="text" class="form-control {{ 'form-control-error' if field.error }} form-control-3-4" id="{{id}}" name="{{name}}" value="{{field.value  | safe}}" maxlength="{{size}}">
+    <input type="text"
+           class="form-control {{ 'form-control-error' if field.error }} form-control-3-4"
+           id="{{id}}" name="{{name}}" value="{{field.value  | safe}}" maxlength="{{size}}">
 </div>
 {% endmacro %}
 
@@ -24,7 +26,10 @@
     {{ fieldError(field) }}
 
     <label class="form-label" for="{{id}}">{{text | safe}}</label>
-    <input type="password" class="form-control {{ 'form-control-error' if field.error }} form-control-{{width}}" id="{{id}}" name="{{name}}" value="{{field.value  | safe}}" maxlength="{{size}}" size="{{size}}">
+    <input type="password"
+           class="form-control {{ 'form-control-error' if field.error }} form-control-{{width}}"
+           id="{{id}}" name="{{name}}" value="{{field.value  | safe}}" maxlength="{{size}}"
+           size="{{size}}">
 </div>
 {% endmacro %}
 
@@ -39,7 +44,10 @@
 
     {{ fieldError(errors.value[index]) }}
 
-    <input type="text" class="form-control {{ 'form-control-error' if errors.value[index]}} form-control-3-4" id="{{id}}" name="{{name}}" value="{{fieldArray.value[index] | safe}}" maxlength="{{size}}">
+    <input type="text"
+           class="form-control {{ 'form-control-error' if errors.value[index]}} form-control-3-4"
+           id="{{id}}" name="{{name}}" value="{{fieldArray.value[index] | safe}}"
+           maxlength="{{size}}">
 </div>
 {% endmacro %}
 
@@ -53,7 +61,9 @@
     {{ fieldError(field) }}
 
     <label class="visually-hidden" for="{{name}}">{{text}}</label>
-    <input type="text" class="form-control {{ 'form-control-error' if field.error }} form-control-3-4" id="{{name}}" name="{{name}}" value="{{field.value | safe}}" maxlength="{{size}}">
+    <input type="text"
+           class="form-control {{ 'form-control-error' if field.error }} form-control-3-4"
+           id="{{name}}" name="{{name}}" value="{{field.value | safe}}" maxlength="{{size}}">
 </div>
 {% endmacro %}
 
@@ -62,6 +72,8 @@
 
     {{ fieldError(field) }}
 
-    <textarea title="{{text}}" class="form-control {{ 'form-control-error' if field.error }} form-control-3-4" rows="{{size}}" id="{{name}}" name="{{name}}">{{field.value | safe}}</textarea>
+    <textarea title="{{text}}"
+              class="form-control {{ 'form-control-error' if field.error }} form-control-3-4"
+              rows="{{size}}" id="{{name}}" name="{{name}}">{{field.value | safe}}</textarea>
 </div>
 {% endmacro %}

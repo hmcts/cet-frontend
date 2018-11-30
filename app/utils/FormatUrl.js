@@ -4,7 +4,7 @@ const url = require('url');
 const config = require('app/config');
 
 class FormatUrl {
-    static format(serviceUrl, servicePath = '') {
+    static format (serviceUrl, servicePath = '') {
         const urlParts = url.parse(serviceUrl);
         const port = urlParts.port ? `:${urlParts.port}` : '';
         let path = servicePath || urlParts.path;
@@ -12,7 +12,7 @@ class FormatUrl {
         return `${urlParts.protocol}//${urlParts.hostname}${port}${path}`;
     }
 
-    static createHostname(req) {
+    static createHostname (req) {
         return `${config.frontendPublicHttpProtocol.toLowerCase()}://${req.get('host')}`;
     }
 }

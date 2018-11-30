@@ -5,7 +5,7 @@ const {expect} = require('chai');
 describe('error-pages', () => {
     it('test 404', (done) => {
         const request = require('supertest');
-        const server = new (require ('app').init)();
+        const server = new (require('app').init)();
         const agent = request.agent(server.app);
         agent.get('/wibble')
             .expect('Content-type', /html/)
@@ -28,7 +28,7 @@ describe('error-pages', () => {
         routes.get('/throwError', function () {
             throw new Error('Test error');
         });
-        const server = new (require ('app').init)();
+        const server = new (require('app').init)();
 
         const agent = request.agent(server.app);
         agent.get('/throwError')

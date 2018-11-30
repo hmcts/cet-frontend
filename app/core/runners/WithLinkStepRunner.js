@@ -4,7 +4,7 @@ const UIStepRunner = require('app/core/runners/UIStepRunner');
 
 class WithLinkStepRunner extends UIStepRunner {
 
-    handleGet(step, req, res) {
+    handleGet (step, req, res) {
         if (req.session.validLink) {
             super.handleGet(step, req, res);
         } else {

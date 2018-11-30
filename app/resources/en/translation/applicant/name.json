@@ -4,7 +4,6 @@
   "firstName": "First name(s)",
   "firstNameHint": "Including middle names",
   "lastName": "Last name(s)",
-
   "errors": {
     "firstName": {
       "required": {

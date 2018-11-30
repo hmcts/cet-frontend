@@ -10,7 +10,12 @@ const {endsWith} = require('lodash');
 const sinon = require('sinon');
 const commonContent = require('app/resources/en/translation/common');
 const services = require('app/components/services');
-const stepsToExclude = ['StartEligibility', 'StartApply', 'NewStartEligibility', 'NewStartApply', 'PinPage', 'PinSent', 'PinResend', 'AddressLookup', 'ExecutorAddress', 'ExecutorContactDetails', 'ExecutorName', 'ExecutorNotified', 'ExecutorNameAsOnWill', 'ExecutorApplying', 'DeleteExecutor', 'PaymentStatus', 'AddAlias', 'RemoveAlias', 'ExecutorRoles', 'ExecutorsWhenDied'];
+const stepsToExclude = ['StartEligibility', 'StartApply', 'NewStartEligibility', 'NewStartApply',
+    'PinPage', 'PinSent', 'PinResend', 'AddressLookup', 'ExecutorAddress',
+    'ExecutorContactDetails', 'ExecutorName', 'ExecutorNotified',
+    'ExecutorNameAsOnWill', 'ExecutorApplying', 'DeleteExecutor',
+    'PaymentStatus', 'AddAlias', 'RemoveAlias', 'ExecutorRoles',
+    'ExecutorsWhenDied'];
 const steps = initSteps.steps;
 let checkAllAgreedStub;
 let featureToggleStub;
@@ -42,12 +47,13 @@ for (const step in steps) {
 
                 server = app.init();
                 agent = request.agent(server.app);
-                co(function* () {
+                co(function * () {
                     let urlSuffix = '';
                     if (endsWith(agent.get(step.constructor.getUrl()), '*')) {
                         urlSuffix = '/0';
                     }
-                    results = yield a11y(agent.get(step.constructor.getUrl()).url + urlSuffix, title);
+                    results =
+                        yield a11y(agent.get(step.constructor.getUrl()).url + urlSuffix, title);
                 })
                     .then(done, done)
                     .catch((error) => {

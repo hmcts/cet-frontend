@@ -3,7 +3,8 @@ const assert = require('chai').assert;
 
 describe('StartApply', () => {
 
-    const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
+    const steps = initSteps(
+        [`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
     const startApply = steps.StartApply;
 
     it('test correct url is returned from getUrl function', () => {

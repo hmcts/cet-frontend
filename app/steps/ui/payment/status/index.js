@@ -9,15 +9,15 @@ const {get, set} = require('lodash');
 
 class PaymentStatus extends Step {
 
-    runner() {
+    runner () {
         return new RedirectRunner();
     }
 
-    static getUrl() {
+    static getUrl () {
         return '/payment-status';
     }
 
-    getContextData(req) {
+    getContextData (req) {
         const ctx = super.getContextData(req);
         const formdata = req.session.form;
         ctx.paymentId = get(formdata, 'payment.paymentId');
@@ -30,7 +30,7 @@ class PaymentStatus extends Step {
         return ctx;
     }
 
-    action(ctx, formdata) {
+    action (ctx, formdata) {
         super.action(ctx, formdata);
         delete ctx.authToken;
         delete ctx.userId;
@@ -41,11 +41,13 @@ class PaymentStatus extends Step {
         return [ctx, formdata];
     }
 
-    isComplete(ctx, formdata) {
-        return [typeof formdata.payment !== 'undefined' && formdata.ccdCase.state === 'CaseCreated' && (formdata.payment.status === 'Success' || formdata.payment.status === 'not_required'), 'inProgress'];
+    isComplete (ctx, formdata) {
+        return [typeof formdata.payment !== 'undefined' && formdata.ccdCase.state === 'CaseCreated' &&
+                (formdata.payment.status === 'Success' || formdata.payment.status ===
+                    'not_required'), 'inProgress'];
     }
 
-    * runnerOptions(ctx, formdata) {
+    * runnerOptions (ctx, formdata) {
         const options = {};
 
         if (formdata.paymentPending === 'true' || formdata.paymentPending === 'unknown') {
@@ -68,8 +70,11 @@ class PaymentStatus extends Step {
             const findPaymentResponse = yield services.findPayment(data);
             const date = typeof findPaymentResponse.date_updated === 'undefined' ? ctx.paymentCreatedDate : findPaymentResponse.date_updated;
             this.updateFormDataPayment(formdata, findPaymentResponse, date);
-            if (findPaymentResponse.name === 'Error' || findPaymentResponse.status === 'Initiated') {
-                logger.error('Payment retrieval failed for paymentId = ' + ctx.paymentId + ' with status = ' + findPaymentResponse.status);
+            if (findPaymentResponse.name === 'Error' || findPaymentResponse.status ===
+                'Initiated') {
+                logger.error(
+                    'Payment retrieval failed for paymentId = ' + ctx.paymentId + ' with status = ' +
+                    findPaymentResponse.status);
                 services.saveFormData(ctx.regId, formdata, ctx.sessionId);
                 const options = {};
                 options.redirect = true;
@@ -78,7 +83,8 @@ class PaymentStatus extends Step {
                 return options;
             }
 
-            const [updateCcdCaseResponse, errors] = yield this.updateCcdCasePaymentStatus(ctx, formdata);
+            const [updateCcdCaseResponse, errors] = yield this.updateCcdCasePaymentStatus(ctx,
+                formdata);
             this.setErrors(options, errors);
             set(formdata, 'ccdCase.state', updateCcdCaseResponse.caseState);
 
@@ -94,7 +100,8 @@ class PaymentStatus extends Step {
                 formdata.paymentPending = 'false';
             }
         } else {
-            const [updateCcdCaseResponse, errors] = yield this.updateCcdCasePaymentStatus(ctx, formdata);
+            const [updateCcdCaseResponse, errors] = yield this.updateCcdCasePaymentStatus(ctx,
+                formdata);
             this.setErrors(options, errors);
             options.redirect = false;
             set(formdata, 'payment.status', 'not_required');
@@ -109,7 +116,7 @@ class PaymentStatus extends Step {
         return options;
     }
 
-    * updateCcdCasePaymentStatus(ctx, formdata) {
+    * updateCcdCasePaymentStatus (ctx, formdata) {
         const submitData = {};
         Object.assign(submitData, formdata);
         let errors;
@@ -125,17 +132,17 @@ class PaymentStatus extends Step {
         return [result, errors];
     }
 
-    handleGet(ctx) {
+    handleGet (ctx) {
         return [ctx, ctx.errors];
     }
 
-    setErrors(options, errors) {
+    setErrors (options, errors) {
         if (typeof errors !== 'undefined') {
             options.errors = errors;
         }
     }
 
-    updateFormDataPayment(formdata, findPaymentResponse, date) {
+    updateFormDataPayment (formdata, findPaymentResponse, date) {
         Object.assign(formdata.payment, {
             channel: findPaymentResponse.channel,
             transactionId: findPaymentResponse.external_reference,

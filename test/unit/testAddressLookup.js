@@ -7,7 +7,8 @@ const co = require('co');
 
 describe('AddressLookup', function () {
 
-    const steps = initSteps([__dirname + '/../../app/steps/action/', __dirname + '/../../app/steps/ui']);
+    const steps = initSteps(
+        [__dirname + '/../../app/steps/action/', __dirname + '/../../app/steps/ui']);
 
     describe('handlePost', function () {
 
@@ -34,7 +35,7 @@ describe('AddressLookup', function () {
             let errors = {};
             const formdata = {applicant: {'someThingToLookFor': 'someThingToLookFor'}};
 
-            co(function* () {
+            co(function * () {
                 [ctx, errors] = yield AddressLookup.handlePost(ctx, errors, formdata);
                 assert.deepEqual(formdata.applicant.addresses, expectedResponse);
                 assert.equal(formdata.applicant.addressFound, 'true');
@@ -55,7 +56,7 @@ describe('AddressLookup', function () {
             let errors = {};
             const formdata = {applicant: {'someThingToLookFor': 'someThingToLookFor'}};
 
-            co(function* () {
+            co(function * () {
                 [ctx, errors] = yield AddressLookup.handlePost(ctx, errors, formdata);
                 assert.equal(formdata.applicant.addressFound, 'false');
                 assert.exists(formdata.applicant.errors[0], 'key not found');
@@ -78,15 +79,16 @@ describe('AddressLookup', function () {
             assert.deepEqual(ret, {'someThingToLookFor': 'someThingToLookFor'});
         });
 
-        it('It creates the referer data section from the formdata if one does not exist', function () {
+        it('It creates the referer data section from the formdata if one does not exist',
+            function () {
 
-            const AddressLookup = steps.AddressLookup;
+                const AddressLookup = steps.AddressLookup;
 
-            const ctx = {'referrer': 'ApplicantAddress'};
-            const formdata = {};
-            const ret = AddressLookup.getReferrerData(ctx, formdata);
-            assert.deepEqual(ret, {});
-        });
+                const ctx = {'referrer': 'ApplicantAddress'};
+                const formdata = {};
+                const ret = AddressLookup.getReferrerData(ctx, formdata);
+                assert.deepEqual(ret, {});
+            });
     });
 
     describe('pruneReferrerData', function () {

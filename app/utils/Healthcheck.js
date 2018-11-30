@@ -7,11 +7,11 @@ const statusUp = 'UP';
 const statusDown = 'DOWN';
 
 class Healthcheck {
-    formatUrl(endpoint) {
+    formatUrl (endpoint) {
         return url => FormatUrl.format(url, endpoint);
     }
 
-    createServicesList(urlFormatter, servicesConfig) {
+    createServicesList (urlFormatter, servicesConfig) {
         return [
             {name: 'Business Service', url: urlFormatter(servicesConfig.validation.url)},
             {name: 'Submit Service', url: urlFormatter(servicesConfig.submit.url)},
@@ -19,7 +19,7 @@ class Healthcheck {
         ];
     }
 
-    createPromisesList(services, callback) {
+    createPromisesList (services, callback) {
         const fetchOpts = fetchOptions({}, 'GET', {});
         return services.map(service => asyncFetch(service.url, fetchOpts, res => res.json()
             .then(json => {
@@ -30,32 +30,32 @@ class Healthcheck {
             }));
     }
 
-    health({err, service, json}) {
+    health ({err, service, json}) {
         if (err) {
             return {name: service.name, status: statusDown, error: err.toString()};
         }
         return {name: service.name, status: json.status};
     }
 
-    info({err, json}) {
+    info ({err, json}) {
         if (err) {
             return {gitCommitId: err.toString()};
         }
         return {gitCommitId: json.git.commit.id};
     }
 
-    getDownstream(type, callback) {
+    getDownstream (type, callback) {
         const url = this.formatUrl(config.endpoints[type.name]);
         const services = this.createServicesList(url, config.services);
         const promises = this.createPromisesList(services, type);
         Promise.all(promises).then(downstream => callback(downstream));
     }
 
-    status(healthDownstream) {
+    status (healthDownstream) {
         return healthDownstream.every(service => service.status === statusUp) ? statusUp : statusDown;
     }
 
-    mergeInfoAndHealthData(healthDownstream, infoDownstream) {
+    mergeInfoAndHealthData (healthDownstream, infoDownstream) {
         return healthDownstream.map((service, key) => {
             return Object.assign(service, {gitCommitId: infoDownstream[key].gitCommitId});
         });

@@ -4,7 +4,7 @@ const AddressStep = require('app/core/steps/AddressStep');
 
 class ApplicantAddress extends AddressStep {
 
-    static getUrl() {
+    static getUrl () {
         return '/applicant-address';
     }
 }

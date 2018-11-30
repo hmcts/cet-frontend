@@ -10,7 +10,7 @@ const journeyMap = require('app/core/journeyMap');
 const {steps} = require('app/core/initSteps');
 
 class TestWrapper {
-    constructor(stepName) {
+    constructor (stepName) {
         this.pageToTest = steps[stepName];
         this.pageUrl = this.pageToTest.constructor.getUrl();
 
@@ -34,8 +34,9 @@ class TestWrapper {
         this.agent = request.agent(this.server.app);
     }
 
-    testContent(done, excludeKeys = [], data) {
-        const contentToCheck = cloneDeep(filter(this.content, (value, key) => !excludeKeys.includes(key) && key !== 'errors'));
+    testContent (done, excludeKeys = [], data) {
+        const contentToCheck = cloneDeep(
+            filter(this.content, (value, key) => !excludeKeys.includes(key) && key !== 'errors'));
         const substitutedContent = this.substituteContent(data, contentToCheck);
         this.agent.get(this.pageUrl)
             .expect('Content-type', /html/)
@@ -46,7 +47,7 @@ class TestWrapper {
             .catch(done);
     }
 
-    testDataPlayback(done, data) {
+    testDataPlayback (done, data) {
         this.agent.get(this.pageUrl)
             .expect('Content-type', /html/)
             .then(response => {
@@ -56,7 +57,7 @@ class TestWrapper {
             .catch(done);
     }
 
-    testContentNotPresent(done, data) {
+    testContentNotPresent (done, data) {
         this.agent.get(this.pageUrl)
             .then(response => {
                 this.assertContentIsNotPresent(response.text, data);
@@ -65,9 +66,12 @@ class TestWrapper {
             .catch(done);
     }
 
-    testErrors(done, data, type, onlyKeys = []) {
+    testErrors (done, data, type, onlyKeys = []) {
         const contentErrors = get(this.content, 'errors', {});
-        const expectedErrors = cloneDeep(isEmpty(onlyKeys) ? contentErrors : filter(contentErrors, (value, key) => onlyKeys.includes(key)));
+        const expectedErrors = cloneDeep(isEmpty(onlyKeys) ? contentErrors : filter(contentErrors,
+            (value,
+                key) => onlyKeys.includes(
+                key)));
         assert.isNotEmpty(expectedErrors);
         this.substituteErrorsContent(data, expectedErrors, type);
         this.agent.post(`${this.pageUrl}`)
@@ -84,7 +88,7 @@ class TestWrapper {
             .catch(done);
     }
 
-    testContentAfterError(data, contentToCheck, done) {
+    testContentAfterError (data, contentToCheck, done) {
         this.agent.post(this.pageUrl)
             .send(data)
             .expect('Content-type', 'text/html; charset=utf-8')
@@ -95,7 +99,7 @@ class TestWrapper {
             .catch(done);
     }
 
-    testRedirect(done, postData, expectedNextUrl) {
+    testRedirect (done, postData, expectedNextUrl) {
         this.agent.post(this.pageUrl)
             .type('form')
             .send(postData)
@@ -105,11 +109,11 @@ class TestWrapper {
             .catch(done);
     }
 
-    nextStep(data = {}) {
+    nextStep (data = {}) {
         return journeyMap(this.pageToTest, data);
     }
 
-    substituteContent(data, contentToSubstitute) {
+    substituteContent (data, contentToSubstitute) {
         Object.entries(contentToSubstitute)
             .forEach(([key, contentValue]) => {
                 contentValue = contentValue.replace(/\n/g, '<br />\n');
@@ -119,12 +123,14 @@ class TestWrapper {
                         placeholder = placeholder.replace(/[{}]/g, '');
                         if (Array.isArray(data[placeholder])) {
                             forEach(data[placeholder], (contentData) => {
-                                const contentValueReplace = contentValue.replace(placeholderRegex, contentData);
+                                const contentValueReplace = contentValue.replace(placeholderRegex,
+                                    contentData);
                                 contentToSubstitute.push(contentValueReplace);
                             });
                             contentToSubstitute[key] = 'undefined';
                         } else {
-                            contentValue = contentValue.replace(placeholderRegex, data[placeholder]);
+                            contentValue =
+                                contentValue.replace(placeholderRegex, data[placeholder]);
                             contentToSubstitute[key] = contentValue;
                         }
                     });
@@ -135,7 +141,7 @@ class TestWrapper {
         return contentToSubstitute.filter(content => content !== 'undefined');
     }
 
-    substituteErrorsContent(data, contentToSubstitute, type) {
+    substituteErrorsContent (data, contentToSubstitute, type) {
         Object.entries(contentToSubstitute)
             .forEach(([key, contentValue]) => {
                 forEach(contentValue[type], (errorMessageItem) => {
@@ -143,26 +149,27 @@ class TestWrapper {
                     if (placeholder) {
                         const placeholderRegex = new RegExp(placeholder, 'g');
                         placeholder = placeholder.replace(/[{}]/g, '');
-                        errorMessageItem = errorMessageItem.replace(placeholderRegex, data[placeholder]);
+                        errorMessageItem =
+                            errorMessageItem.replace(placeholderRegex, data[placeholder]);
                         contentToSubstitute[key][type] = errorMessageItem;
                     }
                 });
             });
     }
 
-    assertContentIsPresent(actualContent, expectedContent) {
+    assertContentIsPresent (actualContent, expectedContent) {
         forEach(expectedContent, (value) => {
             expect(actualContent.toLowerCase()).to.contain(value.toString().toLowerCase());
         });
     }
 
-    assertContentIsNotPresent(actualContent, expectedContent) {
+    assertContentIsNotPresent (actualContent, expectedContent) {
         forEach(expectedContent, (value) => {
             expect(actualContent.toLowerCase()).to.not.contain(value.toString().toLowerCase());
         });
     }
 
-    destroy() {
+    destroy () {
         this.server.http.close();
     }
 }

@@ -44,7 +44,8 @@ const config = {
             cet_oauth_callback_path: '/oauth2/callback'
         },
         payment: {
-            createPaymentUrl: process.env.PAYMENT_CREATE_URL || 'http://localhost:8383/card-payments',
+            createPaymentUrl: process.env.PAYMENT_CREATE_URL ||
+                              'http://localhost:8383/card-payments',
             authorization: process.env.PAYMENT_AUTHORIZATION || 'dummy_token',
             serviceAuthorization: process.env.PAYMENT_SERVICE_AUTHORIZATION || 'dummy_token',
             userId: process.env.PAYMENT_USER_ID || 999999999,
@@ -85,7 +86,8 @@ const config = {
         complaintsProcedure: 'https://www.gov.uk/government/organisations/hm-courts-and-tribunals-service/about/complaints-procedure',
         informationCommissionersOffice: 'https://ico.org.uk/global/contact-us',
         survey: process.env.SURVEY || 'https://www.smartsurvey.co.uk/',
-        surveyEndOfApplication: process.env.SURVEY_END_OF_APPLICATION || 'https://www.smartsurvey.co.uk/',
+        surveyEndOfApplication: process.env.SURVEY_END_OF_APPLICATION ||
+                                'https://www.smartsurvey.co.uk/',
         ihtNotCompleted: 'https://www.gov.uk/valuing-estate-of-someone-who-died/tell-hmrc-estate-value',
         renunciationForm: '/public/pdf/renunciation.pdf',
         applicationFormPA1A: '/public/pdf/cet-application-form-pa1a.pdf',

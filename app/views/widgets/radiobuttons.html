@@ -3,7 +3,8 @@
 {% macro optionsRadio(content, name, field, options, legend, inline = false) %}
 
 
-<fieldset class="form-group {{ 'form-group-error' if field.error }} {{'inline' if inline}}" id="{{name}}">
+<fieldset class="form-group {{ 'form-group-error' if field.error }} {{'inline' if inline}}"
+          id="{{name}}">
     <legend class="visually-hidden">{{legend | safe}}</legend>
 
     {{ fieldError(field) }}
@@ -11,7 +12,8 @@
     {% for option in options %}
 
     <div class="multiple-choice" data-target="{{name}}-{{loop.index}}-details">
-        <input id="{{name}}-{{option}}" type="radio" name="{{name}}" value="{{content[option]}}" {{"checked='checked'" if field.value == content[option] | escape}}>
+        <input id="{{name}}-{{option}}" type="radio" name="{{name}}" value="{{content[option]}}" {{"checked='checked'"
+        if field.value == content[option] | escape}}>
         <label for="{{name}}-{{option}}">{{content[option] | safe}}</label>
     </div>
 
@@ -22,7 +24,8 @@
 
 {% macro optionsRadioWithHint(content, name, field, options, legend, inline = false, hint) %}
 
-<fieldset class="form-group {{ 'form-group-error' if field.error }} {{'inline' if inline}}" id="{{name}}">
+<fieldset class="form-group {{ 'form-group-error' if field.error }} {{'inline' if inline}}"
+          id="{{name}}">
     <legend class="visually-hidden">{{legend | safe}}</legend>
     <p class="form-hint">{{hint | safe}}</p>
 
@@ -31,7 +34,8 @@
     {% for option in options %}
 
     <div class="multiple-choice" data-target="{{name}}-{{loop.index}}-details">
-        <input id="{{name}}-{{option}}" type="radio" name="{{name}}" value="{{content[option]}}" {{"checked='checked'" if field.value === content[option]}}>
+        <input id="{{name}}-{{option}}" type="radio" name="{{name}}" value="{{content[option]}}" {{"checked='checked'"
+        if field.value === content[option]}}>
         <label for="{{name}}-{{option}}">{{content[option] | safe}}</label>
     </div>
 
@@ -42,7 +46,8 @@
 
 {% macro optionsRadioWithLegend(content, name, field, options, legend, inline = false, hint) %}
 
-<fieldset class="form-group {{ 'form-group-error' if field.error }} {{'inline' if inline}}" id="{{name}}">
+<fieldset class="form-group {{ 'form-group-error' if field.error }} {{'inline' if inline}}"
+          id="{{name}}">
     <legend class="heading-medium">{{legend | safe}}</legend>
     <p class="form-hint">{{hint | safe}}</p>
 
@@ -51,7 +56,8 @@
     {% for option in options %}
 
     <div class="multiple-choice" data-target="{{name}}-{{loop.index}}-details">
-        <input id="{{option}}" type="radio" name="{{name}}" value="{{content[option]}}" {{"checked='checked'" if field.value == content[option] | escape}}>
+        <input id="{{option}}" type="radio" name="{{name}}" value="{{content[option]}}" {{"checked='checked'"
+        if field.value == content[option] | escape}}>
         <label for="{{option}}">{{content[option] | safe}}</label>
     </div>
 

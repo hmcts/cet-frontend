@@ -18,7 +18,7 @@ After(() => {
     TestConfigurator.getAfter();
 });
 
-Scenario(TestConfigurator.idamInUseText('Save And Close Link Click Flow'), function* (I) {
+Scenario(TestConfigurator.idamInUseText('Save And Close Link Click Flow'), function * (I) {
 
     // Pre-IDAM
     I.startApplication();
@@ -33,7 +33,7 @@ Scenario(TestConfigurator.idamInUseText('Save And Close Link Click Flow'), funct
     I.selectOriginalWill();
     I.click('Save and close');
     I.see('You’ve signed out');
-    I.seeCurrentUrlEquals(testConfig.TestE2EFrontendUrl+'/sign-out');
+    I.seeCurrentUrlEquals(testConfig.TestE2EFrontendUrl + '/sign-out');
     I.click('sign back in');
     I.seeInCurrentUrl(testConfig.TestIdamLoginUrl);
 

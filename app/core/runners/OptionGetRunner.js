@@ -4,7 +4,7 @@ const UIStepRunner = require('app/core/runners/UIStepRunner');
 
 class OptionGetRunner extends UIStepRunner {
 
-    handleGet(step, req, res) {
+    handleGet (step, req, res) {
         if (req.params[0] === 'redirect') {
             const ctx = step.getContextData(req);
             res.redirect(step.nextStepUrl(ctx));
@@ -13,7 +13,7 @@ class OptionGetRunner extends UIStepRunner {
         }
     }
 
-    handlePost(step, req, res) {
+    handlePost (step, req, res) {
         req.log.error('Post operation not defined for OptionGetRunner');
         res.status(404);
         res.render('errors/404');

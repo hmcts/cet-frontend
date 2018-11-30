@@ -68,7 +68,7 @@ describe('PaymentStatus', () => {
                     Promise.resolve({name: 'Error'}));
                 const ctx = {total: 1};
                 const formData = {paymentPending: 'true'};
-                co(function* () {
+                co(function * () {
                     const options = yield PaymentStatus.runnerOptions(ctx, formData);
 
                     assert.deepEqual(options, expectedOptions);
@@ -110,7 +110,7 @@ describe('PaymentStatus', () => {
                     paymentId: 4567
                 };
                 const formData = {paymentPending: 'true', 'payment': {}};
-                co(function* () {
+                co(function * () {
                     const options = yield PaymentStatus.runnerOptions(ctx, formData);
                     assert.deepEqual(options.redirect, false);
                     assert.deepEqual(formData, expectedFormData);
@@ -152,7 +152,7 @@ describe('PaymentStatus', () => {
                     paymentId: 4567
                 };
                 const formData = {paymentPending: 'true', 'payment': {}};
-                co(function* () {
+                co(function * () {
                     const options = yield PaymentStatus.runnerOptions(ctx, formData);
                     assert.deepEqual(options.redirect, true);
                     assert.deepEqual(options.url, '/payment-breakdown?status=failure');
@@ -190,7 +190,7 @@ describe('PaymentStatus', () => {
                 };
 
                 const formData = {paymentPending: 'false'};
-                co(function* () {
+                co(function * () {
                     const options = yield PaymentStatus.runnerOptions(ctx, formData);
                     assert.deepEqual(options.redirect, false);
                     assert.deepEqual(formData, expectedFormData);
@@ -203,37 +203,38 @@ describe('PaymentStatus', () => {
                 });
             }));
 
-        it('should return field error on options if updateCcdCasePaymentStatus returns error', sinon.test((done) => {
-            servicesMock.expects('authorise').returns(Promise.resolve({}));
-            servicesMock.expects('findPayment').returns(
-                Promise.resolve(successfulPaymentResponse));
-            servicesMock.expects('updateCcdCasePaymentStatus').returns(
-                Promise.resolve({name: 'Error'}));
+        it('should return field error on options if updateCcdCasePaymentStatus returns error',
+            sinon.test((done) => {
+                servicesMock.expects('authorise').returns(Promise.resolve({}));
+                servicesMock.expects('findPayment').returns(
+                    Promise.resolve(successfulPaymentResponse));
+                servicesMock.expects('updateCcdCasePaymentStatus').returns(
+                    Promise.resolve({name: 'Error'}));
 
-            const ctx = {
-                authToken: 'XXXXX',
-                userId: 12345,
-                paymentId: 4567
-            };
+                const ctx = {
+                    authToken: 'XXXXX',
+                    userId: 12345,
+                    paymentId: 4567
+                };
 
-            const formData = {paymentPending: 'false'};
-            co(function* () {
-                const options = yield PaymentStatus.runnerOptions(ctx, formData);
-                assert.deepEqual(options.errors, [{
-                    param: 'update',
-                    msg: {
-                        summary: 'We could not submit your application. Your data has been saved, please try again later.',
-                        message: 'payment.status.errors.update.failure.message'
-                    }
-                }]);
-                servicesMock.expects('findPayment').once();
-                servicesMock.expects('authorise').once();
-                servicesMock.expects('updateCcdCasePaymentStatus').once();
-                done();
-            }).catch(err => {
-                done(err);
-            });
-        }));
+                const formData = {paymentPending: 'false'};
+                co(function * () {
+                    const options = yield PaymentStatus.runnerOptions(ctx, formData);
+                    assert.deepEqual(options.errors, [{
+                        param: 'update',
+                        msg: {
+                            summary: 'We could not submit your application. Your data has been saved, please try again later.',
+                            message: 'payment.status.errors.update.failure.message'
+                        }
+                    }]);
+                    servicesMock.expects('findPayment').once();
+                    servicesMock.expects('authorise').once();
+                    servicesMock.expects('updateCcdCasePaymentStatus').once();
+                    done();
+                }).catch(err => {
+                    done(err);
+                });
+            }));
 
         it('should set redirect to true, paymentPending to true and payment status to success if payment is successful with no case created',
             sinon.test((done) => {
@@ -260,7 +261,7 @@ describe('PaymentStatus', () => {
                     paymentId: 4567
                 };
                 const formData = {paymentPending: 'true', 'payment': {}};
-                co(function* () {
+                co(function * () {
                     const options = yield PaymentStatus.runnerOptions(ctx, formData);
                     assert.deepEqual(options.redirect, true);
                     assert.deepEqual(formData, expectedFormData);

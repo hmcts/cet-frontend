@@ -14,14 +14,14 @@ const ACCESS_TOKEN_OAUTH2 = 'access_token';
 
 class Security {
 
-    constructor(loginUrl) {
+    constructor (loginUrl) {
         if (!loginUrl) {
             throw new Error('login URL required for Security');
         }
         this.loginUrl = loginUrl;
     }
 
-    protect(authorisedRoles) {
+    protect (authorisedRoles) {
 
         const self = this;
 
@@ -57,12 +57,13 @@ class Security {
         };
     }
 
-    _login(req, res) {
+    _login (req, res) {
         const state = this._generateState();
         const returnUrl = FormatUrl.createHostname(req);
         this._storeRedirectCookie(req, res, returnUrl, state);
 
-        const callbackUrl = FormatUrl.format(returnUrl, config.services.idam.cet_oauth_callback_path);
+        const callbackUrl = FormatUrl.format(returnUrl,
+            config.services.idam.cet_oauth_callback_path);
         const redirectUrl = URL.parse(this.loginUrl, true);
         redirectUrl.query.response_type = 'code';
         redirectUrl.query.state = state;
@@ -72,7 +73,7 @@ class Security {
         res.redirect(redirectUrl.format());
     }
 
-    _authorize(res, next, userRoles, authorisedRoles) {
+    _authorize (res, next, userRoles, authorisedRoles) {
         if (userRoles.some(role => authorisedRoles.includes(role))) {
             next();
         } else {
@@ -81,17 +82,17 @@ class Security {
         }
     }
 
-    _denyAccess(res) {
+    _denyAccess (res) {
         res.clearCookie(SECURITY_COOKIE);
         res.status(403);
         res.render('errors/403', {common: commonContent});
     }
 
-    _generateState() {
+    _generateState () {
         return UUID();
     }
 
-    oAuth2CallbackEndpoint() {
+    oAuth2CallbackEndpoint () {
         const self = this;
         return function (req, res) {
 
@@ -104,7 +105,8 @@ class Security {
                 logger.warn('No code received');
                 res.redirect(redirectInfo.continue_url);
             } else if (redirectInfo.state !== req.query.state) {
-                logger.error('States do not match: ' + redirectInfo.state + ' is not ' + req.query.state);
+                logger.error(
+                    'States do not match: ' + redirectInfo.state + ' is not ' + req.query.state);
                 self._denyAccess(res);
             } else {
                 self._getTokenFromCode(req)
@@ -117,7 +119,8 @@ class Security {
                                 self._denyAccess(res);
                             }
                         } else {
-                            self._storeCookie(req, res, result[ACCESS_TOKEN_OAUTH2], SECURITY_COOKIE);
+                            self._storeCookie(req, res, result[ACCESS_TOKEN_OAUTH2],
+                                SECURITY_COOKIE);
                             res.clearCookie(REDIRECT_COOKIE);
                             res.redirect(redirectInfo.continue_url);
                         }
@@ -126,26 +129,27 @@ class Security {
         };
     }
 
-    _getTokenFromCode(req) {
+    _getTokenFromCode (req) {
         const hostname = FormatUrl.createHostname(req);
-        const redirectUri = FormatUrl.format(hostname, config.services.idam.cet_oauth_callback_path);
+        const redirectUri = FormatUrl.format(hostname,
+            config.services.idam.cet_oauth_callback_path);
         return services.getOauth2Token(req.query.code, redirectUri);
     }
 
-    _getRedirectCookie(req) {
+    _getRedirectCookie (req) {
         if (!req.cookies[REDIRECT_COOKIE]) {
             return null;
         }
         return JSON.parse(req.cookies[REDIRECT_COOKIE]);
     }
 
-    _storeRedirectCookie(req, res, continue_url, state) {
+    _storeRedirectCookie (req, res, continue_url, state) {
         const url = URL.parse(continue_url);
         const cookieValue = {continue_url: url.path, state: state};
         this._storeCookie(req, res, JSON.stringify(cookieValue), REDIRECT_COOKIE);
     }
 
-    _storeCookie(req, res, token, cookieName) {
+    _storeCookie (req, res, token, cookieName) {
         if (req.protocol === 'https') {
             res.cookie(cookieName, token, {secure: true, httpOnly: true});
         } else {

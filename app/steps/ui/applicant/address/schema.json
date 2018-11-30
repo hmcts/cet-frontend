@@ -20,25 +20,67 @@
     }
   },
   "switch": [
-    {"if": {"properties":
-           {"addressFound":{"enum": ["true"]}}},
-     "then": 
-           {"oneOf": 
-           [{"required": ["postcodeAddress"]}, 
-            {"required": ["freeTextAddress"]}]},
-     "continue": false
+    {
+      "if": {
+        "properties": {
+          "addressFound": {
+            "enum": [
+              "true"
+            ]
+          }
+        }
+      },
+      "then": {
+        "oneOf": [
+          {
+            "required": [
+              "postcodeAddress"
+            ]
+          },
+          {
+            "required": [
+              "freeTextAddress"
+            ]
+          }
+        ]
+      },
+      "continue": false
     },
-    {"if": {"properties":
-              {"addressFound": {"enum":["none"]},
-               "freeTextAddress":{"maxLength": 0 }}},
-     "then": 
-           {"required": ["postcodeLookup"]},
-     "continue": false
+    {
+      "if": {
+        "properties": {
+          "addressFound": {
+            "enum": [
+              "none"
+            ]
+          },
+          "freeTextAddress": {
+            "maxLength": 0
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "postcodeLookup"
+        ]
+      },
+      "continue": false
     },
-    {"if": {"properties": 
-           {"addressFound": {"enum": ["false"]}}},
-     "then":
-           {"required": ["freeTextAddress"]},
+    {
+      "if": {
+        "properties": {
+          "addressFound": {
+            "enum": [
+              "false"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "freeTextAddress"
+        ]
+      },
       "continue": false
     }
   ]

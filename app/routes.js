@@ -28,7 +28,7 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-  res.redirect('start');
+    res.redirect('start');
 });
 
 router.use((req, res, next) => {

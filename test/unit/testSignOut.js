@@ -7,7 +7,8 @@ const when = require('when');
 const services = require('app/components/services');
 
 describe('Sign-Out', function () {
-    const steps = initSteps([`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
+    const steps = initSteps(
+        [`${__dirname}/../../app/steps/action/`, `${__dirname}/../../app/steps/ui`]);
     const signOut = steps.SignOut;
 
     it('test authToken, cookies and session data have been removed from the session', (done) => {

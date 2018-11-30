@@ -18,13 +18,14 @@ After(() => {
 });
 
 // eslint-disable-next-line no-undef
-xScenario(TestConfigurator.idamInUseText('Survey link redirects to the correct page'), function* (I) {
+xScenario(TestConfigurator.idamInUseText('Survey link redirects to the correct page'),
+    function * (I) {
 
-    // IDAM
-    I.authenticateWithIdamIfAvailable();
+        // IDAM
+        I.authenticateWithIdamIfAvailable();
 
-    I.amOnPage(pageUnderTest.getUrl());
-    I.click('feedback');
-    I.seeElement('#cmdGo');
+        I.amOnPage(pageUnderTest.getUrl());
+        I.click('feedback');
+        I.seeElement('#cmdGo');
 
-});
+    });
