@@ -65,7 +65,7 @@ data "azurerm_key_vault_secret" "idam_secret" {
 }
 
 data "azurerm_key_vault_secret" "s2s_key" {
-  name = "microservicekey-cet-frontend"
+  name = "microservicekey-cet"
   vault_uri = "https://s2s-${local.localenv}.vault.azure.net/"
 }
 
