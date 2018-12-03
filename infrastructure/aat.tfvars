@@ -1,9 +1,9 @@
 env = "aat"
+
 deployment_env = "preprod"
-
 vault_section = "preprod"
-
 packages_environment = "preprod"
+
 packages_version = "0.0.1"
 
 external_host_name = "cet.aat.platform.hmcts.net"
@@ -20,9 +20,6 @@ idam_service_api = "http://rpe-service-auth-provider-aat.service.core-compute-aa
 private_beta_auth_url = "https://idam.preprod.ccidam.reform.hmcts.net/login"
 
 idam_user_host = "https://preprod-idamapi.reform.hmcts.net:3511"
-
-deployment_env = "test"
-
 
 port = "3101"
 
