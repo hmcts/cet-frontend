@@ -2,7 +2,7 @@ locals {
   app_full_name = "${var.product}-${var.component}"
   ase_name = "${data.terraform_remote_state.core_apps_compute.ase_name[0]}"
   local_env = "${(var.env == "preview" || var.env == "spreview") ? (var.env == "preview" ) ? "aat" : "saat" : var.env}"
-  shared_vault_name = "${var.shared_product_name}-${local.local_env}"
+  cet_key_vault = "${var.product}-${local.local_env}"
 
   previewVaultName = "${local.app_full_name}-aat"
   nonPreviewVaultName = "${local.app_full_name}-${var.env}"
@@ -28,8 +28,8 @@ module "cet-frontend-redis-cache" {
 }
 
 data "azurerm_key_vault" "cet_key_vault" {
-  name = "${local.vaultName}"
-  resource_group_name = "${local.vaultName}"
+  name = "${local.cet_key_vault}"
+  resource_group_name = "${local.cet_key_vault}"
 }
 
 
@@ -82,8 +82,8 @@ module "cet-frontend" {
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
   capacity = "${var.capacity}"
   common_tags = "${var.common_tags}"
-  asp_rg = "${var.shared_product_name}-${var.env}"
-  asp_name = "${var.shared_product_name}-${var.env}"
+  asp_rg = "${var.product}-${var.env}"
+  asp_name = "${var.product}-${var.env}"
 
   app_settings = {
 
