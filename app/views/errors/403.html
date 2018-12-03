@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% set displaySignOutLink = 'false' %}
+
+{% block page_title %}
+Not Authorised
+{% endblock %}
+
+{% block content %}
+
+{% from "widgets/textfields.html" import textField %}
+
+<main id="content" role="main">
+    {% include "includes/phase_banner_alpha.html" %}
+
+    <div class="grid-row">
+        <div class="column-two-thirds">
+            <h1 class="form-title heading-large">Not Authorised</h1>
+            <p>Sorry you do not have access to this account.</p>
+        </div>
+    </div>
+
+    {% include "includes/help_details.html" %}
+</main>
+
+{% endblock %}

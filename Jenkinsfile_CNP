@@ -1,0 +1,79 @@
+#!groovy
+@Library("Infrastructure")
+import uk.gov.hmcts.contino.Kubectl
+@Library("Infrastructure")
+import uk.gov.hmcts.contino.Kubectl
+
+String product = "cet"
+String component = "frontend"
+
+
+List<LinkedHashMap<String, Object>> secrets = [
+        secret('testIdamBaseUrl', 'IDAM_API_URL'),
+        secret('testIdamLoginUrl', 'IDAM_LOGIN_URL'),
+        secret('testUseIdam', 'USE_IDAM'),
+        secret('testIdamRole', 'IDAM_CITIZEN_ROLE'),
+        secret('testIdamUserGroup', 'IDAM_USER_GROUP'),
+        secret('testCitizenDomain', 'CITIZEN_EMAIL_DOMAIN'),
+        secret('testTerms', 'TERMS_AND_CONDITIONS'),
+        secret('testUseGovPay', 'USE_GOV_PAY'),
+        secret('testPostcodeServiceUrl', 'POSTCODE_SERVICE_URL'),
+        secret('testPostCodeAddressToken', 'ADDRESS_TOKEN'),
+        secret('testRunE2ETest', 'RUN_E2E_TEST'),
+        secret('idam-secret', 'IDAM_SECRET'),
+        secret('idam-s2s-secret', 'IDAM_S2S_SECRET'),
+        secret('postcode-service-url', 'POSTCODE_SERVICE_URL'),
+        secret('postcode-service-token', 'POSTCODE_SERVICE_TOKEN'),
+        secret('application-fee-code', 'APPLICATION_FEE_CODE'),
+        secret('service-id', 'SERVICE_ID'),
+        secret('site-id', 'SITE_ID')
+]
+
+static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
+    [$class     : 'AzureKeyVaultSecret',
+     secretType : 'Secret',
+     name       : secretName,
+     version    : '',
+     envVariable: envVar
+    ]
+}
+
+withPipeline("nodejs", product, component) {
+    after('build') {
+        sh 'yarn setup'
+    }
+
+    //if (env.CHANGE_TITLE && !env.CHANGE_TITLE.startsWith('[PREVIEW]')) {
+    enableDockerBuild()
+    enableDeployToAKS()
+//  }
+
+    after('aksdeploy') {
+        def subscription = env.SUBSCRIPTION_NAME
+        def aksServiceName = "${product}-${component}-${env.BRANCH_NAME}".toLowerCase()
+        def aksDomain = "${(env.SUBSCRIPTION_NAME in ['nonprod', 'prod']) ? 'service.core-compute-preview.internal' : 'service.core-compute-saat.internal'}"
+
+        def kubectl = new Kubectl(this, subscription, aksServiceName)
+
+        def ingressIP = kubectl.getServiceLoadbalancerIP("traefik", "kube-system")
+
+        registerConsulDns(subscription, "feature-toggle-api-${aksServiceName}", ingressIP)
+
+
+        env.FEATURE_TOGGLES_API_URL = "https://feature-toggle-api-${aksServiceName}.${aksDomain}"
+        echo "${env.FEATURE_TOGGLES_API_URL}"
+    }
+
+
+    setVaultName('cet')
+    loadVaultSecrets(secrets)
+    enableSlackNotifications('#cet-pipeline')
+    after('functionalTest:aat') {
+        publishHTML target: [
+                reportDir            : "output/",
+                reportFiles          : "mochawesome.html",
+                reportName           : "SAAT Functional Tests",
+                alwaysLinkToLastBuild: true
+        ]
+    }
+}

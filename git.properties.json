@@ -1,0 +1,18 @@
+{
+  "git": {
+    "commit": {
+      "message": {
+        "full": "Initial commit based on cet-frontend",
+        "short": "Initial commit based on cet-frontend"
+      },
+      "time": "Thu Nov 29 2018 15:31:24 GMT+0000 (GMT)",
+      "id": "7140a8a215e804c07e9589c4ce91875245434537",
+      "abbrevId": "7140a8a",
+      "user": {
+        "email": "taleb.benouaer@hmcts.net",
+        "name": "taleb"
+      }
+    },
+    "branch": "skeleton-frontend-app"
+  }
+}

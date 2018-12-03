@@ -1,0 +1,22 @@
+version: '2.1'
+
+services:
+  cet-frontend:
+    build:
+      context: .
+    image: docker.artifactory.reform.hmcts.net/cet/cet-frontend
+    container_name: cet-frontend
+    environment:
+    - USE_HTTPS=false
+    - USE_AUTH=false
+    - USE_IDAM=false
+    - http_proxy
+    - https_proxy
+    - no_proxy
+    ports:
+    - 3000:3000
+    networks:
+      default:
+        aliases:
+        - https://www-local.cet.reform.hmcts.net
+

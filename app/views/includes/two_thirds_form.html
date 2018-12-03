@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block pageTitle %}
+{{ content.title }}
+{% endblock %}
+
+{% block content %}
+<main id="content" role="main">
+
+    {% include "includes/phase_banner_alpha.html" %}
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            {% block error_summary %}
+            {% include "includes/error_summary.html" %}
+            {% endblock %}
+
+            {% block question %}{% endblock %}
+
+            {% block page_content %}{% endblock %}
+
+            <form class="form" method="post" action="{{pageUrl}}" novalidate>
+                <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                {% block form_content %}{% endblock %}
+            </form>
+
+            {% block save_and_close %}<p><a href="/sign-out">{{common.saveAndClose}}</a></p>{%
+            endblock %}
+
+            {% block executor_summary %}{% endblock %}
+
+            {% include "includes/help_details.html" %}
+        </div>
+    </div>
+</main>
+{% endblock %}
