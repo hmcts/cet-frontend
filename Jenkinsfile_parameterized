@@ -10,8 +10,8 @@ properties([
 ])
 
 List<LinkedHashMap<String, Object>> secrets = [
-        secret('idam-secret-cet', 'IDAM_SECRET_CET'),
-        secret('idam-s2s-secret', 'IDAM_S2S_SECRET'),
+        secret('ccidam-idam-api-secret', 'IDAM_SECRET_CET'),
+        secret('ccidam-idam-api-secret', 'IDAM_S2S_SECRET'),
         secret('postcode-service-url', 'POSTCODE_SERVICE_URL'),
         secret('postcode-service-token', 'POSTCODE_SERVICE_TOKEN'),
         secret('application-fee-code', 'APPLICATION_FEE_CODE'),
