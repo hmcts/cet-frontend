@@ -8,9 +8,7 @@ locals {
   nonPreviewVaultName = "${local.app_full_name}-${var.env}"
   vaultName = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultName : local.nonPreviewVaultName}"
 
-  nonPreviewVaultUri = "${module.cet-frontend.key_vault_uri}"
-  previewVaultUri = "https://cet-online-app-aat.vault.azure.net/"
-  vaultUri = "${(var.env == "preview" || var.env == "spreview") ? local.previewVaultUri : local.nonPreviewVaultUri}"
+  vaultUri = "https://cet-${var.env}.vault.azure.net/"
 
   previewEnv = "aat"
   nonPreviewEnv = "${var.env}"
