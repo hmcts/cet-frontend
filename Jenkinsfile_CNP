@@ -9,17 +9,6 @@ String component = "frontend"
 
 
 List<LinkedHashMap<String, Object>> secrets = [
-        secret('testIdamBaseUrl', 'IDAM_API_URL'),
-        secret('testIdamLoginUrl', 'IDAM_LOGIN_URL'),
-        secret('testUseIdam', 'USE_IDAM'),
-        secret('testIdamRole', 'IDAM_CITIZEN_ROLE'),
-        secret('testIdamUserGroup', 'IDAM_USER_GROUP'),
-        secret('testCitizenDomain', 'CITIZEN_EMAIL_DOMAIN'),
-        secret('testTerms', 'TERMS_AND_CONDITIONS'),
-        secret('testUseGovPay', 'USE_GOV_PAY'),
-        secret('testPostcodeServiceUrl', 'POSTCODE_SERVICE_URL'),
-        secret('testPostCodeAddressToken', 'ADDRESS_TOKEN'),
-        secret('testRunE2ETest', 'RUN_E2E_TEST'),
         secret('idam-secret', 'IDAM_SECRET'),
         secret('idam-s2s-secret', 'IDAM_S2S_SECRET'),
         secret('postcode-service-url', 'POSTCODE_SERVICE_URL'),

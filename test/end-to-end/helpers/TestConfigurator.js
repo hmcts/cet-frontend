@@ -8,17 +8,12 @@ const testConfig = require('test/config');
 class TestConfigurator {
 
     constructor () {
-        this.testBaseUrl = testConfig.TestIdamBaseUrl;
         this.useIdam = testConfig.TestUseIdam;
         this.setTestCitizenName();
         this.testCitizenDomain = testConfig.TestCitizenDomain.replace('/@', '@');
         this.setTestCitizenPassword();
-        this.testAddUserUrl = testConfig.TestIdamAddUserUrl;
-        this.testDeleteUserUrl = this.testAddUserUrl + '/';
         this.role = testConfig.TestIdamRole;
         this.testIdamUserGroup = testConfig.TestIdamUserGroup;
-        this.paymentEnvironments = testConfig.paymentEnvironments;
-        this.TestE2EFrontendUrl = testConfig.TestE2EFrontendUrl;
         this.useGovPay = testConfig.TestUseGovPay;
         this.userDetails = '';
         this.useSidam = testConfig.TestUseSidam;
@@ -68,18 +63,6 @@ class TestConfigurator {
 
     }
 
-    getAfter () {
-        // if (this.useIdam === 'true') {
-        //     request({
-        //             url: this.getTestDeleteUserURL() + process.env.testCitizenEmail,
-        //             method: 'DELETE'
-        //         }
-        //     );
-
-        //     this.resetEnvVars();
-        // }
-    }
-
     setTestCitizenName () {
         this.testCitizenName = randomstring.generate({
             length: 36,
@@ -116,14 +99,6 @@ class TestConfigurator {
         return this.testCitizenName + this.testCitizenDomain;
     }
 
-    getTestAddUserURL () {
-        return this.testBaseUrl + this.testAddUserUrl;
-    }
-
-    getTestDeleteUserURL () {
-        return this.testBaseUrl + this.testDeleteUserUrl;
-    }
-
     idamInUseText (scenarioText) {
         return (this.useIdam === 'true') ? scenarioText + ' - With Idam' : scenarioText +
                                                                            ' - Without Idam';
@@ -132,11 +107,6 @@ class TestConfigurator {
     setEnvVars () {
         process.env.testCitizenEmail = this.getTestCitizenEmail();
         process.env.testCitizenPassword = this.getTestCitizenPassword();
-    }
-
-    resetEnvVars () {
-        process.env.testCitizenEmail = null;
-        process.env.testCitizenPassword = null;
     }
 
     getUseGovPay () {
