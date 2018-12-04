@@ -211,21 +211,15 @@ exports.init = function () {
 
     app.use(featureToggles);
 
-    if (useIDAM === 'true') {
-        const idamPages = new RegExp(`/((?!${config.nonIdamPages.join('|')}).)*`);
-        app.use(idamPages, security.protect(config.services.idam.roles));
-        app.use('/', routes);
-    } else {
-        app.use('/', (req, res, next) => {
-            if (req.query.id && req.query.id !== req.session.regId) {
-                delete req.session.form;
-            }
-            req.session.regId = req.query.id || req.session.regId || req.sessionID;
-            req.authToken = config.services.payment.authorization;
-            req.userId = config.services.payment.userId;
-            next();
-        }, routes);
-    }
+    app.use('/', (req, res, next) => {
+        if (req.query.id && req.query.id !== req.session.regId) {
+            delete req.session.form;
+        }
+        req.session.regId = req.query.id || req.session.regId || req.sessionID;
+        req.authToken = config.services.payment.authorization;
+        req.userId = config.services.payment.userId;
+        next();
+    }, routes);
 
     // Start the app
     let http;
@@ -248,13 +242,17 @@ exports.init = function () {
     }
 
     app.all('*', (req, res) => {
-        logger(req.sessionID).error(`Unhandled request ${req.url}`);
-        res.status(404).render('errors/404', {common: commonContent});
+        logger(req.sessionID)
+            .error(`Unhandled request ${req.url}`);
+        res.status(404)
+            .render('errors/404', {common: commonContent});
     });
 
     app.use((err, req, res, next) => {
-        logger(req.sessionID).error(err);
-        res.status(500).render('errors/500', {common: commonContent});
+        logger(req.sessionID)
+            .error(err);
+        res.status(500)
+            .render('errors/500', {common: commonContent});
     });
 
     return {app, http};
