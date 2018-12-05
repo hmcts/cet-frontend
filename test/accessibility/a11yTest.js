@@ -7,7 +7,6 @@ const a11y = require('test/util/a11y');
 const app = require('app');
 // const initSteps = require('app/core/initSteps');
 const {endsWith} = require('lodash');
-const sinon = require('sinon');
 const commonContent = require('app/resources/en/translation/common');
 const stepsToExclude = [];
 // const steps = initSteps.steps;
@@ -33,9 +32,6 @@ for (const step in steps) {
                 .replace(/\)/g, '\\)');
 
             before((done) => {
-
-                featureToggleStub = sinon.stub(services, 'featureToggle')
-                    .returns(Promise.resolve('true'));
 
                 server = app.init();
                 agent = request.agent(server.app);

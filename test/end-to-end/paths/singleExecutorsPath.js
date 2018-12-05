@@ -7,7 +7,6 @@ Feature('Single Executor flow');
 // eslint-disable-next-line no-undef
 // eslint-disable-next-line no-undef
 
-
 Scenario('Single Executor Journey', function * (I) {
 
     I.startApplication();
