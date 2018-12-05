@@ -131,14 +131,6 @@ variable "use_idam" {
   default = "false"
 }
 
-variable "idam_user_host" {
-  type = "string"
-}
-
-variable "private_beta_auth_url" {
-  default = "/login"
-}
-
 variable "frontend_protocol" {
   default = "https"
 }
