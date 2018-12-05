@@ -34,11 +34,4 @@ describe('Civil Enforcement frontend health check', () => {
             done();
         });
     });
-
-    it('should return the hostname', done => {
-        healthcheckRequest(frontendUrl, res => {
-            expect(res.body).to.have.property('host');
-            done();
-        });
-    });
 });
