@@ -9,25 +9,6 @@ properties([
         ])
 ])
 
-List<LinkedHashMap<String, Object>> secrets = [
-        secret('ccidam-idam-api-secret', 'IDAM_SECRET_CET'),
-        secret('ccidam-idam-api-secret', 'IDAM_S2S_SECRET'),
-        secret('postcode-service-url', 'POSTCODE_SERVICE_URL'),
-        secret('postcode-service-token', 'POSTCODE_SERVICE_TOKEN'),
-        secret('application-fee-code', 'APPLICATION_FEE_CODE'),
-        secret('service-id', 'SERVICE_ID'),
-        secret('site-id', 'SITE_ID')
-]
-
-static LinkedHashMap<String, Object> secret(String secretName, String envVar) {
-    [$class     : 'AzureKeyVaultSecret',
-     secretType : 'Secret',
-     name       : secretName,
-     version    : '',
-     envVariable: envVar
-    ]
-}
-
 String product = "cet"
 String component = "frontend"
 String slot = "sandbox"
@@ -41,17 +22,4 @@ withParameterizedPipeline('nodejs', product, component, params.ENVIRONMENT, slot
     yarn setup
     printenv '''
     }
-
-    loadVaultSecrets(secrets)
-    /*
-  after('functionalTest:saat') {
-    sh "mkdir functional-output"
-    sh "cp -r output/mochawesome.* functional-output/."
-        publishHTML target: [
-                reportDir            : "output/",
-                reportFiles          : "mochawesome.html",
-                reportName           : "SAAT Functional Tests",
-                alwaysLinkToLastBuild: true
-        ]
-    }  */
 }

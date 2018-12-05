@@ -9,7 +9,6 @@ const app = require('app');
 const {endsWith} = require('lodash');
 const sinon = require('sinon');
 const commonContent = require('app/resources/en/translation/common');
-const services = require('app/components/services');
 const stepsToExclude = [];
 // const steps = initSteps.steps;
 const steps = [];

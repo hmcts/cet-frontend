@@ -30,43 +30,6 @@ data "azurerm_key_vault" "cet_key_vault" {
   resource_group_name = "${local.cet_key_vault}"
 }
 
-
-data "azurerm_key_vault_secret" "postcode_service_token" {
-  name = "postcode-service-token"
-  vault_uri = "${data.azurerm_key_vault.cet_key_vault.vault_uri}"
-}
-
-data "azurerm_key_vault_secret" "postcode_service_url" {
-  name = "postcode-service-url"
-  vault_uri = "${data.azurerm_key_vault.cet_key_vault.vault_uri}"
-}
-
-data "azurerm_key_vault_secret" "application_fee_code" {
-  name = "application-fee-code"
-  vault_uri = "${data.azurerm_key_vault.cet_key_vault.vault_uri}"
-}
-
-data "azurerm_key_vault_secret" "service_id" {
-  name = "service-id"
-  vault_uri = "${data.azurerm_key_vault.cet_key_vault.vault_uri}"
-}
-
-data "azurerm_key_vault_secret" "site_id" {
-  name = "site-id"
-  vault_uri = "${data.azurerm_key_vault.cet_key_vault.vault_uri}"
-}
-
-
-data "azurerm_key_vault_secret" "idam_secret" {
-  name = "ccidam-idam-api-secret"
-  vault_uri = "${data.azurerm_key_vault.cet_key_vault.vault_uri}"
-}
-
-data "azurerm_key_vault_secret" "s2s_key" {
-  name = "microservicekey-cet"
-  vault_uri = "https://s2s-${local.localenv}.vault.azure.net/"
-}
-
 module "cet-frontend" {
   source = "git@github.com:hmcts/moj-module-webapp.git?ref=master"
   product = "${var.product}-${var.microservice}"
@@ -75,7 +38,6 @@ module "cet-frontend" {
   ilbIp = "${var.ilbIp}"
   is_frontend = "${var.env != "preview" ? 1: 0}"
   subscription = "${var.subscription}"
-  additional_host_name = "${var.external_host_name}"
   // need to give proper url
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
   capacity = "${var.capacity}"
@@ -84,11 +46,6 @@ module "cet-frontend" {
   asp_name = "${var.product}-${var.env}"
 
   app_settings = {
-
-    // Node specific vars
-    //NODE_ENV = "${var.node_env}"
-    //UV_THREADPOOL_SIZE = "64"
-    //NODE_CONFIG_DIR = "${var.node_config_dir}"
 
     // Logging vars
     REFORM_TEAM = "${var.product}"
@@ -111,7 +68,6 @@ module "cet-frontend" {
 
     USE_HTTPS = "${var.use_https}"
     USE_AUTH = "${var.use_auth}"
-    GA_TRACKING_ID = "${var.google_track_id}"
 
     // REDIS
     USE_REDIS = "${var.use_redis}"
@@ -120,28 +76,6 @@ module "cet-frontend" {
     REDIS_PORT = "${module.cet-frontend-redis-cache.redis_port}"
     REDIS_PASSWORD = "${module.cet-frontend-redis-cache.access_key}"
 
-    // IDAM
-    USE_IDAM = "${var.use_idam}"
-    IDAM_API_URL = "${var.idam_user_host}"
-    IDAM_LOGIN_URL = "${var.private_beta_auth_url}"
-    IDAM_S2S_URL = "${var.idam_service_api}"
-    IDAM_SERVICE_KEY = "${data.azurerm_key_vault_secret.s2s_key.value}"
-    IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_CET = "${data.azurerm_key_vault_secret.idam_secret.value}"
-
-    //  PAYMENT
-    PAYMENT_CREATE_URL = "${var.payment_create_url }"
-
-    // POSTCODE
-    POSTCODE_SERVICE_URL = "${data.azurerm_key_vault_secret.postcode_service_url.value}"
-    POSTCODE_SERVICE_TOKEN = "${data.azurerm_key_vault_secret.postcode_service_token.value}"
-
-
-    APPLICATION_FEE_CODE = "${data.azurerm_key_vault_secret.application_fee_code.value}"
-    SERVICE_ID = "${data.azurerm_key_vault_secret.service_id.value}"
-    SITE_ID = "${data.azurerm_key_vault_secret.site_id.value}"
-
     REFORM_ENVIRONMENT = "${var.reform_envirionment_for_test}"
-
-    FEATURE_TOGGLES_API_URL = "${var.feature_toggles_api_url}"
   }
 }

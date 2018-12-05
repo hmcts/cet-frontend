@@ -56,12 +56,6 @@ const fetchJson = (url, fetchOptions) => {
         .catch(err => err);
 };
 
-const fetchText = (url, fetchOptions) => {
-    return asyncFetch(url, fetchOptions, res => res.text())
-        .then(text => text)
-        .catch(err => err);
-};
-
 const fetchOptions = (data, method, headers, proxy) => {
     return {
         method: method,
@@ -77,7 +71,5 @@ const fetchOptions = (data, method, headers, proxy) => {
 
 module.exports = {
     fetchOptions: fetchOptions,
-    fetchJson: fetchJson,
-    asyncFetch: asyncFetch,
-    fetchText: fetchText
+    fetchJson: fetchJson
 };

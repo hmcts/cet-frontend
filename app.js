@@ -14,17 +14,13 @@ const cookieParser = require('cookie-parser');
 const config = require(`${__dirname}/app/config`);
 const utils = require(`${__dirname}/app/components/utils`);
 const packageJson = require(`${__dirname}/package`);
-const Security = require(`${__dirname}/app/components/security`);
 const helmet = require('helmet');
 const csrf = require('csurf');
 const healthcheck = require(`${__dirname}/app/healthcheck`);
-const fs = require('fs');
-const https = require('https');
 const appInsights = require('applicationinsights');
 const commonContent = require('app/resources/en/translation/common');
 const uuidv4 = require('uuid/v4');
 const uuid = uuidv4();
-const featureToggles = require('app/featureToggles');
 
 exports.init = function () {
     const app = express();
@@ -34,8 +30,6 @@ exports.init = function () {
     const password = config.app.password;
     const useAuth = config.app.useAuth.toLowerCase();
     const useHttps = config.app.useHttps.toLowerCase();
-    const useIDAM = config.app.useIDAM.toLowerCase();
-    const security = new Security(config.services.idam.loginUrl);
 
     if (config.appInsights.instrumentationKey) {
         appInsights.setup(config.appInsights.instrumentationKey);
@@ -62,8 +56,6 @@ exports.init = function () {
 
     const globals = {
         'currentYear': new Date().getFullYear(),
-        'gaTrackingId': config.gaTrackingId,
-        'enableTracking': config.enableTracking,
         'links': config.links,
         'helpline': config.helpline,
         'nonce': uuid
@@ -185,8 +177,6 @@ exports.init = function () {
         next(); // otherwise continue
     });
 
-    app.use(config.services.idam.cet_oauth_callback_path, security.oAuth2CallbackEndpoint());
-
     if (config.app.useCSRFProtection === 'true') {
         app.use(csrf(), (req, res, next) => {
             res.locals.csrfToken = req.csrfToken();
@@ -209,37 +199,18 @@ exports.init = function () {
 
     app.use('/health', healthcheck);
 
-    app.use(featureToggles);
-
     app.use('/', (req, res, next) => {
         if (req.query.id && req.query.id !== req.session.regId) {
             delete req.session.form;
         }
         req.session.regId = req.query.id || req.session.regId || req.sessionID;
-        req.authToken = config.services.payment.authorization;
-        req.userId = config.services.payment.userId;
         next();
     }, routes);
 
     // Start the app
-    let http;
-
-    if (['development', 'testing'].includes(config.nodeEnvironment)) {
-        const sslDirectory = path.join(__dirname, 'app', 'resources', 'localhost-ssl');
-        const sslOptions = {
-            key: fs.readFileSync(path.join(sslDirectory, 'localhost.key')),
-            cert: fs.readFileSync(path.join(sslDirectory, 'localhost.crt'))
-        };
-        const server = https.createServer(sslOptions, app);
-
-        http = server.listen(port, () => {
-            console.log(`Application started: http://localhost:${port}`);
-        });
-    } else {
-        http = app.listen(port, () => {
-            console.log(`Application started: http://localhost:${port}`);
-        });
-    }
+    const http = app.listen(port, () => {
+        console.log(`Application started: http://localhost:${port}`);
+    });
 
     app.all('*', (req, res) => {
         logger(req.sessionID)
@@ -248,7 +219,7 @@ exports.init = function () {
             .render('errors/404', {common: commonContent});
     });
 
-    app.use((err, req, res, next) => {
+    app.use((err, req, res) => {
         logger(req.sessionID)
             .error(err);
         res.status(500)

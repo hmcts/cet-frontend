@@ -70,10 +70,6 @@ variable "node_path" {
   default = "."
 }
 
-variable "external_host_name" {
-  type = "string"
-}
-
 // Package details
 variable "packages_name" {
   default = "cet-frontend"
@@ -101,15 +97,6 @@ variable "public_port" {
 
 variable "port" {
   default = "3001"
-}
-
-variable "ga_tracking_url" {
-  description = "Google Analytics tracking URL"
-  default = "http://www.google-analytics.com/collect"
-}
-
-variable "google_track_id" {
-  description = "Google Analytics tracking ID"
 }
 
 variable "redis_use_tls" {
@@ -160,22 +147,10 @@ variable "reform_team" {
   default = "cet"
 }
 
-variable "idam_service_api" {
-  type = "string"
-}
-
-variable "payment_create_url" {
-  type = "string"
-}
-
 variable "capacity" {
   default = "1"
 }
 
 variable "common_tags" {
   type = "map"
-}
-
-variable "feature_toggles_api_url" {
-  type = "string"
 }

@@ -19,8 +19,7 @@ class UIStepRunner {
             const session = req.session;
             const formdata = session.form;
             let ctx = step.getContextData(req);
-            const featureToggles = session.featureToggles;
-            [ctx, errors] = yield step.handleGet(ctx, formdata, featureToggles);
+            [ctx, errors] = yield step.handleGet(ctx, formdata);
             forEach(errors, (error) =>
                 req.log.info({type: 'Validation Message', url: step.constructor.getUrl()},
                     JSON.stringify(error))
@@ -48,11 +47,10 @@ class UIStepRunner {
             let ctx = step.getContextData(req);
             let [isValid, errors] = [];
             [isValid, errors] = step.validate(ctx, formdata);
-            const featureToggles = session.featureToggles;
             if (isValid) {
                 [ctx, errors] =
                     yield step.handlePost(ctx, errors, formdata, req.session,
-                        FormatUrl.createHostname(req), featureToggles);
+                        FormatUrl.createHostname(req));
             }
 
             if (isEmpty(errors)) {

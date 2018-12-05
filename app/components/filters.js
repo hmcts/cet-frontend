@@ -1,4 +1,3 @@
-const initialsFilter = require('app/components/initialsFilter');
 
 module.exports = function (env) {
 
@@ -22,8 +21,6 @@ module.exports = function (env) {
     env.addFilter('log', function log (a) {
         return nunjucksSafe('<script>console.log(' + JSON.stringify(a, null, '\t') + ');</script>');
     });
-
-    env.addFilter('initials', initialsFilter);
 
     return env;
 };

@@ -6,7 +6,6 @@ const app = require('app');
 const routes = require('app/routes');
 const config = require('app/config');
 const request = require('supertest');
-const journeyMap = require('app/core/journeyMap');
 const {steps} = require('app/core/initSteps');
 
 class TestWrapper {
@@ -47,25 +46,6 @@ class TestWrapper {
             .catch(done);
     }
 
-    testDataPlayback (done, data) {
-        this.agent.get(this.pageUrl)
-            .expect('Content-type', /html/)
-            .then(response => {
-                this.assertContentIsPresent(response.text, data);
-                done();
-            })
-            .catch(done);
-    }
-
-    testContentNotPresent (done, data) {
-        this.agent.get(this.pageUrl)
-            .then(response => {
-                this.assertContentIsNotPresent(response.text, data);
-                done();
-            })
-            .catch(done);
-    }
-
     testErrors (done, data, type, onlyKeys = []) {
         const contentErrors = get(this.content, 'errors', {});
         const expectedErrors = cloneDeep(isEmpty(onlyKeys) ? contentErrors : filter(contentErrors,
@@ -86,31 +66,6 @@ class TestWrapper {
                 done();
             })
             .catch(done);
-    }
-
-    testContentAfterError (data, contentToCheck, done) {
-        this.agent.post(this.pageUrl)
-            .send(data)
-            .expect('Content-type', 'text/html; charset=utf-8')
-            .then(res => {
-                this.assertContentIsPresent(res.text, contentToCheck);
-                done();
-            })
-            .catch(done);
-    }
-
-    testRedirect (done, postData, expectedNextUrl) {
-        this.agent.post(this.pageUrl)
-            .type('form')
-            .send(postData)
-            .expect('location', expectedNextUrl)
-            .expect(302)
-            .then(() => done())
-            .catch(done);
-    }
-
-    nextStep (data = {}) {
-        return journeyMap(this.pageToTest, data);
     }
 
     substituteContent (data, contentToSubstitute) {
@@ -160,12 +115,6 @@ class TestWrapper {
     assertContentIsPresent (actualContent, expectedContent) {
         forEach(expectedContent, (value) => {
             expect(actualContent.toLowerCase()).to.contain(value.toString().toLowerCase());
-        });
-    }
-
-    assertContentIsNotPresent (actualContent, expectedContent) {
-        forEach(expectedContent, (value) => {
-            expect(actualContent.toLowerCase()).to.not.contain(value.toString().toLowerCase());
         });
     }
 

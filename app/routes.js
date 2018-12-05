@@ -1,6 +1,5 @@
 'use strict';
 
-const config = require('app/config');
 const router = require('express').Router();
 const initSteps = require('app/core/initSteps');
 const logger = require('app/components/logger');
@@ -14,7 +13,6 @@ router.all('*', (req, res, next) => {
 router.use((req, res, next) => {
     if (!req.session.form) {
         req.session.form = {
-            payloadVersion: config.payloadVersion,
             applicantEmail: req.session.regId
         };
         req.session.back = [];

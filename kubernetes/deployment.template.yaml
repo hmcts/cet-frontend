@@ -32,8 +32,6 @@ spec:
           value: 'production'
         - name: UV_THREADPOOL_SIZE
           value: '64'
-        - name: GA_TRACKING_ID
-          value: 'UA-93598808-3'
         - name: PUBLIC_PROTOCOL
           value: 'https'
         - name: FEATURE_TOGGLES_API_URL
@@ -50,30 +48,6 @@ spec:
           # IDAM
         - name: USE_IDAM
           value: 'true'
-        - name: IDAM_SERVICE_KEY
-          value: ${IDAM_S2S_SECRET}
-        - name: IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_CET
-          value: ${IDAM_SECRET_CET}
-          # POSTCODE
-        - name: POSTCODE_SERVICE_URL
-          value: ${PRO_POSTCODE_SERVICE_URL}
-        - name: POSTCODE_SERVICE_TOKEN
-          value: ${PRO_POSTCODE_SERVICE_TOKEN}
-          # SURVEY
-        - name: SURVEY
-          value: ${PRO_SURVEY}
-        - name: SURVEY_END_OF_APPLICATION
-          value: ${PRO_SURVEY_END_OF_APPLICATIONN}
-        - name: APPLICATION_FEE_CODE
-          value: ${PRO_APPLICATION_FEE_CODEL}
-        - name: UK_COPIES_FEE_CODE
-          value: ${PRO_UK_COPIES_FEE_CODE}
-        - name: OVERSEAS_COPIES_FEE_CODE
-          value: ${PRO_OVERSEAS_COPIES_FEE_CODE}
-        - name: SERVICE_ID
-          value: ${PRO_SERVICE_ID}
-        - name: SITE_ID
-          value: ${PRO_SITE_ID}
         envFrom:
         - configMapRef:
             name: ${SERVICE_NAME}-config
@@ -146,82 +120,6 @@ data:
   LOGBACK_REQUIRE_THREAD: 'false'
   LOGBACK_REQUIRE_ALERT_LEVEL: 'false'
   LOGBACK_REQUIRE_ERROR_CODE: 'false'
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: feature-toggle-api
-  namespace: ${NAMESPACE}
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: feature-toggle-api
-  template:
-    metadata:
-      labels:
-        app: feature-toggle-api
-    spec:
-      initContainers:
-      - name: init-wait-db
-        image: busybox
-        command: ["sh", "-c", "for i in $(seq 1 300); do nc -zvw1 shared-database 5432 && exit 0 || sleep 3; done; exit 1"]
-      containers:
-      - image: hmcts/feature-toggle-api
-        name: feature-toggle-api
-        envFrom:
-        - configMapRef:
-            name: feature-toggle-api
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "200m"
-          limits:
-            memory: "1024Mi"
-            cpu: "2500m"
-        ports:
-        - containerPort: 8580
-          name: http
-        imagePullPolicy: Always
-#    dnsConfig:
-#      options:
-#      - name: single-request-reopen
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: feature-toggle-api
-  namespace: ${NAMESPACE}
-  labels:
-    app: feature-toggle-api
-spec:
-  ports:
-  - name: http
-    protocol: TCP
-    port: 80
-    targetPort: 8580
-  selector:
-    app: feature-toggle-api
----
-#
-# FEATURE-TOGGLES :: Ingress
-#
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: feature-toggle-api
-  namespace: ${NAMESPACE}
-  annotations:
-    kubernetes.io/ingress.class: traefik
-spec:
-  rules:
-  - host: feature-toggle-api-${SERVICE_FQDN}
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: feature-toggle-api
-          servicePort: 80
 
 
 ---

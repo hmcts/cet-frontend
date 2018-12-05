@@ -2,13 +2,13 @@
 
 {% set displaySignOutLink = 'false' %}
 
-{% block page_title %}
+{% block pageTitle %}
 Page not found
 {% endblock %}
 
-{% block content %}
+{% set serviceName = 'Civil Enforcement' %}
 
-{% from "widgets/textfields.html" import textField %}
+{% block content %}
 
 <main id="content" role="main">
     {% include "includes/phase_banner_alpha.html" %}
