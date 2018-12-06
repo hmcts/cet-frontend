@@ -2,7 +2,7 @@
 
 const utils = require('app/components/api-utils');
 const config = require('app/config');
-const BACKEND_SERVICE_URL = "http://localhost:3000/data";
+const BACKEND_SERVICE_URL = config.services.backend.url;
 const logger = require('app/components/logger');
 const logInfo = (message, sessionId = 'Init') => logger(sessionId).info(message);
 
@@ -13,8 +13,8 @@ const loadCaseData = (id, sessionID) => {
         'Session-Id': sessionID
     };
     const fetchOptions = utils.fetchOptions({}, 'GET', headers);
-    logInfo(`loadFormData url: ${BACKEND_SERVICE_URL}/${id}`);
-    return utils.fetchJson(`${BACKEND_SERVICE_URL}/${id}`, fetchOptions);
+    logInfo(`loadFormData url: ${BACKEND_SERVICE_URL}`);
+    return utils.fetchJson(BACKEND_SERVICE_URL, fetchOptions);
 };
 
 const saveFormData = (id, data, sessionID) => {

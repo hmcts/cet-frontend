@@ -35,9 +35,7 @@
     "sonar-scan": "node_modules/sonar-scanner/bin/sonar-scanner -Dsonar.projectName='Civil Enforcement :: frontend' -Dsonar.sources=app -Dsonar.tests=test -Dsonar.exclusions=test/** -Dsonar.exclusions=app/assets/** -Dsonar.language=js -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info",
     "git-info": "node-git-info-json",
     "//": "The below scripts are just stubs, don't use them in production",
-    "s2s-stub": "NODE_PATH=. node test/service-stubs/idam.js",
-    "payment-stub": "NODE_PATH=. node test/service-stubs/payment.js",
-    "find-address-stub": "NODE_PATH=. node test/service-stubs/find-address.js"
+    "backend-stub": "NODE_PATH=. node $NODE_DEBUG_OPTION test/service-stubs/backend.js"
   },
   "dependencies": {
     "@hmcts/nodejs-logging": "^3.0.0",

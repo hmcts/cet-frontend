@@ -14,6 +14,12 @@ const config = {
         port: process.env.PORT || '3000',
         useCSRFProtection: 'true'
     },
+    services: {
+        backend: {
+            url: "http://localhost:3001/backend/load-case-data",
+            port: "3001"
+        }
+    },
     redis: {
         host: process.env.REDIS_HOST || 'localhost',
         port: process.env.REDIS_PORT || 6379,

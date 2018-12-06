@@ -26,8 +26,6 @@ class UIStepRunner {
             );
             const content = step.generateContent(ctx, formdata);
             const fields = step.generateFields(ctx, errors, formdata);
-            req.log.info(`here are the fields ${JSON.stringify(fields)}`);
-
             if (req.query.source === 'back') {
                 session.back.pop();
             } else if (session.back[session.back.length - 1] !== step.constructor.getUrl()) {

@@ -6,15 +6,11 @@ const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
 const config = require('app/config');
 
-const buildRequest = (url, fetchOptions) => {
-    return new fetch.Request(url, fetchOptions);
-};
 
-const retryOptions = () => {
-    return {
-        retries: config.utils.api.retries,
-        retryDelay: config.utils.api.retryDelay
-    };
+const fetchJson = (url, fetchOptions) => {
+    return asyncFetch(url, fetchOptions, res => res.json())
+        .then(json => json)
+        .catch(err => err);
 };
 
 const asyncFetch = (url, fetchOptions, parseBody) => {
@@ -50,10 +46,15 @@ const asyncFetch = (url, fetchOptions, parseBody) => {
     });
 };
 
-const fetchJson = (url, fetchOptions) => {
-    return asyncFetch(url, fetchOptions, res => res.json())
-        .then(json => json)
-        .catch(err => err);
+const buildRequest = (url, fetchOptions) => {
+    return new fetch.Request(url, fetchOptions);
+};
+
+const retryOptions = () => {
+    return {
+        retries: config.utils.api.retries,
+        retryDelay: config.utils.api.retryDelay
+    };
 };
 
 const fetchOptions = (data, method, headers, proxy) => {

@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
                 req.log.debug('Successfully loaded case data');
                 req.session.form = result.formdata;
             }
-            res.redirect('summary');
+            res.redirect('start');
         });
 });
 
