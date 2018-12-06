@@ -1,0 +1,55 @@
+{% extends "includes/two_thirds_form.html" %}
+
+{% block question %}
+{% endblock %}
+{% block form_content %}
+{% from "input/macro.njk" import govukInput %}
+{% from "fieldset/macro.njk" import govukFieldset %}
+
+{% call govukFieldset({
+    legend: {
+        text: content.question,
+        classes: "govuk-fieldset__legend--xl",
+        isPageHeading: true
+    }
+}) %}
+
+{{ govukInput({
+    label: {
+    text: "First name"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "firstName",
+   name: "firstName"
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Last name"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "lastName",
+   name: "lastName"
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Address"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "address",
+   name: "address"
+  })
+}}
+
+
+{% endcall %}
+{% from "button/macro.njk" import govukButton %}
+
+{{ govukButton({
+    text: "Save and continue"
+   })
+}}
+{% endblock %}

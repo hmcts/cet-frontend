@@ -1,0 +1,92 @@
+{% extends "includes/two_thirds_form.html" %}
+
+{% block question %}
+{% endblock %}
+{% block form_content %}
+{% from "input/macro.njk" import govukInput %}
+{% from "fieldset/macro.njk" import govukFieldset %}
+
+{% call govukFieldset({
+    legend: {
+        text: content.question,
+        classes: "govuk-fieldset__legend--xl",
+        isPageHeading: true
+    }
+}) %}
+
+{{ govukInput({
+    label: {
+    text: "Date of judgment or order"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "date",
+   name: "date",
+   value: fields.date.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Judgment award including interest"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "award",
+   name: "award",
+   value: fields.award.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Court fees"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "courtFees",
+   name: "courtFees",
+   value: fields.courtFees.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Assessed costs"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "assessedCosts",
+   name: "assessedCosts",
+   value: fields.assessedCosts.value
+  })
+}}
+
+
+{{ govukInput({
+    label: {
+    text: "Interest earned since judgment"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "interestAmount",
+   name: "interestAmount",
+   value: fields.interestAmount.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+        text: "Debt paid as of " + claimDate
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "amountPaid",
+   name: "amountPaid",
+   value: fields.amountPaid.value
+  })
+}}
+
+
+{% endcall %}
+{% from "button/macro.njk" import govukButton %}
+
+{{ govukButton({
+    text: "Save and continue"
+   })
+}}
+{% endblock %}

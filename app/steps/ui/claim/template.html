@@ -1,0 +1,80 @@
+{% extends "includes/two_thirds_form.html" %}
+
+{% block question %}
+{% endblock %}
+{% block form_content %}
+{% from "input/macro.njk" import govukInput %}
+{% from "fieldset/macro.njk" import govukFieldset %}
+
+{% call govukFieldset({
+    legend: {
+        text: content.question,
+        classes: "govuk-fieldset__legend--xl",
+        isPageHeading: true
+    }
+}) %}
+
+{{ govukInput({
+    label: {
+    text: "Claim number"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "number",
+   name: "number",
+   value: fields.number.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Date of claim"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "date",
+   name: "date",
+   value: fields.date.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Original claimant"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "originalClaimant",
+   name: "originalClaimant",
+   value: fields.originalClaimant.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Reason for debt"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "debtReason",
+   name: "debtReason",
+   value: fields.debtReason.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Application made by"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "applicant",
+   name: "applicant",
+   value: fields.applicant.value
+  })
+}}
+
+
+{% endcall %}
+{% from "button/macro.njk" import govukButton %}
+
+{{ govukButton({
+    text: "Save and continue"
+   })
+}}
+{% endblock %}

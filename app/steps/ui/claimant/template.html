@@ -1,0 +1,58 @@
+{% extends "includes/two_thirds_form.html" %}
+
+{% block question %}
+{% endblock %}
+{% block form_content %}
+{% from "input/macro.njk" import govukInput %}
+{% from "fieldset/macro.njk" import govukFieldset %}
+
+{% call govukFieldset({
+    legend: {
+        text: "Claimant details",
+        classes: "govuk-fieldset__legend--xl",
+        isPageHeading: true
+    }
+}) %}
+
+{{ govukInput({
+    label: {
+    text: "First name"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "firstname",
+   name: "firstName",
+   value: fields.firstName.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Last name"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "lastname",
+   name: "lastName",
+   value: fields.lastName.value
+  })
+}}
+
+{{ govukInput({
+    label: {
+    text: "Address"
+   },
+   classes: "govuk-!-width-two-thirds",
+   id: "address",
+   name: "address",
+   value: fields.address.value
+})
+}}
+
+
+{% endcall %}
+{% from "button/macro.njk" import govukButton %}
+
+{{ govukButton({
+    text: "Save and continue"
+   })
+}}
+{% endblock %}

@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "claim",
+  "type": "object",
+  "properties": {
+    "number": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    },
+    "date": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    },
+    "originalClaimant": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    },
+    "debtReason": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    },
+    "applicant": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    }
+  },
+  "required": [
+    "number",
+    "date",
+    "originalClaimant",
+    "debtReason",
+    "applicant"
+  ]
+}

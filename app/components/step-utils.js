@@ -11,13 +11,10 @@ const commonContent = function (lang = 'en') {
 
 const updateTaskStatus = function (ctx, req, steps) {
     const formdata = req.session.form;
-    const taskList = journeyMap.taskList;
-    Object.keys(taskList).forEach(taskName => {
-        const task = taskList[taskName];
-        let status = 'notStarted';
-        let step = steps[task.firstStep];
+    const stepList = journeyMap.stepList;
+    Object.keys(stepList).forEach(stepName => {
+        let step = journeyMap(stepName)
 
-        while (step.name !== task.lastStep) {
             const localctx = step.getContextData(req);
             const featureToggles = req.session.featureToggles;
             const [stepCompleted, progressFlag] = step.isComplete(localctx, formdata,
@@ -29,7 +26,6 @@ const updateTaskStatus = function (ctx, req, steps) {
             } else {
                 break;
             }
-        }
         status = step.name === task.lastStep ? 'complete' : status;
         const nextURL = step.constructor.getUrl();
         const checkYourAnswersLink = steps[task.summary].constructor.getUrl();

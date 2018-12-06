@@ -6,6 +6,30 @@ const logger = require('app/components/logger')('Init');
 const path = require('path');
 const steps = {};
 
+const initSteps = (stepLocations) => {
+    const content = requireDir(module, '../', {include: /resources/});
+    i18next.createInstance();
+    i18next.init(content, (err) => {
+        if (err) {
+            logger.error(err);
+        }
+    });
+
+    stepLocations.forEach((location) => {
+        const calculatePath = path => {
+            if (/index.js$/.test(path)) {
+                const step = initStep(path);
+                steps[step.name] = step;
+                return true;
+            }
+            return false;
+        };
+        requireDir(module, location, {include: calculatePath});
+    });
+
+    return steps;
+};
+
 const initStep = filePath => {
     const stepObject = require(filePath);
     const filePathFragments = filePath.search('ui') >= 0 ? filePath.split(
@@ -29,30 +53,6 @@ const initStep = filePath => {
 
     resourcePath = resourcePath.replace(path.sep, '/');
     return new stepObject(steps, section.toString(), resourcePath, i18next, schema);
-};
-
-const initSteps = (stepLocations) => {
-    const content = requireDir(module, '../', {include: /resources/});
-    i18next.createInstance();
-    i18next.init(content, (err) => {
-        if (err) {
-            logger.error(err);
-        }
-    });
-
-    stepLocations.forEach((location) => {
-        const calculatePath = path => {
-            if (/index.js$/.test(path)) {
-                const step = initStep(path);
-                steps[step.name] = step;
-                return true;
-            }
-            return false;
-        };
-        requireDir(module, location, {include: calculatePath});
-    });
-
-    return steps;
 };
 
 module.exports = initSteps;

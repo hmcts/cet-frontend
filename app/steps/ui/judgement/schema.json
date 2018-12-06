@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "judgement",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    },
+    "award": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    },
+    "courtFees": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    },
+    "assessedCosts": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    },
+    "interestAmount": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    },
+    "amountPaid": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[^<>]+$"
+    }
+  },
+  "required": [
+    "date",
+    "award",
+    "courtFees",
+    "assessedCosts",
+    "interestAmount"
+  ]
+}

@@ -20,4 +20,3 @@ const nextStep = (currentStep, ctx) => {
 
 module.exports = nextStep;
 module.exports.stepList = journey.stepList;
-module.exports.taskList = journey.taskList;

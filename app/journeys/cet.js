@@ -1,14 +1,12 @@
 'use strict';
 
 const stepList = {
-    Start: 'ApplicantName',
-    ApplicantName: 'ApplicantAddress',
-    ApplicantAddress: 'ExecutorsNumber',
-    PaymentBreakdown: 'PaymentStatus',
-    PaymentStatus: 'ThankYou',
-    ThankYou: 'ThankYou',
-    AddressLookup: 'AddressLookup',
-    TermsConditions: 'TermsConditions',
+    Start: 'Summary',
+    Summary: 'Claimant',
+    Claimant: 'Defendant',
+    Defendant: 'Judgement',
+    Judgement: 'Claim',
+    Claim: 'Summary',
 };
 
 module.exports.stepList = stepList;

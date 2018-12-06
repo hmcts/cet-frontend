@@ -3,6 +3,7 @@
 const router = require('express').Router();
 const initSteps = require('app/core/initSteps');
 const logger = require('app/components/logger');
+const services = require('app/components/services');
 
 router.all('*', (req, res, next) => {
     req.log = logger(req.sessionID);
@@ -23,6 +24,20 @@ router.use((req, res, next) => {
     }
 
     next();
+});
+
+router.get('/', (req, res) => {
+    services.loadCaseData(req.session.regId)
+        .then(result => {
+            if (result.name === 'Error') {
+                req.log.debug('Failed to load user data');
+                req.log.info({tags: 'Analytics'}, 'Application Started');
+            } else {
+                req.log.debug('Successfully loaded case data');
+                req.session.form = result.formdata;
+            }
+            res.redirect('summary');
+        });
 });
 
 router.get('/', (req, res) => {

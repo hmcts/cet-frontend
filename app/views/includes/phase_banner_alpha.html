@@ -1,6 +1,10 @@
-<div class="phase-banner-alpha">
-    <p>
-        <strong class="phase-tag">{{common.phase}}</strong>
-        <span>{{common.feedback | replace('{smartSurveyFeedbackUrl}', links.survey) | replace('{currentPageUrl}', pageUrl) | safe}}</span>
-    </p>
+{% from "phase-banner/macro.njk" import govukPhaseBanner %}
+<div class="govuk-width-container">
+{{ govukPhaseBanner({
+        tag: {
+            text: "alpha"
+        },
+        html: 'This is a new service – your <a class="govuk-link" href="#">feedback</a> will help us to improve it.'
+    })
+}}
 </div>
