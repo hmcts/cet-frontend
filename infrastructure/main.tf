@@ -13,6 +13,10 @@ locals {
   previewEnv = "aat"
   nonPreviewEnv = "${var.env}"
   localenv = "${(var.env == "preview" || var.env == "spreview") ? local.previewEnv : local.nonPreviewEnv}"
+
+  prod_external_host_name = "www.civil-enforcement.service.gov.uk"
+  non_prod_external_host_name = "cet.${var.env}.platform.hmcts.net"
+  external_host_name = "${(var.env == "prod") ? local.prod_external_host_name : local.non_prod_external_host_name}"
 }
 
 
@@ -38,12 +42,12 @@ module "cet-frontend" {
   ilbIp = "${var.ilbIp}"
   is_frontend = "${var.env != "preview" ? 1: 0}"
   subscription = "${var.subscription}"
-  // need to give proper url
   appinsights_instrumentation_key = "${var.appinsights_instrumentation_key}"
   capacity = "${var.capacity}"
   common_tags = "${var.common_tags}"
   asp_rg = "${var.product}-${var.env}"
   asp_name = "${var.product}-${var.env}"
+  additional_host_name = "${local.external_host_name}"  // need to give proper url
 
   app_settings = {
 
