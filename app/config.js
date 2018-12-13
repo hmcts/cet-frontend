@@ -2,7 +2,7 @@
 
 const config = {
     environment: process.env.REFORM_ENVIRONMENT || 'prod',
-    nodeEnvironment: process.env.NODE_ENV,
+    nodeEnvironment: process.env.NODE_ENV || 'local',
     gitRevision: process.env.GIT_REVISION,
     frontendPublicHttpProtocol: process.env.PUBLIC_PROTOCOL || 'http',
     app: {
@@ -16,9 +16,24 @@ const config = {
     },
     services: {
         backend: {
-            url: "http://localhost:3001/backend/load-case-data",
-            port: "3001"
-        }
+            url: 'http://localhost:8080',
+            port: '3001'
+        },
+        s2sAuth: {
+            url: process.env.IDAM_S2S_URL || 'http://localhost:4502',
+            serviceName: 'cet_frontend',
+            secret: process.env.S2S_SECRET || 'AAAAAAAAAAAAAAAA'
+        },
+        idam: {
+            loginUrl: process.env.IDAM_LOGIN_URL || 'https://localhost:3501/login',
+            apiUrl: process.env.IDAM_API_URL || 'http://localhost:4501',
+            roles: ['cet-private-beta', 'citizen'],
+            oauth2: {
+                client: 'cet',
+                secret: process.env.IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_CET || 'AAAAAAAAAAAAAAAA',
+                callback_path: '/oauth2/callback'
+            },
+        },
     },
     redis: {
         host: process.env.REDIS_HOST || 'localhost',

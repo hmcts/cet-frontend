@@ -13,6 +13,12 @@ const fetchJson = (url, fetchOptions) => {
         .catch(err => err);
 };
 
+const fetchText = (url, fetchOptions) => {
+    return asyncFetch(url, fetchOptions, res => res.text())
+        .then(text => text)
+        .catch(err => err);
+};
+
 const asyncFetch = (url, fetchOptions, parseBody) => {
     if (!endsWith(url, 'health')) {
         logger.info('Calling external service');
@@ -71,6 +77,7 @@ const fetchOptions = (data, method, headers, proxy) => {
 };
 
 module.exports = {
-    fetchOptions: fetchOptions,
-    fetchJson: fetchJson
+    fetchOptions,
+    fetchJson,
+    fetchText
 };

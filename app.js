@@ -4,8 +4,10 @@
 
 const logger = require('app/components/logger');
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const session = require('express-session');
+const https = require('https');
 const nunjucks = require('nunjucks');
 const routes = require(`${__dirname}/app/routes`);
 const favicon = require('serve-favicon');
@@ -17,6 +19,7 @@ const packageJson = require(`${__dirname}/package`);
 const helmet = require('helmet');
 const csrf = require('csurf');
 const healthcheck = require(`${__dirname}/app/healthcheck`);
+const Security = require(`${__dirname}/app/components/security`);
 const appInsights = require('applicationinsights');
 const commonContent = require('app/resources/en/translation/common');
 const uuidv4 = require('uuid/v4');
@@ -30,6 +33,7 @@ exports.init = function () {
     const password = config.app.password;
     const useAuth = config.app.useAuth.toLowerCase();
     const useHttps = config.app.useHttps.toLowerCase();
+    const security = new Security(config.services.idam.loginUrl);
 
     if (config.appInsights.instrumentationKey) {
         appInsights.setup(config.appInsights.instrumentationKey);
@@ -196,6 +200,9 @@ exports.init = function () {
     if (useHttps === 'true') {
         app.use(utils.forceHttps);
     }
+
+    app.use(config.services.idam.oauth2.callback_path, security.oAuth2CallbackEndpoint());
+    app.use('/', security.protect(config.services.idam.roles));
 
     app.use('/health', healthcheck);
 
