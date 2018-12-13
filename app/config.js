@@ -1,6 +1,7 @@
 'use strict';
 
 const config = {
+    serviceName: 'cet_frontend',
     environment: process.env.REFORM_ENVIRONMENT || 'prod',
     nodeEnvironment: process.env.NODE_ENV || 'local',
     gitRevision: process.env.GIT_REVISION,
@@ -21,7 +22,6 @@ const config = {
         },
         s2sAuth: {
             url: process.env.IDAM_S2S_URL || 'http://localhost:4502',
-            serviceName: 'cet_frontend',
             secret: process.env.S2S_SECRET || 'AAAAAAAAAAAAAAAA'
         },
         idam: {
@@ -29,7 +29,6 @@ const config = {
             apiUrl: process.env.IDAM_API_URL || 'http://localhost:4501',
             roles: ['cet-private-beta', 'citizen'],
             oauth2: {
-                client: 'cet',
                 secret: process.env.IDAM_API_OAUTH2_CLIENT_CLIENT_SECRETS_CET || 'AAAAAAAAAAAAAAAA',
                 callback_path: '/oauth2/callback'
             },

@@ -7,7 +7,7 @@ const config = require('app/config');
 const IDAM_SERVICE_URL = config.services.idam.apiUrl;
 const BACKEND_SERVICE_URL = config.services.backend.url;
 const SERVICE_AUTHORISATION_URL = `${config.services.s2sAuth.url}/lease`;
-const SERVICE_NAME = config.services.s2sAuth.serviceName;
+const SERVICE_NAME = config.serviceName;
 const S2S_SECRET = config.services.s2sAuth.secret;
 const logger = require('app/components/logger');
 const logInfo = (message, sessionId = 'Init') => logger(sessionId).info(message);
@@ -31,7 +31,7 @@ const getFeeAmount = (userToken) => {
             if (result.name !== 'Error') {
                 const headers = {
                     'Content-Type': 'application/json',
-                    'Authorization': userToken,
+                    'Authorization': `Bearer ${userToken}`,
                     'ServiceAuthorization': result
                 };
                 const fetchOptions = utils.fetchOptions({}, 'GET', headers);
@@ -68,7 +68,7 @@ const getUserDetails = (securityCookie) => {
 
 const getOauth2Token = (code, redirectUri) => {
     logInfo('calling oauth2 token');
-    const clientName = config.services.idam.oauth2.client;
+    const clientName = config.serviceName;
     const secret = config.services.idam.oauth2.secret;
     const idam_api_url = config.services.idam.apiUrl;
 

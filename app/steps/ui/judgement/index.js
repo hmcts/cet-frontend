@@ -12,7 +12,7 @@ class Judgement extends ValidationStep {
     * getContextData (req) {
         const ctx = super.getContextData(req);
         Object.assign(ctx, req.session.form || {});
-        ctx.courtFees = yield services.getFeeAmount(ctx.authToken);
+        ctx.courtFees = yield services.getFeeAmount(req.authToken);
         return ctx;
     }
 }

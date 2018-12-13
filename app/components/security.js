@@ -66,7 +66,7 @@ class Security {
         const redirectUrl = URL.parse(this.loginUrl, true);
         redirectUrl.query.response_type = 'code';
         redirectUrl.query.state = state;
-        redirectUrl.query.client_id = 'cet';
+        redirectUrl.query.client_id = config.serviceName;
         redirectUrl.query.redirect_uri = callbackUrl;
 
         res.redirect(redirectUrl.format());
