@@ -27,8 +27,9 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res) => {
-    services.loadCaseData(req.session.regId)
+    services.loadCaseData('dummy-case', req.authToken)
         .then(result => {
+            req.log.info(`this is case-data returned ${result}`);
             if (result.name === 'Error') {
                 req.log.debug('Failed to load user data');
                 req.log.info({tags: 'Analytics'}, 'Application Started');

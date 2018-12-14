@@ -12,15 +12,23 @@ const S2S_SECRET = config.services.s2sAuth.secret;
 const logger = require('app/components/logger');
 const logInfo = (message, sessionId = 'Init') => logger(sessionId).info(message);
 
-const loadCaseData = (id, sessionID) => {
+const loadCaseData = (caseNumber, userToken) => {
     logInfo('loadCaseData');
-    const headers = {
-        'Content-Type': 'application/json',
-        'Session-Id': sessionID
-    };
-    const fetchOptions = utils.fetchOptions({}, 'GET', headers);
-    logInfo(`loadFormData url: ${BACKEND_SERVICE_URL}`);
-    return utils.fetchJson(BACKEND_SERVICE_URL, fetchOptions);
+
+    return authorise()
+        .then(result => {
+            if (result.name !== 'Error') {
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${userToken}`,
+                    'ServiceAuthorization': result
+                };
+                const fetchOptions = utils.fetchOptions({}, 'GET', headers);
+                logInfo(`loadFormData url: ${BACKEND_SERVICE_URL}/case-data/${caseNumber}`);
+                return utils.fetchJson(`${BACKEND_SERVICE_URL}/case-data/dummy-case`, fetchOptions);
+            }
+            throw new Error('Could not retrieve service token');
+        });
 };
 
 const getFeeAmount = (userToken) => {
