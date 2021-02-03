@@ -58,7 +58,7 @@
     "govuk-frontend": "^2.0.0",
     "govuk_frontend_toolkit": "7.5.0",
     "govuk_template_jinja": "0.24.1",
-    "helmet": "3.8.2",
+    "helmet": "3.23.3",
     "https-proxy-agent": "^2.2.1",
     "i18next": "^10.0.0",
     "ioredis": "^3.2.2",
